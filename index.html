@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>RTC 70</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RTC 70">
+<meta name="theme-color" content="#0E1018">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E1018'/%3E%3Cpath d='M24 138 L66 58 L92 104 L120 46 L156 138 Z' fill='none' stroke='%2374E8C3' stroke-width='9' stroke-linejoin='round'/%3E%3Ctext x='90' y='168' font-family='Arial' font-size='30' fill='%2374E8C3' text-anchor='middle' font-weight='900'%3E70K%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href='data:application/json,{"name":"Pong Yaeng RTC 70","short_name":"RTC 70","start_url":".","display":"standalone","background_color":"%230E1018","theme_color":"%230E1018","icons":[{"src":"data:image/svg+xml,%253Csvg xmlns=%2527http://www.w3.org/2000/svg%2527 viewBox=%25270 0 180 180%2527%253E%253Crect width=%2527180%2527 height=%2527180%2527 rx=%252740%2527 fill=%2527%25230B0F0D%2527/%253E%253Cpath d=%2527M24 138 L66 58 L92 104 L120 46 L156 138 Z%2527 fill=%2527none%2527 stroke=%2527%2523B6F22A%2527 stroke-width=%25279%2527 stroke-linejoin=%2527round%2527/%253E%253C/svg%253E","sizes":"180x180","type":"image/svg+xml"}]}'>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0E1018;--bg2:#161926;--card:#1A1E2E;--card2:#222740;--line:#2C3147;--txt:#ECEDF5;--muted:#9197AE;--muted2:#646A85;--lime:#74E8C3;--lime-d:#52C9A5;--orange:#FFB39C;--orange-d:#F08A6E;--z1:#B3A6F0;--z2:#74E8C3;--z3:#F5D98B;--z4:#FFB39C;--z5:#F2899C;--good:#74E8C3;--warn:#F5D98B;--bad:#F2899C;--lav:#B3A6F0;--r:24px}
+html,body{background:linear-gradient(180deg,#161A28 0%,#0E1018 42%,#0C0E15 100%);background-attachment:fixed;color:var(--txt);font-family:'Manrope',system-ui,sans-serif;overscroll-behavior:none}
+body{padding-bottom:calc(82px + env(safe-area-inset-bottom));min-height:100vh}
+.dsp{font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.01em}
+.num{font-family:'Archivo',sans-serif;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+input,button,select,textarea{font-family:inherit;color:inherit}
+input,textarea{font-size:16px}
+::-webkit-scrollbar{width:0}
+.wrap{padding:0 16px;max-width:520px;margin:0 auto}
+.app-hd{padding:calc(14px + env(safe-area-inset-top)) 16px 6px;max-width:520px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center}
+.logo svg{width:18px;height:18px}
+.brand b{font-family:'Archivo';font-weight:900;font-size:15px;letter-spacing:.02em}
+.brand span{display:block;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.12em;margin-top:-2px}
+.card{background:linear-gradient(165deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 6px 26px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.03)}
+.fade{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stagger>*{animation:fade .45s ease both}
+.stagger>*:nth-child(1){animation-delay:.02s}.stagger>*:nth-child(2){animation-delay:.07s}.stagger>*:nth-child(3){animation-delay:.12s}.stagger>*:nth-child(4){animation-delay:.17s}.stagger>*:nth-child(5){animation-delay:.22s}.stagger>*:nth-child(6){animation-delay:.27s}.stagger>*:nth-child(7){animation-delay:.32s}.stagger>*:nth-child(8){animation-delay:.37s}
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(14,16,24,.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-top:1px solid var(--line);display:flex;padding:8px 6px env(safe-area-inset-bottom);max-width:520px;margin:0 auto;z-index:50}
+.nav button{flex:1;border:none;background:none;padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--muted2);transition:color .2s}
+.nav button.on{color:var(--lime)}
+.nav svg{width:23px;height:23px;transition:transform .2s}
+.nav button.on svg{transform:translateY(-1px)}
+.nav small{font-size:9.5px;font-weight:700;letter-spacing:.02em}
+.nav .dot{width:4px;height:4px;border-radius:9px;background:var(--lime);margin-top:2px;opacity:0;transition:opacity .2s}
+.nav button.on .dot{opacity:1}
+.h-sec{font-family:'Archivo';font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:24px 4px 11px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.02em}
+.tap{transition:transform .12s}.tap:active{transform:scale(.97)}
+.bar{height:7px;background:var(--bg2);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.in{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;color:var(--txt);font-size:15px;font-weight:600;width:100%}
+.in:focus{outline:none;border-color:var(--lime)}
+.btn{border:none;border-radius:13px;padding:13px;font-family:'Archivo';font-weight:800;font-size:14px;cursor:pointer;width:100%;letter-spacing:.02em}
+.btn-lime{background:var(--lime);color:#10131F}
+.btn-ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.zbadge{font-size:10px;font-weight:800;padding:2px 7px;border-radius:7px;font-family:'Archivo';letter-spacing:.03em}
+.glow{box-shadow:0 0 0 1px rgba(116,232,195,.22),0 10px 36px -14px rgba(116,232,195,.4),inset 0 1px 0 rgba(255,255,255,.04)}
+.divline{height:1px;background:var(--line);margin:14px 0}
+.chk{width:30px;height:30px;border-radius:9px;border:2px solid var(--muted2);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s}
+.chk.on{background:var(--lime);border-color:var(--lime)}
+.chk svg{width:17px;height:17px;stroke:#10131F;stroke-width:3.2;fill:none;opacity:0;transition:opacity .2s}
+.chk.on svg{opacity:1}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:fade .25s ease}
+.sheet{background:var(--bg2);border:1px solid var(--line);border-bottom:none;border-radius:24px 24px 0 0;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:8px 18px calc(26px + env(safe-area-inset-bottom));animation:up .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+.grab{width:38px;height:4px;border-radius:9px;background:var(--line);margin:8px auto 14px}
+.linkbtn{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);color:var(--lime);text-decoration:none;padding:8px 12px;border-radius:10px;font-size:12.5px;font-weight:700}
+.seg{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;border:none;background:none;color:var(--muted);font-weight:700;font-size:12.5px;padding:8px 4px;border-radius:9px;cursor:pointer;transition:all .2s}
+.seg button.on{background:var(--lime);color:#10131F}
+.topo{position:absolute;inset:0;opacity:.5;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,rgba(116,232,195,.06) 1px,transparent 0);background-size:24px 24px}
+.langbtn{border:1px solid var(--line);background:var(--card2);border-radius:9px;padding:6px 9px;font-family:'Archivo';font-weight:800;font-size:11px;cursor:pointer;color:var(--lime);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="app-hd">
+ <div class="brand">
+  <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M3 18 L8.5 8 L12 14 L16 6 L21 18 Z" stroke="#74E8C3" stroke-width="2" stroke-linejoin="round"/></svg></div>
+  <div><b>RTC&nbsp;70</b><span>PONG YAENG TRAIL</span></div>
+ </div>
+ <div id="hdRight"></div>
+</div>
+<div class="wrap"><div id="view"></div></div>
+<div class="nav" id="nav"></div>
+
+<script>
+/* ============ i18n CORE ============ */
+let LANG='th';
+const tx=o=>(o&&typeof o==='object'&&('th'in o))?(o[LANG]||o.th):o;
+const UI={
+ daysToRace:{th:"วันถึงวันแข่ง",en:"DAYS TO RACE"},
+ nav_today:{th:"วันนี้",en:"Today"},nav_plan:{th:"แผน",en:"Plan"},nav_str:{th:"ฝึก",en:"Strength"},nav_fuel:{th:"อาหาร",en:"Fuel"},nav_log:{th:"บันทึก",en:"Log"},
+ readyCheck:{th:"เช็ก Readiness วันนี้",en:"Check today's readiness"},
+ readySub:{th:"ตอบ 3 ข้อ ก่อนตัดสินใจซ้อม",en:"Answer 3 questions before training"},
+ ready_g:{th:"พร้อม ซ้อมได้เลย 🟢",en:"Ready — go train 🟢"},ready_y:{th:"ระวัง · ลดลงหน่อย 🟡",en:"Caution · ease off 🟡"},ready_r:{th:"พักเถอะวันนี้ 🔴",en:"Rest today 🔴"},
+ ready_gd:{th:"ร่างกายฟื้นตัวดี ทำตามแผนได้",en:"Well recovered — follow the plan"},ready_yd:{th:"ลดความหนัก/ระยะ ~20-30% หรือสลับเป็น easy",en:"Cut intensity/distance ~20-30% or swap to easy"},ready_rd:{th:"พักไม่ใช่ความล้มเหลว — ป้องกันบาดเจ็บคือชนะ",en:"Rest isn't failure — preventing injury is winning"},
+ todayDo:{th:"วันนี้ต้องทำ",en:"Today's session"},planDay:{th:"แผนวันที่เลือก",en:"Selected day"},
+ tagToday:{th:"วันนี้",en:"TODAY"},tagBehind:{th:"ย้อนหลัง",en:"BEHIND"},tagAhead:{th:"ล่วงหน้า",en:"AHEAD"},
+ markDone:{th:"ติ๊กว่าทำเสร็จ",en:"Mark complete"},done:{th:"✓ ทำแล้ว",en:"✓ Done"},detail:{th:"รายละเอียด",en:"Details"},
+ prevDay:{th:"‹ วันก่อน",en:"‹ Prev"},nextDay:{th:"วันถัดไป ›",en:"Next ›"},jumpToday:{th:"วันนี้",en:"Today"},
+ overview:{th:"ภาพรวม",en:"Overview"},thisWeek:{th:"สัปดาห์นี้",en:"This week"},pctDone:{th:"% สำเร็จ",en:"% done"},
+ kmTotal:{th:"KM รวม",en:"TOTAL KM"},vertKm:{th:"VERT (km)",en:"VERT (km)"},sessions:{th:"เซสชัน",en:"SESSIONS"},
+ whyTitle:{th:"ทำไมฉันถึงวิ่ง",en:"Why I run"},quoteCredit:{th:"แรงใจประจำวัน",en:"Daily motivation"},
+ niggleWarn:{th:"เจ็บซ้ำ",en:"recurring"},niggleWarnSub:{th:"จุดเดิมเจ็บซ้ำ — ควรพบนักกายภาพก่อนซ้อมต่อ",en:"Same spot recurring — see a physio before continuing"},
+ backupTitle:{th:"สำรองข้อมูลหน่อย",en:"Back up your data"},
+ planLegendNow:{th:"ตอนนี้",en:"NOW"},
+ done_n:{th:"เสร็จ",en:"done"},
+ str_rehab:{th:"Rehab",en:"Rehab"},str_main:{th:"Strength",en:"Strength"},str_drill:{th:"Drills",en:"Drills"},str_gear:{th:"อุปกรณ์",en:"Equipment"},
+ rehabBanner:{th:"🩹 ทำ <b>ทุกวัน/วันเว้นวัน</b> — เจาะ 3 จุดที่เจ็บ (ITB·เอ็นร้อยหวาย·รองช้ำ) + เท้าแบน · <span style='color:var(--lime)'>★ = สำคัญสุดสำหรับคุณ</span>",en:"🩹 Do <b>daily / every other day</b> — targets your 3 sore spots (ITB · Achilles · plantar) + flat feet · <span style='color:var(--lime)'>★ = top priority for you</span>"},
+ mainBanner:{th:"💪 <b>2 ครั้ง/สัปดาห์</b> · คุมฟอร์มสำคัญกว่าน้ำหนัก · <span style='color:var(--lime)'>★ Step-down + Bulgarian split = ตัวรับ downhill โดยตรง</span>",en:"💪 <b>2×/week</b> · form over load · <span style='color:var(--lime)'>★ Step-down + Bulgarian split = direct downhill prep</span>"},
+ mainProg:{th:"Progression: Prep-W4 น้ำหนักตัว/เบา → W5-8 เพิ่มน้ำหนัก → W9-10 คงหนักลดเซ็ต → W11-12 เบา maintenance",en:"Progression: Prep-W4 bodyweight/light → W5-8 add load → W9-10 keep load, fewer sets → W11-12 light maintenance"},
+ drillBanner:{th:"🏃 ทำ warm-up ก่อนวิ่งคุณภาพ (hill/tempo) ~10 นาที · เป้าหมาย = <b>cadence สูง 170-180</b> + ลงเท้าใต้ลำตัว (กัน ITB/รองช้ำ)",en:"🏃 Warm-up before quality runs (hill/tempo) ~10 min · goal = <b>high cadence 170-180</b> + land under your body (protects ITB/plantar)"},
+ gearBanner:{th:"🏠 อุปกรณ์ห้องซ้อม · <span style='color:var(--lime)'>★ 3 ชิ้นแรกคุ้มสุด</span> · ติ๊กที่มีแล้วได้",en:"🏠 Home gym kit · <span style='color:var(--lime)'>★ first 3 are best value</span> · tap what you own"},
+ watchForm:{th:"ดูท่า",en:"Watch"},
+ fuel_train:{th:"ระหว่างซ้อม",en:"Training"},fuel_race:{th:"วันแข่ง",en:"Race day"},fuel_zone:{th:"HR Zones",en:"HR Zones"},
+ hrIntro:{th:"มีนาฬิกาวัด HR → คุมด้วย <b>HR เป็นหลัก</b> (บนเขา pace ไม่มีความหมาย) · Max HR",en:"Got an HR watch → train by <b>HR primarily</b> (pace is meaningless on climbs) · Max HR"},
+ hrIntro2:{th:"(ตั้งค่าได้ที่ ⚙️ มุมขวาบน)",en:"(set it via ⚙️ top-right)"},
+ fieldTest:{th:"🔬 หาค่าจริง (Max HR)",en:"🔬 Find your real Max HR"},
+ fieldTestBody:{th:"วอร์มดี → วิ่งขึ้นเขาชันเต็มที่ 3-4 นาที 2 รอบ (พักระหว่าง) → ดูเลข HR สูงสุดบนนาฬิกา = ใกล้เคียง Max จริง แล้วใส่ใน ⚙️",en:"Warm up → run a steep hill all-out 3-4 min × 2 (rest between) → read peak HR on watch ≈ true Max, then enter it in ⚙️"},
+ goalTitle:{th:"🎯 เป้าหมาย 3 ชั้น (A/B/C)",en:"🎯 3-tier goals (A/B/C)"},
+ goalSub:{th:"ช่วยตัดสินใจหน้างานโดยไม่แตกตื่น",en:"Helps you decide on course without panic"},
+ timelineTitle:{th:"⏱ Fueling Timeline",en:"⏱ Fueling Timeline"},
+ log_why:{th:"แรงใจ",en:"Motivation"},log_niggle:{th:"อาการเจ็บ",en:"Niggles"},log_weight:{th:"น้ำหนัก",en:"Weight"},
+ whyCardTitle:{th:"ทำไมฉันถึงวิ่ง?",en:"Why do I run?"},
+ whyCardSub:{th:"เขียนเหตุผลของคุณ — ไว้อ่านตอนชั่วโมงที่ 10 กลางดึก ที่ขาไม่อยากก้าว อัลตราคือเกมของใจ 70%",en:"Write your reason — to read at hour 10 in the dark when your legs quit. Ultra is 70% mental."},
+ whyPlaceholder:{th:"เช่น อยากพิสูจน์ว่าทำได้ / เพื่อสุขภาพ / เพื่อคนที่รัก...",en:"e.g. to prove I can / for my health / for someone I love..."},
+ niggleBanner:{th:"🩹 จดอาการเจ็บเล็กๆ ทุกครั้ง — เห็น pattern ก่อนกลายเป็นบาดเจ็บจริง · ถ้าจุดเดิมเจ็บซ้ำ 3+ ครั้ง = หยุดพบนักกายภาพ",en:"🩹 Log every little niggle — spot patterns before real injury · same spot 3+ times = stop & see a physio"},
+ addNiggle:{th:"+ บันทึกอาการวันนี้",en:"+ Log a niggle today"},
+ noNiggle:{th:"ยังไม่มีบันทึก — ดีแล้ว! 🎉",en:"No entries yet — good! 🎉"},
+ niggleAlertSub:{th:"จุดเดิมเจ็บซ้ำ ≥3 ครั้ง — แนะนำหยุดและพบนักกายภาพ",en:"Same area ≥3 times — stop and see a physio"},
+ weightBanner:{th:"⚖️ <b>เป้า = ลดไขมัน รักษากล้าม</b> (recomposition) · deficit เบาเฉพาะวันพัก/easy · วันซ้อมหนัก+Peak กินเต็ม",en:"⚖️ <b>Goal = lose fat, keep muscle</b> (recomposition) · light deficit on rest/easy days only · eat full on hard + Peak days"},
+ weightTrend:{th:"Trend น้ำหนัก vs เป้า",en:"Weight vs target"},
+ baseStart:{th:"ตั้งต้น",en:"Start"},baseNow:{th:"ปัจจุบัน",en:"Now"},baseTarget:{th:"เป้าวันแข่ง",en:"Race target"},
+ baseInbody:{th:"📋 InBody baseline",en:"📋 InBody baseline"},
+ inbodyNote:{th:d=>`วัดเมื่อ ${d} · กล้ามดี (SMM 36.3) · ลดเฉพาะไขมัน`,en:d=>`Measured ${d} · good muscle (SMM 36.3) · cut fat only`},
+ fat:{th:"ไขมัน",en:"Fat"},muscleSmm:{th:"กล้าม",en:"Muscle"},visceral:{th:"Visceral",en:"Visceral"},
+ toGo:{th:"เหลือ",en:"to go"},lost:{th:"ลดแล้ว",en:"lost"},onTrack:{th:"ตามแผน",en:"on track"},
+ energyGuide:{th:"⚡ พลังงานวันนี้ (ไกด์)",en:"⚡ Today's energy (guide)"},
+ energyFor:{th:"สำหรับ",en:"for"},kcalDay:{th:"kcal/วัน",en:"kcal/day"},
+ energyNote:{th:"ไกด์คร่าวๆ จาก BMR 1,743 — เน้นโปรตีน 140–175 ก./วัน · วันซ้อมหนักกินเต็มเพื่อฟื้นตัว ห้ามอด",en:"Rough guide from BMR 1,743 — prioritize protein 140–175 g/day · eat full on hard days to recover, don't under-eat"},
+ dietType_rest:{th:"วันพัก",en:"Rest day"},dietType_easy:{th:"วัน Easy",en:"Easy day"},dietType_quality:{th:"วันคุณภาพ (Hill/Tempo)",en:"Quality (Hill/Tempo)"},dietType_long:{th:"วัน Long/B2B",en:"Long/B2B day"},dietType_race:{th:"วันแข่ง",en:"Race day"},
+ deficitTag:{th:"deficit เบา",en:"slight deficit"},eatFull:{th:"กินเต็ม",en:"eat full"},
+ startWeightL:{th:"น้ำหนักตั้งต้น (kg)",en:"Start weight (kg)"},targetWeightL:{th:"เป้าน้ำหนักวันแข่ง (kg)",en:"Race-day target (kg)"},
+ targetHint:{th:"แนะนำ ~84–85 (ลด ~3–4 kg) · 74.8 จาก InBody = เป้าหลังแข่ง ค่อยลดต่อ",en:"Suggest ~84–85 (lose ~3–4 kg) · InBody's 74.8 = post-race goal"},
+ fuel_food:{th:"อาหาร",en:"Food"},fuel_guide:{th:"ไกด์",en:"Guide"},
+ foodToday:{th:"วันนี้",en:"Today"},
+ kcalLeft:{th:"เหลือได้อีก",en:"left"},kcalOver:{th:"เกิน",en:"over"},
+ protein:{th:"โปรตีน",en:"Protein"},carbsL:{th:"คาร์บ",en:"Carbs"},
+ addFood:{th:"+ เพิ่มอาหาร",en:"+ Add food"},
+ noFood:{th:"ยังไม่ได้บันทึกวันนี้ — กดเพิ่มอาหารด้านบน",en:"Nothing logged today — tap add food above"},
+ foodSheetTitle:{th:"เพิ่มอาหาร",en:"Add food"},
+ foodSearch:{th:"ค้นหา / พิมพ์ชื่อ...",en:"Search / type name..."},
+ cat_meal:{th:"ข้าว/เส้น",en:"Meals"},cat_protein:{th:"โปรตีน",en:"Protein"},cat_snack:{th:"ว่าง/ผลไม้",en:"Snacks"},cat_fuel:{th:"ของวิ่ง",en:"Run fuel"},cat_drink:{th:"เครื่องดื่ม",en:"Drinks"},cat_custom:{th:"กรอกเอง",en:"Custom"},
+ customName:{th:"ชื่ออาหาร",en:"Food name"},customKcal:{th:"แคลอรี่ (kcal)",en:"Calories (kcal)"},customP:{th:"โปรตีน (g) — ไม่บังคับ",en:"Protein (g) — optional"},customC:{th:"คาร์บ (g) — ไม่บังคับ",en:"Carbs (g) — optional"},
+ addBtn:{th:"เพิ่ม",en:"Add"},
+ perServe:{th:"/ที่",en:"/serving"},
+ dietType_quality2:{th:"คุณภาพ",en:"Quality"},
+ targetKcal:{th:"เป้าวันนี้",en:"Today's target"},
+ proteinTip:{th:"💪 เป้าโปรตีน ~{p} g (รักษากล้าม)",en:"💪 Protein target ~{p} g (preserve muscle)"},
+ ov_done:{th:"สำเร็จรวม",en:"Done"},ov_week:{th:"สัปดาห์นี้",en:"This week"},ov_race:{th:"ถึงแข่ง",en:"To race"},
+ ov_days:{th:"วัน",en:"days"},
+ nutToday:{th:"โภชนาการวันนี้",en:"Today's nutrition"},nutTap:{th:"แตะเพื่อบันทึก/ดูอาหาร",en:"Tap to log / view food"},
+ statKm:{th:"km รวม",en:"total km"},statVert:{th:"vert",en:"vert"},statSess:{th:"เซสชัน",en:"sessions"},
+ notifTitle:{th:"การแจ้งเตือน",en:"Notifications"},
+ notifEmpty:{th:"ไม่มีแจ้งเตือนตอนนี้ 🎉",en:"No notifications right now 🎉"},
+ notifBackup:{th:"ควรสำรองข้อมูล",en:"Time to back up"},
+ notifReady:{th:"ยังไม่เช็ก Readiness วันนี้",en:"Readiness not checked today"},
+ notifReadySub:{th:"ตอบ 3 ข้อ ก่อนตัดสินใจซ้อม",en:"Answer 3 questions before training"},
+ notifFood:{th:"ยังไม่บันทึกอาหารวันนี้",en:"No food logged today"},
+ notifFoodSub:{th:"แตะเพื่อไปหน้าอาหาร",en:"Tap to open food log"},
+ sevNone:{th:"ไม่มี",en:"none"},sev1:{th:"ตึงเบาๆ",en:"slight tightness"},sev2:{th:"รำคาญ",en:"annoying"},sev3:{th:"เจ็บชัด",en:"clear pain"},
+ setTitle:{th:"⚙️ ตั้งค่า",en:"⚙️ Settings"},
+ startDate:{th:"วันเริ่มโปรแกรม (วันแรกของ Prep)",en:"Program start date (first day of Prep)"},
+ raceDateL:{th:"วันแข่ง",en:"Race date"},
+ maxhrL:{th:"Max HR (bpm) — ปล่อยว่าง = ใช้ค่าประเมิน",en:"Max HR (bpm) — leave blank = use estimate"},
+ maxhrHint:{th:"🔬 หาค่าจริง: วอร์มดี → วิ่งขึ้นเขาชันเต็มที่ 3-4 นาที 2 รอบ → ดูเลข HR สูงสุด · HR Zones จะคำนวณใหม่อัตโนมัติ",en:"🔬 Find it: warm up → steep hill all-out 3-4 min × 2 → read peak HR · zones recalc automatically"},
+ raceInfo:{th:"🏔 ข้อมูลสนาม",en:"🏔 Race info"},
+ backupSection:{th:"สำรองข้อมูล",en:"Backup"},backupLast:{th:"ล่าสุด",en:"last"},backupDaysAgo:{th:"วันก่อน",en:"days ago"},
+ disclaimer:{th:"ตัวเลขสนามอ้างอิง PYT/ITRA 2025 · ไม่ใช่แพทย์/โค้ช<br>เจ็บ 3 จุด + เท้าแบน แนะนำพบนักกายภาพก่อนเข้า Phase หนัก",en:"Race figures per PYT/ITRA 2025 · not a doctor/coach<br>3 niggles + flat feet — see a physio before hard phases"},
+ // session detail
+ forPurpose:{th:"ทำไปเพื่อ",en:"Purpose"},structure:{th:"โครงสร้าง",en:"Structure"},cueLabel:{th:"💡 เทคนิคเน้น",en:"💡 Key cue"},
+ kmPlan:{th:"KM แผน",en:"PLAN KM"},vertM:{th:"VERT (m)",en:"VERT (m)"},
+ seeAllStr:{th:"ดูท่าทั้งหมดในแท็บ Strength →",en:"See all exercises in Strength tab →"},
+ doneToggle:{th:"✓ ทำแล้ว — กดเพื่อยกเลิก",en:"✓ Done — tap to undo"},completeBtn:{th:"ทำเสร็จแล้ว",en:"Mark complete"},
+ kmActual:{th:"KM จริง",en:"Actual KM"},vertActual:{th:"Vert จริง",en:"Actual Vert"},rpeL:{th:"RPE 1-10",en:"RPE 1-10"},
+ notePlaceholder:{th:"โน้ต (รู้สึกยังไง อาการเจ็บ?)",en:"Note (how did it feel? any pain?)"},
+ // readiness sheet
+ readinessTitle:{th:"Readiness Check",en:"Readiness Check"},
+ readinessSub:{th:"ตอบ 3 ข้อ — แอปจะแนะนำว่าวันนี้ควรซ้อมแค่ไหน",en:"Answer 3 — the app suggests how much to train today"},
+ rq1:{th:"ตื่นเช้านี้รู้สึกยังไง",en:"How do you feel this morning?"},rq2:{th:"นอนคืนที่ผ่านมา",en:"Last night's sleep?"},rq3:{th:"อาการเจ็บ (ITB/เอ็น/รองช้ำ)",en:"Niggles (ITB/Achilles/plantar)?"},
+ ro_fresh:{th:"สดชื่น",en:"Fresh"},ro_ok:{th:"ปกติ",en:"Normal"},ro_tired:{th:"เพลีย/หนัก",en:"Tired/heavy"},
+ ro_good:{th:"ดี",en:"Good"},ro_fair:{th:"พอใช้",en:"Fair"},ro_bad:{th:"ไม่ดี",en:"Poor"},
+ ro_no:{th:"ไม่มี",en:"None"},ro_slight:{th:"ตึงนิดหน่อย",en:"Slight"},ro_pain:{th:"เจ็บชัด",en:"Clear pain"},
+ saveToday:{th:"บันทึกผลวันนี้",en:"Save today"},
+ // niggle sheet
+ niggleSheetTitle:{th:"บันทึกอาการเจ็บ",en:"Log a niggle"},area:{th:"บริเวณ",en:"Area"},level:{th:"ระดับ",en:"Severity"},
+ niggleNotePh:{th:"โน้ต (เกิดตอนไหน หลังวิ่ง/เดิน?)",en:"Note (when? after running/walking?)"},save:{th:"บันทึก",en:"Save"},
+ export:{th:"↓ Export",en:"↓ Export"},import:{th:"↑ Import",en:"↑ Import"},badFile:{th:"ไฟล์ไม่ถูกต้อง",en:"Invalid file"},
+ backupReminderSub:{th:d=>`ไม่ได้ export มา ${d>365?'นานแล้ว':d+' วัน'} · กดเพื่อ Export`,en:d=>`No export for ${d>365?'a long time':d+' days'} · tap to Export`},
+};
+function t(k){const v=UI[k];if(!v)return k;return tx(v);}
+const days_th=['อา','จ','อ','พ','พฤ','ศ','ส'],days_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const mon_th=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const mon_en=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function dateHeader(){const d=new Date();return LANG==='th'?`วันนี้, ${d.getDate()} ${mon_th[d.getMonth()]}`:`Today, ${d.getDate()} ${mon_en[d.getMonth()]}`;}
+
+/* ============ DATA (bilingual) ============ */
+const RACE={dist:72.59,gain:3586,loss:3598,cutoff:15,start:"16:00",aid:3,level:6};
+const RACE_DATE_DEFAULT="2026-10-18";
+const HRMAX_DEFAULT=184;
+const INBODY={date:"03.06.2026",weight:88.3,smm:36.3,fat:24.8,pbf:28.0,bmr:1743,target:74.8,visceral:10,whr:0.96,ffm:63.5};
+const START_WEIGHT_DEFAULT=88.3, TARGET_WEIGHT_DEFAULT=84.5;
+// kcal guide by session type (from BMR 1743): [lo,hi,mode]
+const ENERGY={Rest:[2000,2200,"deficit"],Rehab:[2000,2300,"deficit"],Easy:[2400,2700,"eat"],Tempo:[2700,3000,"eat"],Hill:[2700,3100,"eat"],Downhill:[2700,3100,"eat"],Night:[2600,3000,"eat"],Strength:[2300,2600,"eat"],Long:[3200,3900,"eat"],B2B:[3000,3700,"eat"],Race:[4000,6000,"eat"]};
+function energyType(t2){if(t2==="Rest")return"rest";if(t2==="Rehab"||t2==="Strength"||t2==="Easy")return"easy";if(t2==="Long"||t2==="B2B")return"long";if(t2==="Race")return"race";return"quality";}
+function hrmax(){return (typeof S!=='undefined' && +S.hrmax)?+S.hrmax:HRMAX_DEFAULT;}
+function zones(){const H=hrmax();return [
+ {z:"Z1",name:{th:"Recovery",en:"Recovery"},pct:"50-60%",lo:Math.round(H*.5),hi:Math.round(H*.6),col:"--z1",feel:{th:"สบายมาก เดิน/จ๊อกเบา",en:"Very easy, walk/light jog"}},
+ {z:"Z2",name:{th:"Aerobic",en:"Aerobic"},pct:"60-70%",lo:Math.round(H*.6),hi:Math.round(H*.7),col:"--z2",feel:{th:"คุยเป็นประโยคได้ — ใช้ 80% ของซ้อม",en:"Can speak full sentences — 80% of training"}},
+ {z:"Z3",name:{th:"Tempo",en:"Tempo"},pct:"70-80%",lo:Math.round(H*.7),hi:Math.round(H*.8),col:"--z3",feel:{th:"คุยได้สั้นๆ เหนื่อยกำลังดี",en:"Short phrases only, comfortably hard"}},
+ {z:"Z4",name:{th:"Threshold",en:"Threshold"},pct:"80-90%",lo:Math.round(H*.8),hi:Math.round(H*.9),col:"--z4",feel:{th:"พูดไม่ออก — ช่วงขึ้นเขา",en:"Can't talk — for climbs"}},
+ {z:"Z5",name:{th:"Max",en:"Max"},pct:"90-100%",lo:Math.round(H*.9),hi:H,col:"--z5",feel:{th:"หอบ — ไม่ค่อยใช้ในอัลตรา",en:"Gasping — rarely used in ultra"}},
+];}
+const LIB={
+ Rehab:{label:{th:"Rehab / Mobility",en:"Rehab / Mobility"},zone:null,col:"--z1",purpose:{th:"ฟื้นฟู 3 จุดเจ็บ (ITB/เอ็นร้อยหวาย/รองช้ำ) + สร้างฐานก่อนซ้อมหนัก",en:"Rehab 3 sore spots (ITB/Achilles/plantar) + build base before hard work"},struct:{th:"ชุดท่า Rehab กลุ่ม A (ดูแท็บ Strength) ~20-25 นาที",en:"Rehab group A (see Strength tab) ~20-25 min"},cue:{th:"ทำช้า คุมฟอร์ม โฟกัสก้น+อุ้งเท้า ห้ามเจ็บแปลบ",en:"Slow, controlled, focus glutes + arch, no sharp pain"}},
+ Easy:{label:{th:"Easy Run",en:"Easy Run"},zone:"Z2",col:"--z2",purpose:{th:"สร้าง aerobic base + ฝึกเผาผลาญไขมัน (โหลดต่ำ ข้อต่อปลอดภัย)",en:"Build aerobic base + fat metabolism (low load, joint-safe)"},struct:{th:"เดิน 5 นาที → วิ่ง easy คุม HR Z2 → cool-down 5 นาที",en:"Walk 5 min → easy run in Z2 → cool-down 5 min"},cue:{th:"คุยเป็นประโยคได้ตลอด · ก้าวสั้น cadence สูง · ไหล่ผ่อน",en:"Hold a conversation · short steps, high cadence · relax shoulders"}},
+ Long:{label:{th:"Long Run (trail)",en:"Long Run (trail)"},zone:"Z2",col:"--z2",purpose:{th:"สร้างความอึด + time-on-feet + ซ้อมกินจริง/อุปกรณ์จริง",en:"Build endurance + time-on-feet + practice real fueling/gear"},struct:{th:"คุม Z2 · เดินขึ้นชัน-วิ่งราบ/ลง · กินทุก 30-40 นาที",en:"Stay Z2 · hike climbs, run flats/downs · eat every 30-40 min"},cue:{th:"เริ่มช้ากว่าที่คิด · ลงเขาก้าวถี่-เบา ไม่เบรกส้น",en:"Start slower than you think · downhill quick-light steps, no heel braking"}},
+ B2B:{label:{th:"Back-to-Back",en:"Back-to-Back"},zone:"Z2",col:"--z2",purpose:{th:"จำลองความล้าท้ายเรซ — วิ่งบนขาที่ยังไม่หายเมื่อย",en:"Simulate late-race fatigue — run on tired legs"},struct:{th:"วันที่ 2 ของ long run · เริ่มช้าๆ คุม Z2 ล้วน",en:"Day 2 of long run · start slow, pure Z2"},cue:{th:"ถ้าเจ็บ (ไม่ใช่แค่ล้า) ให้หยุด · นี่คือซ้อมความอดทนของใจ",en:"Stop if it's pain (not just fatigue) · this trains mental grit"}},
+ Hill:{label:{th:"Hill Repeat",en:"Hill Repeat"},zone:"Z4",col:"--z4",purpose:{th:"สร้างพลังขา เตรียมไต่ +3,586 ม.",en:"Build leg power for +3,586 m climbing"},struct:{th:"WU 15น. + drills → ขึ้นแรง 60-90วิ @Z4 (เดิน/จ๊อกลงพักให้ HR กลับ Z2) → CD 10น.",en:"WU 15 min + drills → hard 60-90 s @Z4 (jog/walk down to Z2) → CD 10 min"},cue:{th:"ก้าวสั้น ดันด้วยก้น/สะโพก เอนจากข้อเท้า มองข้างหน้า",en:"Short steps, drive from glutes/hips, lean from ankles, look ahead"}},
+ Downhill:{label:{th:"Downhill Focus",en:"Downhill Focus"},zone:"Z2-Z3",col:"--z3",purpose:{th:"สร้าง quad durability — กันขาพัง/DOMS ช่วงลง −3,598 ม.",en:"Build quad durability — prevent blow-up/DOMS on −3,598 m descent"},struct:{th:"หาเขายาว ลงแบบควบคุม 4-6 เที่ยว (ขึ้นเดิน/จ๊อก)",en:"Long hill, controlled descents 4-6× (hike/jog up)"},cue:{th:"ก้าวถี่-เบา ตัวเอนหน้าเล็กน้อย อย่าเบรกส้นแรง ลงเท้าใต้ลำตัว",en:"Quick-light steps, slight forward lean, no hard heel braking, land under body"}},
+ Tempo:{label:{th:"Tempo Run",en:"Tempo Run"},zone:"Z3",col:"--z3",purpose:{th:"ยก aerobic threshold ให้วิ่งสบายที่ pace สูงขึ้น",en:"Raise aerobic threshold to run easier at faster pace"},struct:{th:"WU 15น. → 20-30น. @Z3 → CD 10น.",en:"WU 15 min → 20-30 min @Z3 → CD 10 min"},cue:{th:"'เหนื่อยกำลังดี' คุมให้สม่ำเสมอ ไม่ระเบิด",en:"'Comfortably hard', steady, don't blow up"}},
+ Night:{label:{th:"Night Run",en:"Night Run"},zone:"Z2",col:"--z1",purpose:{th:"ฝึกไฟฉาย+กินในที่มืด+สมาธิกลางคืน (สนามเริ่ม 16:00)",en:"Practice headlamp + eating in dark + night focus (race starts 16:00)"},struct:{th:"ออก 17:00-18:00 ให้เจอมืดจริง คุม Z2 + ทดสอบอุปกรณ์",en:"Head out 17:00-18:00 into real dark, Z2 + test gear"},cue:{th:"ทดสอบไฟหลัก+สำรอง · ซ้อมหยิบเจลในที่มืด · ระวังพื้นต่างระดับ",en:"Test main + backup light · practice grabbing gels in dark · watch footing"}},
+ Strength:{label:{th:"Strength + Rehab",en:"Strength + Rehab"},zone:null,col:"--orange",purpose:{th:"สร้างพลัง+ความทนทานขา รับ downhill · ป้องกันบาดเจ็บ",en:"Build leg power+durability for downhill · prevent injury"},struct:{th:"กลุ่ม B (Strength) + กลุ่ม A (Rehab) ~40 นาที — ดูแท็บ Strength",en:"Group B (Strength) + group A (Rehab) ~40 min — see Strength tab"},cue:{th:"คุมฟอร์มสำคัญกว่าน้ำหนัก · เน้น Step-down + Bulgarian split",en:"Form over load · focus Step-down + Bulgarian split"}},
+ Rest:{label:{th:"Recovery Day",en:"Recovery Day"},zone:null,col:"--z1",purpose:{th:"วันที่ร่างกาย 'สร้าง' ความแข็งแรง — สำคัญพอๆ กับวันซ้อม",en:"The day your body 'builds' strength — as vital as training"},struct:{th:"นอนให้พอ · เดินเบา/ยืดเหยียดได้ · เติมอาหาร",en:"Sleep well · light walk/stretch ok · refuel"},cue:{th:"พักไม่ใช่ความล้มเหลว · นอน 7-9 ชม. คือการซ้อมอย่างหนึ่ง",en:"Rest isn't failure · 7-9 h sleep IS training"}},
+ Race:{label:{th:"RACE DAY",en:"RACE DAY"},zone:null,col:"--orange",purpose:{th:"วันที่รอคอย — สนุกกับมัน เดินขึ้น วิ่งลง กินสม่ำเสมอ",en:"The day you've waited for — enjoy it, hike up, run down, eat steadily"},struct:{th:"ดูแผน Pacing/Fuel ในแท็บ Fuel",en:"See Pacing/Fuel plan in Fuel tab"},cue:{th:"0-20K ประหยัดแรง · 20-50K รักษาจังหวะ · 50-70K บริหารแรง",en:"0-20K conserve · 20-50K hold rhythm · 50-70K manage energy"}},
+};
+const D=(day,t2,title_th,title_en,km,vert,note_th,note_en)=>({day,t:t2,title:{th:title_th,en:title_en},km,vert,note:{th:note_th||"",en:note_en||""}});
+const PHASES={Prep:{name:{th:"เตรียม/ฟื้นฟู",en:"Prep/Rehab"},col:"--z1"},P1:{name:{th:"Base",en:"Base"},col:"--z2"},P2:{name:{th:"Build",en:"Build"},col:"--z3"},P3:{name:{th:"Peak",en:"Peak"},col:"--orange"},P4:{name:{th:"Taper",en:"Taper"},col:"--z2"}};
+const PROG=[
+ {id:"prep1",label:{th:"Prep 1",en:"Prep 1"},phase:"Prep",days:[D("Mon","Rehab","Rehab + mobility","Rehab + mobility",0,0),D("Tue","Easy","Easy run (เทสต์อาการ)","Easy run (injury test)",5,80),D("Wed","Strength","Strength intro + Rehab","Strength intro + Rehab",0,0),D("Thu","Easy","Easy + drills","Easy + drills",6,100),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Easy","Easy trail","Easy trail",8,200),D("Sun","Rehab","Rehab + mobility","Rehab + mobility",0,0)]},
+ {id:"prep2",label:{th:"Prep 2",en:"Prep 2"},phase:"Prep",days:[D("Mon","Rehab","Rehab + mobility","Rehab + mobility",0,0),D("Tue","Easy","Easy + strides","Easy + strides",6,100),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Easy","Easy + drills","Easy + drills",7,140),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Easy","Easy trail","Easy trail",10,300),D("Sun","Rehab","Rehab + mobility","Rehab + mobility",0,0)]},
+ {id:"w1",label:{th:"Week 1",en:"Week 1"},phase:"P1",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",7,150),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Hill","Hill repeat","Hill repeat",8,300,"6×","6×"),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long run trail","Long run trail",15,500),D("Sun","Easy","Easy recovery","Easy recovery",5,80)]},
+ {id:"w2",label:{th:"Week 2",en:"Week 2"},phase:"P1",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",8,180),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Hill","Hill repeat","Hill repeat",9,350,"7×","7×"),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long run trail","Long run trail",18,650),D("Sun","Easy","Easy recovery","Easy recovery",6,100)]},
+ {id:"w3",label:{th:"Week 3",en:"Week 3"},phase:"P1",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",9,200),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Hill","Hill repeat","Hill repeat",10,400,"8×","8×"),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long run trail","Long run trail",20,750),D("Sun","Easy","Easy recovery","Easy recovery",7,120)]},
+ {id:"w4",label:{th:"Week 4 · down",en:"Week 4 · down"},phase:"P1",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",7,150),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Downhill","Downhill focus","Downhill focus",9,400),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long + downhill","Long + downhill",16,600,"ลดลง","reduced"),D("Sun","Easy","Easy recovery","Easy recovery",5,80)]},
+ {id:"w5",label:{th:"Week 5",en:"Week 5"},phase:"P2",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Tempo","Tempo run","Tempo run",10,200),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Hill","Hill + downhill","Hill + downhill",11,500),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","B2B","Long B2B","Long B2B",24,1000,"day 1","day 1"),D("Sun","B2B","Long B2B","Long B2B",12,400,"day 2","day 2")]},
+ {id:"w6",label:{th:"Week 6",en:"Week 6"},phase:"P2",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Tempo","Tempo run","Tempo run",11,220),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Night","Night run (headlamp test)","Night run (headlamp test)",10,450),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","B2B","Long B2B","Long B2B",26,1100,"day 1","day 1"),D("Sun","B2B","Long B2B","Long B2B",14,500,"day 2","day 2")]},
+ {id:"w7",label:{th:"Week 7",en:"Week 7"},phase:"P2",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Tempo","Tempo run","Tempo run",12,240),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Downhill","Hill + downhill","Hill + downhill",12,550),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","B2B","Long B2B","Long B2B",28,1300,"day 1","day 1"),D("Sun","B2B","Long B2B","Long B2B",15,550,"day 2","day 2")]},
+ {id:"w8",label:{th:"Week 8 · down",en:"Week 8 · down"},phase:"P2",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Tempo","Tempo run","Tempo run",10,200),D("Wed","Strength","Strength + Rehab","Strength + Rehab",0,0),D("Thu","Night","Night + full gear test","Night + full gear test",12,550),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","B2B","Long B2B (race nutrition)","Long B2B (race nutrition)",24,1100,"day 1","day 1"),D("Sun","B2B","Long B2B","Long B2B",13,450,"day 2","day 2")]},
+ {id:"w9",label:{th:"Week 9 · PEAK",en:"Week 9 · PEAK"},phase:"P3",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy + strides","Easy + strides",10,200),D("Wed","Strength","Strength (taper load)","Strength (taper load)",0,0),D("Thu","Night","Night (start sim 16:00)","Night (start sim 16:00)",14,700),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","PEAK Long (full gear)","PEAK Long (full gear)",34,1450,"34K","34K"),D("Sun","B2B","Recovery + downhill","Recovery + downhill",15,600)]},
+ {id:"w10",label:{th:"Week 10 · PEAK",en:"Week 10 · PEAK"},phase:"P3",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy + strides","Easy + strides",10,200),D("Wed","Strength","Strength (light)","Strength (light)",0,0),D("Thu","Downhill","Hill + downhill","Hill + downhill",12,600),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long · time-on-feet 7h","Long · time-on-feet 7h",30,1350,"30K","30K"),D("Sun","Easy","Recovery jog","Recovery jog",12,350)]},
+ {id:"w11",label:{th:"Week 11 · taper",en:"Week 11 · taper"},phase:"P4",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",8,150),D("Wed","Strength","Strength (v.light)","Strength (v.light)",0,0),D("Thu","Hill","Short hill (sharpen)","Short hill (sharpen)",7,300),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long run (reduced)","Long run (reduced)",16,500),D("Sun","Easy","Easy recovery","Easy recovery",6,100)]},
+ {id:"w12",label:{th:"Week 12 · RACE",en:"Week 12 · RACE"},phase:"P4",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy shakeout","Easy shakeout",6,80),D("Wed","Rest","Recovery","Recovery",0,0),D("Thu","Easy","Easy + strides","Easy + strides",5,60),D("Fri","Rest","Rest / gear check","Rest / gear check",0,0),D("Sat","Easy","Pre-race jog 20 นาที","Pre-race jog 20 min",3,30),D("Sun","Race","RACE DAY — RTC 70","RACE DAY — RTC 70",72.6,3586)]},
+];
+const SESS=[];PROG.forEach(wk=>wk.days.forEach((d,i)=>SESS.push(Object.assign({},d,{wid:wk.id,idx:i,id:wk.id+"-"+i,phase:wk.phase,wlabel:wk.label}))));
+const STR_REHAB=[
+ {n:{th:"Clamshell",en:"Clamshell"},fix:{th:"ITB · ก้นอ่อน",en:"ITB · weak glutes"},sr:{th:"3 × 15/ข้าง",en:"3 × 15/side"},q:"clamshell exercise glute medius form",star:0},
+ {n:{th:"Side-lying leg raise",en:"Side-lying leg raise"},fix:{th:"ITB · gluteus medius",en:"ITB · gluteus medius"},sr:{th:"3 × 15/ข้าง",en:"3 × 15/side"},q:"side lying leg raise hip abduction",star:0},
+ {n:{th:"Monster walk (ยางยืด)",en:"Monster walk (band)"},fix:{th:"สะโพก/ก้น คุมเข่า",en:"hips/glutes, knee control"},sr:{th:"3 × 12 ก้าว",en:"3 × 12 steps"},q:"banded monster walk exercise",star:0},
+ {n:{th:"Eccentric heel drop",en:"Eccentric heel drop"},fix:{th:"เอ็นร้อยหวาย",en:"Achilles"},sr:{th:"3 × 15 (ช้า 3วิ)",en:"3 × 15 (slow 3s)"},q:"eccentric heel drop achilles exercise",star:1},
+ {n:{th:"Calf raise (เข่าตรง+งอ)",en:"Calf raise (straight+bent)"},fix:{th:"น่อง/เอ็นร้อยหวาย",en:"calf/Achilles"},sr:{th:"3 × 15 แต่ละแบบ",en:"3 × 15 each"},q:"calf raise straight bent knee",star:0},
+ {n:{th:"Towel scrunch / คีบของ",en:"Towel scrunch / toe grab"},fix:{th:"รองช้ำ · เท้าแบน",en:"plantar · flat feet"},sr:{th:"3 × 15",en:"3 × 15"},q:"towel scrunch foot exercise plantar",star:0},
+ {n:{th:"Short foot exercise",en:"Short foot exercise"},fix:{th:"อุ้งเท้า · เท้าแบน",en:"arch · flat feet"},sr:{th:"3 × 10/ข้าง ค้าง 5วิ",en:"3 × 10/side hold 5s"},q:"short foot exercise arch flat feet",star:1},
+ {n:{th:"Plantar fascia stretch",en:"Plantar fascia stretch"},fix:{th:"รองช้ำ (เช้าก่อนก้าวแรก)",en:"plantar (before 1st step AM)"},sr:{th:"ค้าง 30วิ × 3",en:"hold 30s × 3"},q:"plantar fascia stretch foot",star:0},
+];
+const STR_MAIN=[
+ {n:{th:"Goblet Squat",en:"Goblet Squat"},fix:{th:"ต้นขา/ก้น",en:"quads/glutes"},sr:{th:"3 × 8-12",en:"3 × 8-12"},q:"goblet squat dumbbell form",star:0},
+ {n:{th:"Romanian Deadlift",en:"Romanian Deadlift"},fix:{th:"hamstring/หลังล่าง",en:"hamstring/low back"},sr:{th:"3 × 8-10",en:"3 × 8-10"},q:"dumbbell romanian deadlift form",star:0},
+ {n:{th:"Bulgarian Split Squat",en:"Bulgarian Split Squat"},fix:{th:"ขาเดี่ยว/สมดุล/ก้น",en:"single leg/balance/glute"},sr:{th:"3 × 8/ข้าง",en:"3 × 8/side"},q:"bulgarian split squat dumbbell form",star:1},
+ {n:{th:"Step-down (เข่าคุม)",en:"Step-down (knee control)"},fix:{th:"เบรกตอนลงเขา · กัน ITB",en:"downhill braking · ITB guard"},sr:{th:"3 × 10/ข้าง",en:"3 × 10/side"},q:"single leg step down eccentric knee",star:1},
+ {n:{th:"Calf Raise (โหลด)",en:"Calf Raise (loaded)"},fix:{th:"น่อง/เอ็นร้อยหวาย",en:"calf/Achilles"},sr:{th:"3 × 15-20",en:"3 × 15-20"},q:"weighted calf raise",star:0},
+ {n:{th:"Plank / Side Plank",en:"Plank / Side Plank"},fix:{th:"core · คุมช่วงบน",en:"core · upper-body control"},sr:{th:"3 × 30-60วิ",en:"3 × 30-60s"},q:"plank side plank form",star:0},
+];
+const DRILLS=[
+ {n:{th:"A-Skip",en:"A-Skip"},fix:{th:"ยกเข่า+cadence+ลงเท้าใต้ตัว",en:"knee lift+cadence+land under body"},sr:{th:"2 × 20ม.",en:"2 × 20m"},q:"a skip running drill technique"},
+ {n:{th:"B-Skip",en:"B-Skip"},fix:{th:"extension+hamstring",en:"extension+hamstring"},sr:{th:"2 × 20ม.",en:"2 × 20m"},q:"b skip running drill"},
+ {n:{th:"Strides",en:"Strides"},fix:{th:"ฟอร์ม+cadence สูง",en:"form+high cadence"},sr:{th:"4-6 × 20วิ",en:"4-6 × 20s"},q:"running strides drill technique"},
+ {n:{th:"Downhill stride",en:"Downhill stride"},fix:{th:"ลงเขาก้าวถี่-เบา",en:"downhill quick-light steps"},sr:{th:"4 × ลงเขาสั้น",en:"4 × short descents"},q:"downhill running technique drill"},
+];
+const EQUIP=[
+ {n:{th:"Resistance band (ยางยืดวง)",en:"Resistance band (loop)"},why:{th:"แก้ ITB/ก้นอ่อนที่ต้นตอ — Clamshell, Monster walk",en:"Fix ITB/weak glutes at root — Clamshell, Monster walk"},cost:"150-400฿",star:1},
+ {n:{th:"Dumbbell ปรับน้ำหนัก",en:"Adjustable dumbbell"},why:{th:"Goblet squat, RDL, Bulgarian split, Calf raise",en:"Goblet squat, RDL, Bulgarian split, Calf raise"},cost:"800-2,500฿",star:1},
+ {n:{th:"กล่อง/ม้านั่ง (step box)",en:"Box/bench (step box)"},why:{th:"Step-down, Bulgarian split — หัวใจของ downhill",en:"Step-down, Bulgarian split — core of downhill prep"},cost:"500-1,500฿",star:1},
+ {n:{th:"เสื่อโยคะ",en:"Yoga mat"},why:{th:"Plank, core, stretch, rehab",en:"Plank, core, stretch, rehab"},cost:"200-500฿",star:0},
+ {n:{th:"Foam roller",en:"Foam roller"},why:{th:"คลาย ITB/น่อง/รองช้ำ หลังซ้อม",en:"Release ITB/calf/plantar after training"},cost:"300-700฿",star:0},
+ {n:{th:"ลูกบอลนวด/ลูกเทนนิส",en:"Massage/tennis ball"},why:{th:"นวดฝ่าเท้าแก้รองช้ำ",en:"Massage sole for plantar fasciitis"},cost:"0-200฿",star:0},
+];
+const FUEL=[
+ {h:{th:"รายวัน (วันซ้อม)",en:"Daily (training days)"},icon:"🍚",rows:[[{th:"โปรตีน",en:"Protein"},{th:"1.6-2.0 ก./กก. (~135-170 ก./วัน)",en:"1.6-2.0 g/kg (~135-170 g/day)"}],[{th:"คาร์บ",en:"Carbs"},{th:"วัน long run สูง · วันพักลดลง",en:"High on long-run days · lower on rest days"}],[{th:"หลักคิด",en:"Principle"},{th:"กินให้พอฟื้นตัว — ช่วง Build/Peak ไม่คุมอาหาร",en:"Eat enough to recover — don't diet during Build/Peak"}]]},
+ {h:{th:"ก่อนซ้อม Long (1-3 ชม.ก่อน)",en:"Before long run (1-3 h prior)"},icon:"⏱",rows:[[{th:"คาร์บ",en:"Carbs"},{th:"1-2 ก./กก. ย่อยง่าย",en:"1-2 g/kg, easy to digest"}],[{th:"เลี่ยง",en:"Avoid"},{th:"ไฟเบอร์/ไขมันสูง",en:"high fiber/fat"}],[{th:"ตัวอย่างไทย",en:"Examples"},{th:"ข้าวเหนียว+กล้วย · ขนมปัง+น้ำผึ้ง · โจ๊ก",en:"sticky rice+banana · toast+honey · rice porridge"}]]},
+ {h:{th:"ระหว่างซ้อม/แข่ง (ต่อชั่วโมง)",en:"During (per hour)"},icon:"🏃",rows:[[{th:"คาร์บ",en:"Carbs"},{th:"60 → ไต่ขึ้น 80-90 ก.",en:"60 → build to 80-90 g"}],[{th:"น้ำ",en:"Water"},{th:"500-750 ml",en:"500-750 ml"}],[{th:"โซเดียม",en:"Sodium"},{th:"500-800 mg",en:"500-800 mg"}],[{th:"ผสม",en:"Mix"},{th:"เจล + ของจริง (กล้วย/หมูแดดเดียว/ข้าวเหนียว/มาม่า/โคล่าแฟลต)",en:"gels + real food (banana/jerky/rice/noodles/flat cola)"}]]},
+ {h:{th:"Gut Training",en:"Gut Training"},icon:"🔄",rows:[[{th:"เริ่ม",en:"Start"},{th:"60 ก./ชม.",en:"60 g/h"}],[{th:"เพิ่ม",en:"Increase"},{th:"+10 ก. ทุก 2 สัปดาห์ ในช่วง long run",en:"+10 g every 2 weeks on long runs"}],[{th:"เป้า",en:"Target"},{th:"80-90 ก. ก่อน peak — กันจุก/พังท้ายเรซ",en:"80-90 g before peak — prevents GI distress late race"}]]},
+ {h:{th:"หลังซ้อม (30-60 นาที)",en:"After (30-60 min)"},icon:"💪",rows:[[{th:"คาร์บ",en:"Carbs"},{th:"1-1.2 ก./กก.",en:"1-1.2 g/kg"}],[{th:"โปรตีน",en:"Protein"},{th:"20-40 ก.",en:"20-40 g"}],[{th:"ตัวอย่าง",en:"Examples"},{th:"นมช็อกโกแลต · ไข่+ข้าว · เวย์+กล้วย",en:"chocolate milk · eggs+rice · whey+banana"}]]},
+];
+const RACEFUEL=[
+ [{th:"−3 ชม.",en:"−3 h"},{th:"มื้อใหญ่ย่อยง่าย (ข้าว+ไก่/ไข่) · ไม่ลองของใหม่",en:"Big easy-digest meal (rice+chicken/egg) · nothing new"}],
+ [{th:"สตาร์ท 16:00",en:"Start 16:00"},{th:"เริ่มช้า คุม Z2 · เดินขึ้นเขาตั้งแต่ต้น",en:"Start slow, Z2 · hike climbs from the start"}],
+ [{th:"ทุก 30-40 นาที",en:"Every 30-40 min"},{th:"เจล/ของจริงสลับ (คาร์บ 60-80 ก./ชม.)",en:"Alternate gel/real food (60-80 g carbs/h)"}],
+ [{th:"ทุก 1 ชม.",en:"Every 1 h"},{th:"เกลือแร่ 1 เม็ด + จิบน้ำสม่ำเสมอ",en:"1 salt tab + sip water steadily"}],
+ [{th:"กลางคืน/หนาว",en:"Night/cold"},{th:"ของอุ่น (ซุป/มาม่า) + ของเค็ม ที่ aid",en:"Warm food (soup/noodles) + savory at aid"}],
+ [{th:"3 aid เท่านั้น",en:"Only 3 aids"},{th:"พกเสบียงระหว่างจุดให้พอ — พึ่งตัวเองสูง",en:"Carry enough between stations — high self-reliance"}],
+ [{th:"50-70K",en:"50-70K"},{th:"โคล่าแฟลต/คาเฟอีน · เดินสลับวิ่ง · ระวัง quads",en:"Flat cola/caffeine · run-walk · watch quads"}],
+];
+const PACING=[[{th:"A · ~13 ชม.",en:"A · ~13 h"},{th:"มี buffer ก่อน cut-off · เป้าหมายในฝัน",en:"Buffer before cut-off · dream goal"}],[{th:"B · <15 ชม.",en:"B · <15 h"},{th:"จบก่อน cut-off · เป้าหลัก",en:"Finish before cut-off · main goal"}],[{th:"C · จบให้ได้",en:"C · just finish"},{th:"ไปให้ไกลสุด · สนุกกับมัน",en:"Go as far as you can · enjoy it"}]];
+const NIGGLE_AREAS=[{th:"ITB (ข้างเข่า)",en:"ITB (knee side)"},{th:"เอ็นร้อยหวาย",en:"Achilles"},{th:"รองช้ำ (ฝ่าเท้า)",en:"Plantar (sole)"},{th:"เข่า",en:"Knee"},{th:"อื่นๆ",en:"Other"}];
+const QUOTES=[
+ [{th:"วินัยคือสะพานเชื่อมระหว่างเป้าหมายกับความสำเร็จ",en:"Discipline is the bridge between goals and accomplishment."},"Jim Rohn"],
+ [{th:"เราไม่ได้ลุกขึ้นมาทำตามแรงบันดาลใจ เราลุกขึ้นมาทำเพราะวินัย",en:"We don't rise to motivation, we rise to discipline."},"—"],
+ [{th:"ความสม่ำเสมอชนะความสมบูรณ์แบบเสมอ",en:"Consistency always beats perfection."},"—"],
+ [{th:"ร่างกายทำได้เกือบทุกอย่าง สิ่งที่ต้องโน้มน้าวคือใจ",en:"Your body can do almost anything — it's your mind you must convince."},"—"],
+ [{th:"ระยะทางที่ยากที่สุดคือก้าวแรกออกจากประตูบ้าน",en:"The hardest distance is the first step out the door."},"—"],
+ [{th:"วันที่ไม่อยากซ้อมที่สุด คือวันที่การซ้อมมีค่าที่สุด",en:"The day you least want to train is the day it matters most."},"—"],
+ [{th:"ไม่มีใครเคยเสียใจที่ได้ออกไปวิ่ง",en:"No one ever regretted going for the run."},"—"],
+ [{th:"ความเจ็บปวดชั่วคราว ความภูมิใจถาวร",en:"Pain is temporary, pride is forever."},"—"],
+ [{th:"จงวิ่งวันที่ไม่อยากวิ่ง นั่นแหละคือวันที่สร้างคุณ",en:"Run on the days you don't feel like it — those days build you."},"—"],
+ [{th:"เป้าหมายที่ไม่มีวินัย ก็เป็นแค่ความฝัน",en:"A goal without discipline is just a wish."},"—"],
+ [{th:"ทุกก้าวเล็กๆ วันนี้ คือเส้นชัยของวันข้างหน้า",en:"Every small step today is the finish line of tomorrow."},"—"],
+ [{th:"อย่าหยุดเมื่อเหนื่อย หยุดเมื่อเสร็จ",en:"Don't stop when you're tired. Stop when you're done."},"—"],
+ [{th:"แชมป์ถูกสร้างในวันที่ไม่มีใครมอง",en:"Champions are made when no one is watching."},"—"],
+ [{th:"พักได้ แต่อย่ายอมแพ้",en:"It's okay to rest, not to quit."},"—"],
+ [{th:"ความแข็งแกร่งมาจากการเอาชนะสิ่งที่คิดว่าทำไม่ได้",en:"Strength comes from overcoming what you thought you couldn't."},"—"],
+ [{th:"วันนี้คุณวิ่งหนีตัวเองคนเก่า",en:"Today you outrun the person you used to be."},"—"],
+ [{th:"ใจที่ยอมแพ้ ขายังวิ่งต่อได้",en:"When the mind quits, the legs can still go."},"—"],
+ [{th:"ระเบียบวินัยคืออิสรภาพ",en:"Discipline is freedom."},"—"],
+ [{th:"ค่อยๆ ก็ยังเร็วกว่านั่งอยู่เฉยๆ",en:"Slow is still faster than sitting still."},"—"],
+ [{th:"เหงื่อวันนี้ คือรอยยิ้มที่เส้นชัย",en:"Today's sweat is tomorrow's finish-line smile."},"—"],
+ [{th:"ความสำเร็จคือผลรวมของความพยายามเล็กๆ ที่ทำซ้ำทุกวัน",en:"Success is small efforts repeated day in, day out."},"—"],
+ [{th:"จงอดทนกับกระบวนการ ผลลัพธ์จะตามมาเอง",en:"Trust the process — results follow."},"—"],
+ [{th:"ขาที่ล้า ใจที่ไม่ยอม นั่นคือนักวิ่งเทรล",en:"Tired legs, unbreakable will — that's a trail runner."},"—"],
+ [{th:"ภูเขาไม่ได้เอาชนะด้วยกำลัง แต่ด้วยความไม่ยอมแพ้",en:"Mountains aren't conquered by strength, but by persistence."},"—"],
+ [{th:"เริ่มจากที่ที่คุณอยู่ ใช้สิ่งที่คุณมี ทำสิ่งที่คุณทำได้",en:"Start where you are, use what you have, do what you can."},"Arthur Ashe"],
+ [{th:"ความก้าวหน้า ไม่ใช่ความสมบูรณ์แบบ",en:"Progress, not perfection."},"—"],
+ [{th:"วินัยคือการเลือกสิ่งที่ต้องการจริงๆ เหนือสิ่งที่อยากได้ตอนนี้",en:"Discipline is choosing what you want most over what you want now."},"—"],
+ [{th:"ทุกครั้งที่อยากเลิก จำว่าทำไมถึงเริ่ม",en:"When you want to quit, remember why you started."},"—"],
+ [{th:"ไม่มีทางลัดไปสู่ที่ที่คุ้มค่าจะไป",en:"There are no shortcuts to anywhere worth going."},"—"],
+ [{th:"ฝึกหนักในยามว่าง เพื่อไม่ต้องลำบากในวันแข่ง",en:"Train hard in training so race day feels easy."},"—"],
+ [{th:"ก้าวต่อไป แม้ช้า ก็ยังคือก้าวไปข้างหน้า",en:"Keep moving — slow is still forward."},"—"],
+ [{th:"คุณแข็งแกร่งกว่าข้ออ้างของตัวเองเสมอ",en:"You are always stronger than your excuses."},"—"],
+];
+function quoteOfDay(){const ep=Math.floor((new Date(todayStr()+'T00:00:00'))/864e5);return QUOTES[((ep%QUOTES.length)+QUOTES.length)%QUOTES.length];}
+/* food DB: per common Thai serving — kcal, protein(p), carbs(c) */
+const FOODDB=[
+ {cat:"meal",n:{th:"ข้าวมันไก่",en:"Chicken rice"},kcal:600,p:30,c:75},
+ {cat:"meal",n:{th:"ข้าวกะเพราไก่+ไข่ดาว",en:"Basil chicken rice + fried egg"},kcal:620,p:30,c:70},
+ {cat:"meal",n:{th:"ข้าวผัด",en:"Fried rice"},kcal:550,p:18,c:75},
+ {cat:"meal",n:{th:"ข้าวขาหมู",en:"Pork leg rice"},kcal:650,p:30,c:75},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวน้ำ",en:"Noodle soup"},kcal:350,p:18,c:45},
+ {cat:"meal",n:{th:"ผัดไทย",en:"Pad Thai"},kcal:500,p:18,c:70},
+ {cat:"meal",n:{th:"ข้าวเหนียวหมูปิ้ง",en:"Sticky rice + pork skewer"},kcal:350,p:14,c:50},
+ {cat:"meal",n:{th:"ส้มตำ",en:"Papaya salad"},kcal:120,p:4,c:20},
+ {cat:"meal",n:{th:"มาม่าต้ม",en:"Instant noodles"},kcal:380,p:8,c:54},
+ {cat:"meal",n:{th:"ข้าวสวย 1 ทัพพี",en:"Steamed rice 1 scoop"},kcal:80,p:1.5,c:18},
+ {cat:"meal",n:{th:"ข้าวสวย 1 จาน",en:"Steamed rice 1 plate"},kcal:240,p:4,c:53},
+ {cat:"meal",n:{th:"สลัดอกไก่",en:"Chicken salad"},kcal:320,p:35,c:15},
+ {cat:"protein",n:{th:"อกไก่ต้ม/ย่าง 100g",en:"Chicken breast 100g"},kcal:165,p:31,c:0},
+ {cat:"protein",n:{th:"ไก่ย่าง 1/4 ตัว",en:"Grilled chicken 1/4"},kcal:300,p:35,c:2},
+ {cat:"protein",n:{th:"ไข่ต้ม 1 ฟอง",en:"Boiled egg"},kcal:78,p:6,c:0.5},
+ {cat:"protein",n:{th:"ไข่ดาว 1 ฟอง",en:"Fried egg"},kcal:90,p:6,c:0.5},
+ {cat:"protein",n:{th:"ปลาทูทอด 1 ตัว",en:"Fried mackerel"},kcal:140,p:18,c:0},
+ {cat:"protein",n:{th:"เวย์โปรตีน 1 สกู๊ป",en:"Whey 1 scoop"},kcal:120,p:24,c:3},
+ {cat:"protein",n:{th:"หมูแดดเดียว 50g",en:"Pork jerky 50g"},kcal:150,p:15,c:2},
+ {cat:"protein",n:{th:"เต้าหู้ไข่ 1 หลอด",en:"Egg tofu 1 tube"},kcal:80,p:5,c:3},
+ {cat:"snack",n:{th:"กล้วย 1 ลูก",en:"Banana"},kcal:105,p:1.3,c:27},
+ {cat:"snack",n:{th:"ส้ม 1 ลูก",en:"Orange"},kcal:62,p:1,c:15},
+ {cat:"snack",n:{th:"แอปเปิล 1 ลูก",en:"Apple"},kcal:95,p:0.5,c:25},
+ {cat:"snack",n:{th:"โยเกิร์ตกรีก",en:"Greek yogurt"},kcal:100,p:10,c:6},
+ {cat:"snack",n:{th:"ถั่วรวม 30g",en:"Mixed nuts 30g"},kcal:180,p:6,c:6},
+ {cat:"snack",n:{th:"ขนมปังโฮลวีต 1 แผ่น",en:"Wholewheat bread 1 slice"},kcal:80,p:4,c:14},
+ {cat:"fuel",n:{th:"เจลพลังงาน 1 ซอง",en:"Energy gel 1"},kcal:100,p:0,c:25},
+ {cat:"fuel",n:{th:"เกลือแร่ 1 ขวด",en:"Sports drink 1"},kcal:80,p:0,c:20},
+ {cat:"fuel",n:{th:"โคล่า 1 กระป๋อง",en:"Cola 1 can"},kcal:140,p:0,c:39},
+ {cat:"fuel",n:{th:"กล้วยตาก 2 ชิ้น",en:"Dried banana 2"},kcal:110,p:1,c:28},
+ {cat:"fuel",n:{th:"เยลลี่/ลูกอม",en:"Jelly/candy"},kcal:60,p:0,c:15},
+ {cat:"drink",n:{th:"นมช็อกโกแลต 1 กล่อง",en:"Chocolate milk 1"},kcal:180,p:8,c:28},
+ {cat:"drink",n:{th:"นมจืด 1 กล่อง",en:"Plain milk 1"},kcal:150,p:8,c:12},
+ {cat:"drink",n:{th:"กาแฟดำ",en:"Black coffee"},kcal:5,p:0,c:0},
+ {cat:"drink",n:{th:"กาแฟ/ชาเย็น",en:"Thai iced coffee/tea"},kcal:250,p:4,c:40},
+ {cat:"drink",n:{th:"น้ำอัดลม 1 กระป๋อง",en:"Soft drink 1 can"},kcal:140,p:0,c:39},
+ {cat:"drink",n:{th:"น้ำเปล่า",en:"Water"},kcal:0,p:0,c:0},
+ {cat:"meal",n:{th:"ข้าวไข่เจียว",en:"Omelette rice"},kcal:450,p:14,c:55},
+ {cat:"meal",n:{th:"ข้าวหมูแดง",en:"BBQ red pork rice"},kcal:520,p:22,c:72},
+ {cat:"meal",n:{th:"ข้าวหมูกรอบ",en:"Crispy pork rice"},kcal:600,p:22,c:70},
+ {cat:"meal",n:{th:"ข้าวหน้าเป็ด",en:"Roast duck rice"},kcal:550,p:28,c:70},
+ {cat:"meal",n:{th:"ข้าวคลุกกะปิ",en:"Shrimp paste rice"},kcal:480,p:15,c:70},
+ {cat:"meal",n:{th:"ผัดซีอิ๊ว",en:"Pad see ew"},kcal:550,p:18,c:70},
+ {cat:"meal",n:{th:"ราดหน้า",en:"Rad na"},kcal:480,p:20,c:60},
+ {cat:"meal",n:{th:"ข้าวคะน้าหมูกรอบ",en:"Kale + crispy pork rice"},kcal:620,p:22,c:70},
+ {cat:"meal",n:{th:"แกงเขียวหวานไก่ + ข้าว",en:"Green curry chicken + rice"},kcal:600,p:25,c:65},
+ {cat:"meal",n:{th:"ต้มยำกุ้ง 1 ถ้วย",en:"Tom yum goong bowl"},kcal:180,p:18,c:10},
+ {cat:"meal",n:{th:"แกงส้ม 1 ถ้วย",en:"Sour curry bowl"},kcal:150,p:15,c:12},
+ {cat:"meal",n:{th:"ข้าวซอยไก่",en:"Khao soi chicken"},kcal:550,p:25,c:60},
+ {cat:"meal",n:{th:"ขนมจีนน้ำยา",en:"Khanom jeen nam ya"},kcal:450,p:15,c:70},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวเรือ",en:"Boat noodles"},kcal:400,p:20,c:45},
+ {cat:"meal",n:{th:"เย็นตาโฟ",en:"Yen ta fo"},kcal:420,p:18,c:55},
+ {cat:"meal",n:{th:"บะหมี่หมูแดง",en:"Egg noodle + red pork"},kcal:450,p:22,c:55},
+ {cat:"meal",n:{th:"ข้าวต้มหมู",en:"Pork rice soup"},kcal:300,p:18,c:40},
+ {cat:"meal",n:{th:"โจ๊กหมู + ไข่",en:"Pork congee + egg"},kcal:320,p:18,c:42},
+ {cat:"meal",n:{th:"สุกี้น้ำรวม",en:"Suki soup mixed"},kcal:350,p:25,c:25},
+ {cat:"meal",n:{th:"หมูกระทะ 1 มื้อ",en:"Moo kratha (BBQ buffet)"},kcal:700,p:45,c:30},
+ {cat:"meal",n:{th:"ผัดผักรวม",en:"Stir-fried mixed veg"},kcal:150,p:6,c:15},
+ {cat:"meal",n:{th:"ข้าวเหนียว 1 ก้อน",en:"Sticky rice 1 ball"},kcal:160,p:3,c:35},
+ {cat:"protein",n:{th:"ลาบหมู",en:"Larb moo"},kcal:250,p:22,c:8},
+ {cat:"protein",n:{th:"น้ำตกหมู",en:"Nam tok moo"},kcal:280,p:25,c:8},
+ {cat:"protein",n:{th:"ไก่ทอด 1 ชิ้น",en:"Fried chicken 1 pc"},kcal:250,p:20,c:12},
+ {cat:"protein",n:{th:"หมูทอดกระเทียม",en:"Garlic fried pork"},kcal:300,p:25,c:8},
+ {cat:"protein",n:{th:"ทอดมันปลา 3 ชิ้น",en:"Fish cakes 3 pc"},kcal:210,p:12,c:14},
+ {cat:"protein",n:{th:"ทูน่ากระป๋อง 1 กระป๋อง",en:"Canned tuna 1 can"},kcal:120,p:26,c:0},
+ {cat:"protein",n:{th:"อกไก่ย่าง 150g",en:"Grilled chicken breast 150g"},kcal:250,p:47,c:0},
+ {cat:"protein",n:{th:"ไก่อบ 1 น่อง",en:"Baked chicken drumstick"},kcal:180,p:25,c:0},
+ {cat:"protein",n:{th:"กุ้งต้ม 100g",en:"Boiled shrimp 100g"},kcal:99,p:24,c:0},
+ {cat:"snack",n:{th:"ข้าวเหนียวมะม่วง",en:"Mango sticky rice"},kcal:400,p:5,c:75},
+ {cat:"snack",n:{th:"กล้วยทอด 3 ชิ้น",en:"Fried banana 3 pc"},kcal:250,p:2,c:35},
+ {cat:"snack",n:{th:"ปาท่องโก๋ 2 ตัว",en:"Pa thong ko 2 pc"},kcal:180,p:3,c:24},
+ {cat:"snack",n:{th:"ลูกชิ้นปิ้ง 5 ลูก",en:"Grilled meatballs 5"},kcal:150,p:8,c:12},
+ {cat:"snack",n:{th:"ไส้กรอกอีสาน 2 ชิ้น",en:"Isan sausage 2 pc"},kcal:200,p:8,c:12},
+ {cat:"snack",n:{th:"ขนมปังสังขยา",en:"Custard toast"},kcal:250,p:6,c:40},
+ {cat:"snack",n:{th:"โรตี",en:"Roti"},kcal:300,p:5,c:40},
+ {cat:"snack",n:{th:"องุ่น 1 กำมือ",en:"Grapes 1 handful"},kcal:90,p:1,c:23},
+ {cat:"snack",n:{th:"มะละกอสุก 1 ชาม",en:"Ripe papaya bowl"},kcal:75,p:1,c:19},
+ {cat:"meal",n:{th:"พิซซ่า 1 ชิ้น",en:"Pizza 1 slice"},kcal:285,p:12,c:36},
+ {cat:"meal",n:{th:"สปาเกตตี้คาโบนาร่า",en:"Spaghetti carbonara"},kcal:600,p:22,c:70},
+ {cat:"meal",n:{th:"สปาเกตตี้ขี้เมา",en:"Drunken spaghetti"},kcal:550,p:20,c:72},
+ {cat:"meal",n:{th:"เบอร์เกอร์เนื้อ",en:"Beef burger"},kcal:550,p:28,c:45},
+ {cat:"meal",n:{th:"เบอร์เกอร์ไก่",en:"Chicken burger"},kcal:480,p:26,c:45},
+ {cat:"meal",n:{th:"เฟรนช์ฟรายส์ (กลาง)",en:"French fries (M)"},kcal:340,p:4,c:44},
+ {cat:"meal",n:{th:"สเต๊กเนื้อ 200g",en:"Beef steak 200g"},kcal:440,p:52,c:0},
+ {cat:"meal",n:{th:"สเต๊กไก่ 200g",en:"Chicken steak 200g"},kcal:330,p:50,c:2},
+ {cat:"meal",n:{th:"แซลมอนย่าง 150g",en:"Grilled salmon 150g"},kcal:280,p:34,c:0},
+ {cat:"meal",n:{th:"แซนด์วิชแฮมชีส",en:"Ham & cheese sandwich"},kcal:350,p:18,c:35},
+ {cat:"meal",n:{th:"แซนด์วิชทูน่า",en:"Tuna sandwich"},kcal:330,p:20,c:32},
+ {cat:"meal",n:{th:"สลัดซีซาร์ไก่",en:"Chicken Caesar salad"},kcal:360,p:24,c:12},
+ {cat:"meal",n:{th:"สลัดผัก (น้ำใส)",en:"Garden salad (light)"},kcal:150,p:5,c:12},
+ {cat:"meal",n:{th:"ข้าวกล้อง 1 ทัพพี",en:"Brown rice 1 scoop"},kcal:110,p:2.5,c:23},
+ {cat:"meal",n:{th:"มันฝรั่งบด",en:"Mashed potato"},kcal:210,p:4,c:35},
+ {cat:"protein",n:{th:"ออมเล็ตชีส",en:"Cheese omelette"},kcal:320,p:20,c:3},
+ {cat:"protein",n:{th:"เบคอน 2 แผ่น",en:"Bacon 2 strips"},kcal:90,p:6,c:0},
+ {cat:"protein",n:{th:"ไส้กรอกเยอรมัน 1",en:"Sausage 1"},kcal:180,p:9,c:2},
+ {cat:"snack",n:{th:"แพนเค้ก 2 แผ่น",en:"Pancakes 2"},kcal:350,p:8,c:50},
+ {cat:"snack",n:{th:"ข้าวโอ๊ต 1 ถ้วย",en:"Oatmeal 1 bowl"},kcal:300,p:10,c:50},
+ {cat:"snack",n:{th:"ซีเรียล + นม",en:"Cereal + milk"},kcal:250,p:9,c:40},
+ {cat:"snack",n:{th:"โยเกิร์ตกราโนล่า",en:"Yogurt + granola"},kcal:280,p:10,c:40},
+ {cat:"snack",n:{th:"โปรตีนบาร์",en:"Protein bar"},kcal:220,p:20,c:22},
+ {cat:"snack",n:{th:"กราโนล่าบาร์",en:"Granola bar"},kcal:120,p:3,c:20},
+ {cat:"snack",n:{th:"ดาร์กช็อกโกแลต 2 ชิ้น",en:"Dark chocolate 2 sq"},kcal:110,p:1,c:12},
+ {cat:"snack",n:{th:"มันฝรั่งทอดกรอบ (ถุงเล็ก)",en:"Potato chips (small)"},kcal:150,p:2,c:15},
+ {cat:"snack",n:{th:"ครัวซองต์",en:"Croissant"},kcal:270,p:5,c:31},
+ {cat:"snack",n:{th:"โดนัท",en:"Donut"},kcal:250,p:4,c:30},
+ {cat:"snack",n:{th:"ไอศกรีม 1 สกู๊ป",en:"Ice cream 1 scoop"},kcal:140,p:3,c:18},
+ {cat:"fuel",n:{th:"โปรตีนเชคพร้อมดื่ม",en:"RTD protein shake"},kcal:160,p:30,c:8},
+ {cat:"fuel",n:{th:"เกเตอเรด 1 ขวด",en:"Gatorade 1 bottle"},kcal:130,p:0,c:34},
+ {cat:"fuel",n:{th:"อินทผลัม 3 ลูก",en:"Dates 3 pc"},kcal:200,p:1,c:54},
+ {cat:"drink",n:{th:"นมถั่วเหลือง",en:"Soy milk"},kcal:120,p:7,c:12},
+ {cat:"drink",n:{th:"น้ำส้มคั้น",en:"Orange juice"},kcal:110,p:2,c:26},
+ {cat:"drink",n:{th:"สมูทตี้ผลไม้",en:"Fruit smoothie"},kcal:200,p:4,c:40},
+ {cat:"drink",n:{th:"ลาเต้",en:"Latte"},kcal:150,p:8,c:13},
+ {cat:"drink",n:{th:"คาปูชิโน่",en:"Cappuccino"},kcal:120,p:6,c:10},
+ {cat:"drink",n:{th:"อเมริกาโน่",en:"Americano"},kcal:10,p:0,c:2},
+ {cat:"drink",n:{th:"โค้ก zero",en:"Coke Zero"},kcal:0,p:0,c:0},
+ {cat:"drink",n:{th:"เบียร์ 1 กระป๋อง",en:"Beer 1 can"},kcal:150,p:1,c:13},
+];
+function dateIndex(ds){const t2=new Date(ds+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
+function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;return{lo:e[0],hi:e[1],mode:e[2],type:energyType(s.t),sess:s};}
+function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
+function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0)}),{kcal:0,p:0,c:0});}
+</script>
+<script>
+/* ============ STATE ============ */
+function todayStr(){return new Date().toISOString().slice(0,10);}
+const KEY="rtc70_v2";
+let S={done:{},actual:{},weights:{},gear:{},rehab:{},readiness:{},niggles:[],why:"",raceDate:RACE_DATE_DEFAULT,startDate:todayStr(),hrmax:0,lastBackup:0,lang:"th",startWeight:START_WEIGHT_DEFAULT,targetWeight:TARGET_WEIGHT_DEFAULT,food:{}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+LANG=S.lang||"th";
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const todayKey=()=>todayStr();
+
+let tab="today";
+const $=h=>{const t=document.createElement("template");t.innerHTML=h.trim();return t.content.firstChild;};
+const cv=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const ic=(p,col,sz)=>`<svg viewBox="0 0 24 24" width="${sz||22}" height="${sz||22}" fill="none" stroke="${col||'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const TICK='<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+const ICN={today:'<path d="M3 18 L8.5 8 L12 14 L16 6 L21 18Z"/>',plan:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/>',str:'<path d="M6.5 6.5l11 11M4 9l-2 2 3 3 2-2M20 15l2-2-3-3-2 2M9 4l2-2 3 3-2 2M15 20l-2 2-3-3 2-2"/>',fuel:'<path d="M6 2h9l-1 7H7zM5 9h11v11a2 2 0 01-2 2H7a2 2 0 01-2-2zM18 6h2a1 1 0 011 1v4a2 2 0 01-2 2h-1"/>',log:'<path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/>'};
+
+function isInput(t2){return t2!=="Rest";}
+function doneCount(){return SESS.filter(s=>isInput(s.t)&&S.done[s.id]).length;}
+function totalSess(){return SESS.filter(s=>isInput(s.t)).length;}
+function totals(){const tot=totalSess(),dc=doneCount();const pk=SESS.reduce((a,s)=>a+s.km,0),pv=SESS.reduce((a,s)=>a+s.vert,0);const ak=Object.values(S.actual).reduce((a,x)=>a+(parseFloat(x&&x.km)||0),0);const av=Object.values(S.actual).reduce((a,x)=>a+(parseFloat(x&&x.v)||0),0);const dtr=Math.max(0,Math.ceil((new Date(S.raceDate)-new Date())/864e5));return{tot,dc,pk,pv,ak,av,dtr,comp:tot?dc/tot:0};}
+function wkStat(wid){const it=SESS.filter(s=>s.wid===wid);const pk=it.reduce((a,s)=>a+s.km,0);const ak=it.reduce((a,s)=>a+(parseFloat((S.actual[s.id]||{}).km)||0),0);const d=it.filter(s=>isInput(s.t)&&S.done[s.id]).length;const t2=it.filter(s=>isInput(s.t)).length;return{pk,ak,d,t:t2};}
+let todayPtr=null;
+let foodPtr=null;
+function sessDate(i){const d=new Date(S.startDate+'T00:00:00');d.setDate(d.getDate()+i);return d;}
+function sessDateStr(i){const d=sessDate(i);const dd=(LANG==='th'?days_th:days_en)[d.getDay()];return dd+' '+d.getDate()+'/'+(d.getMonth()+1);}
+function todayIndex(){const t2=new Date(todayStr()+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
+function todaySess(){if(todayPtr){const f=SESS.find(s=>s.id===todayPtr);if(f)return f;}return SESS[todayIndex()];}
+function niggleAlerts(){const c={};(S.niggles||[]).forEach(n=>{if(n.sev>=2)c[n.area]=(c[n.area]||0)+1;});return Object.entries(c).filter(([a,n])=>n>=3);}
+function daysSinceBackup(){if(!S.lastBackup)return 999;return Math.floor((Date.now()-S.lastBackup)/864e5);}
+function zb(z){if(!z)return"";const Z=zones().find(x=>x.z===z);const col=Z?cv(Z.col):cv("--lime");return `<span class="zbadge" style="background:${col}22;color:${col}">${z}</span>`;}
+
+function render(){
+ const v=document.getElementById("view");v.innerHTML="";
+ ({today:Today,plan:Plan,str:Strength,fuel:Fuel,log:Log}[tab])(v);
+ const hr=document.getElementById("hdRight");hr.innerHTML="";hr.style.cssText="display:flex;align-items:center;gap:9px";
+ const lb=$(`<button class="langbtn tap">${LANG==='th'?'EN':'TH'}</button>`);
+ lb.onclick=()=>{LANG=LANG==='th'?'en':'th';S.lang=LANG;save();render();};
+ hr.appendChild(lb);
+ const nt=notifications();
+ const bell=$(`<button class="tap" style="position:relative;border:none;background:var(--card2);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--line)">${ic('<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>',cv('--muted'),17)}${nt.length?`<span style="position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:var(--bad);color:#10131F;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:Archivo">${nt.length}</span>`:''}</button>`);
+ bell.onclick=openNotifications;hr.appendChild(bell);
+ const gear=$(`<button class="tap" style="border:none;background:var(--card2);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--line)">${ic('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>',cv('--muted'),17)}</button>`);
+ gear.onclick=openSettings;hr.appendChild(gear);
+ const t2=totals();
+ hr.appendChild($(`<div style="text-align:right"><div class="num" style="font-size:19px;color:var(--orange);line-height:1">${t2.dtr}</div><div style="font-size:8.5px;color:var(--muted);font-weight:700;letter-spacing:.06em">${t('daysToRace')}</div></div>`));
+ renderNav();window.scrollTo(0,0);
+}
+function renderNav(){const n=document.getElementById("nav");n.innerHTML="";[["today","nav_today"],["plan","nav_plan"],["str","nav_str"],["fuel","nav_fuel"],["log","nav_log"]].forEach(([k,lk])=>{const on=tab===k;const b=$(`<button class="${on?'on':''}">${ic(ICN[k],on?cv('--lime'):cv('--muted2'),23)}<small>${t(lk)}</small><span class="dot"></span></button>`);b.onclick=()=>{tab=k;render();};n.appendChild(b);});}
+function ring(pct,size,sw,col){const r=(size-sw)/2,c=2*Math.PI*r;col=col||cv('--lime');return `<svg width="${size}" height="${size}" style="transform:rotate(-90deg)"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${cv('--bg2')}" stroke-width="${sw}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct)}" style="transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)"/></svg>`;}
+function countUp(el,to,dur,suffix){to=Math.round(to);let st=null;suffix=suffix||"";function step(ts){if(!st)st=ts;const p=Math.min(1,(ts-st)/(dur||700));el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+suffix;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+
+function readinessToday(){return S.readiness[todayKey()];}
+function readinessVerdict(tot){if(tot>=5)return{c:"--good",t:t('ready_g'),d:t('ready_gd'),e:'🟢'};if(tot>=3)return{c:"--warn",t:t('ready_y'),d:t('ready_yd'),e:'🟡'};return{c:"--bad",t:t('ready_r'),d:t('ready_rd'),e:'🔴'};}
+function openReadiness(){
+ const qs=[{q:t('rq1'),o:[[t('ro_fresh'),2],[t('ro_ok'),1],[t('ro_tired'),0]]},{q:t('rq2'),o:[[t('ro_good'),2],[t('ro_fair'),1],[t('ro_bad'),0]]},{q:t('rq3'),o:[[t('ro_no'),2],[t('ro_slight'),1],[t('ro_pain'),0]]}];
+ let ans=[null,null,null];
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:20px;margin-bottom:4px">${t('readinessTitle')}</div><div style="color:var(--muted);font-size:13px;margin-bottom:16px">${t('readinessSub')}</div></div>`);
+ const body=$('<div></div>');sheet.appendChild(body);const result=$('<div style="margin-top:6px"></div>');
+ function draw(){body.innerHTML="";qs.forEach((it,i)=>{const blk=$(`<div style="margin-bottom:16px"><div style="font-weight:700;font-size:14px;margin-bottom:9px">${i+1}. ${it.q}</div></div>`);const seg=$('<div class="seg"></div>');it.o.forEach(([lbl,val])=>{const b=$(`<button class="${ans[i]===val?'on':''}">${lbl}</button>`);b.onclick=()=>{ans[i]=val;draw();};seg.appendChild(b);});blk.appendChild(seg);body.appendChild(blk);});result.innerHTML="";if(ans.every(a=>a!==null)){const tot=ans.reduce((a,b)=>a+b,0),vd=readinessVerdict(tot);result.appendChild($(`<div class="card" style="border-color:${cv(vd.c)};background:${cv(vd.c)}14;text-align:center"><div class="dsp" style="font-size:18px;color:${cv(vd.c)}">${vd.t}</div><div style="color:var(--muted);font-size:13px;margin-top:5px">${vd.d}</div></div>`));const sv=$(`<button class="btn btn-lime tap" style="margin-top:12px">${t('saveToday')}</button>`);sv.onclick=()=>{S.readiness[todayKey()]={ans,tot};save();closeSheet();render();};result.appendChild(sv);}body.appendChild(result);}
+ draw();showSheet(sheet);
+}
+function showSheet(sheet){const bg=$('<div class="modal-bg"></div>');bg.appendChild(sheet);bg.onclick=e=>{if(e.target===bg)closeSheet();};document.body.appendChild(bg);document.body.style.overflow="hidden";window._sheet=bg;}
+function closeSheet(){if(window._sheet){window._sheet.remove();window._sheet=null;document.body.style.overflow="";}}
+
+function openSession(s){
+ const L=LIB[s.t]||LIB.Easy;const col=cv(L.col);const a=S.actual[s.id]||{};const dn=S.done[s.id];
+ const sheet=$(`<div class="sheet"><div class="grab"></div></div>`);
+ sheet.appendChild($(`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:5px;height:34px;border-radius:9px;background:${col}"></div><div><div class="dsp" style="font-size:19px">${tx(L.label)} ${tx(s.note)?'· '+tx(s.note):''}</div><div style="font-size:12px;color:var(--muted);font-weight:700">${tx(s.wlabel)} · ${s.day} ${zb(L.zone)}</div></div></div>`));
+ if(s.km>0)sheet.appendChild($(`<div style="display:flex;gap:18px;margin:12px 2px 4px"><div><div class="num" style="font-size:24px;color:var(--lime)">${s.km}</div><div style="font-size:10px;color:var(--muted);font-weight:700">${t('kmPlan')}</div></div><div><div class="num" style="font-size:24px;color:var(--orange)">${s.vert}</div><div style="font-size:10px;color:var(--muted);font-weight:700">${t('vertM')}</div></div></div>`));
+ const info=(ti,b)=>$(`<div style="margin-top:14px"><div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:4px">${ti}</div><div style="font-size:13.5px;line-height:1.5">${b}</div></div>`);
+ if(L.purpose)sheet.appendChild(info(t('forPurpose'),tx(L.purpose)));
+ if(L.struct)sheet.appendChild(info(t('structure'),tx(L.struct)));
+ if(L.cue)sheet.appendChild(info(t('cueLabel'),tx(L.cue)));
+ if(s.t==="Strength"||s.t==="Rehab")sheet.appendChild($(`<div style="margin-top:14px"><button class="linkbtn" onclick="tab='str';closeSheet();render()" style="border:none;cursor:pointer">${t('seeAllStr')}</button></div>`));
+ sheet.appendChild($('<div class="divline"></div>'));
+ if(isInput(s.t)){const dbtn=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap">${dn?t('doneToggle'):t('completeBtn')}</button>`);dbtn.onclick=()=>{S.done[s.id]=!dn;save();closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};sheet.appendChild(dbtn);
+  if(dn){const fields=s.km>0?[["km",t('kmActual')],["v",t('vertActual')],["rpe",t('rpeL')]]:[["rpe",t('rpeL')]];const g=$(`<div style="display:grid;grid-template-columns:${s.km>0?'1fr 1fr 1fr':'1fr'};gap:8px;margin-top:12px"></div>`);fields.forEach(([f,ph])=>{const wp=$(`<div><div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px">${ph}</div></div>`);const inp=$(`<input class="in" type="number" inputmode="decimal" value="${a[f]||''}">`);inp.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{[f]:e.target.value});save();};wp.appendChild(inp);g.appendChild(wp);});sheet.appendChild(g);const nt=$(`<textarea class="in" rows="2" placeholder="${t('notePlaceholder')}" style="margin-top:8px;resize:none">${a.note||''}</textarea>`);nt.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{note:e.target.value});save();};sheet.appendChild(nt);}}
+ showSheet(sheet);
+}
+</script>
+<script>
+function Today(v){
+ const wrap=$('<div class="stagger"></div>');
+ // date header
+ wrap.appendChild($(`<div style="margin:2px 2px 14px"><div class="dsp" style="font-size:24px">${dateHeader()}</div></div>`));
+ // 3-ring overview
+ const t2=totals();const nowWid=SESS[todayIndex()].wid;const ws=wkStat(nowWid);
+ const weekPct=ws.t?ws.d/ws.t:0;
+ const totDays=Math.max(1,Math.round((new Date(S.raceDate)-new Date(S.startDate))/864e5));
+ const elapsed=Math.min(totDays,Math.max(0,Math.round((new Date(todayStr())-new Date(S.startDate))/864e5)));
+ const racePct=elapsed/totDays;
+ const cell=(pct,sz,colv,centerHtml,label)=>{const c=cv(colv);return `<div style="flex:1;text-align:center"><div style="position:relative;width:${sz}px;height:${sz}px;margin:0 auto">${ring(pct,sz,8,c)}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">${centerHtml}</div></div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:8px">${label}</div></div>`;};
+ const ovc=$('<div class="card" style="display:flex;gap:4px;padding:18px 8px"></div>');
+ ovc.innerHTML=cell(t2.comp,82,'--lime',`<div class="num" style="font-size:19px;color:${cv('--lime')}">${Math.round(t2.comp*100)}<span style="font-size:10px">%</span></div>`,t('ov_done'))
+  +cell(weekPct,82,'--z1',`<div class="num" style="font-size:19px;color:${cv('--z1')}">${Math.round(weekPct*100)}<span style="font-size:10px">%</span></div>`,t('ov_week'))
+  +cell(racePct,82,'--orange',`<div class="num" style="font-size:20px;color:${cv('--orange')}">${t2.dtr}</div><div style="font-size:8px;color:var(--muted);font-weight:700">${t('ov_days')}</div>`,t('ov_race'));
+ wrap.appendChild(ovc);
+ // stat row
+ wrap.appendChild($(`<div class="card" style="display:flex;gap:8px;padding:13px 14px;margin-top:10px"><div style="flex:1;text-align:center"><div class="num" style="font-size:17px">${Math.round(t2.ak)}<span style="font-size:10px;color:var(--muted)">/${Math.round(t2.pk)}</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('statKm')}</div></div><div style="width:1px;background:var(--line)"></div><div style="flex:1;text-align:center"><div class="num" style="font-size:17px;color:var(--orange)">${(t2.av/1000).toFixed(1)}<span style="font-size:10px;color:var(--muted)">/${(t2.pv/1000).toFixed(0)}k</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('statVert')}</div></div><div style="width:1px;background:var(--line)"></div><div style="flex:1;text-align:center"><div class="num" style="font-size:17px">${t2.dc}<span style="font-size:10px;color:var(--muted)">/${t2.tot}</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('statSess')}</div></div></div>`));
+ // nutrition summary
+ const fds=todayStr();const ftg=foodTarget(fds);const ftot=foodTotals(fds);const pT=proteinTarget();const kpct=Math.min(1,ftot.kcal/ftg.hi);const kovr=ftot.kcal>ftg.hi;
+ const nutc=$(`<div class="card tap" style="margin-top:10px;display:flex;align-items:center;gap:16px"><div style="position:relative;width:78px;height:78px;flex-shrink:0">${ring(kpct,78,8,kovr?cv('--bad'):cv('--lime'))}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:17px;color:${kovr?cv('--bad'):cv('--lime')}">${Math.round(ftot.kcal)}</div><div style="font-size:8px;color:var(--muted);font-weight:700">kcal</div></div></div><div style="flex:1"><div class="dsp" style="font-size:14px;margin-bottom:2px">${t('nutToday')}</div><div style="font-size:11px;color:var(--muted);margin-bottom:9px">${t('nutTap')}</div><div style="display:flex;gap:14px"><div><div class="num" style="font-size:15px;color:var(--good)">${Math.round(ftot.p)}<span style="font-size:10px;color:var(--muted)">/${pT}g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('protein')}</div></div><div><div class="num" style="font-size:15px">${Math.round(ftot.c)}<span style="font-size:10px;color:var(--muted)">g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('carbsL')}</div></div><div><div class="num" style="font-size:14px;color:var(--muted)">${ftg.lo}–${ftg.hi}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('targetKcal')}</div></div></div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted2'),16)}</div>`);
+ nutc.onclick=()=>{tab='fuel';window._fuelTab='food';foodPtr=null;render();};wrap.appendChild(nutc);
+ const al=niggleAlerts();
+ if(al.length){wrap.appendChild($(`<div class="card" style="border-color:var(--bad)66;background:var(--bad)14;margin-top:6px;display:flex;gap:11px;align-items:center"><div style="font-size:22px">🩹</div><div style="flex:1"><div class="dsp" style="font-size:14px;color:var(--bad)">${al.map(a=>tx(NIGGLE_AREAS.find(x=>x.th===a[0]||x.en===a[0])||{th:a[0],en:a[0]})).join(', ')} ${t('niggleWarn')} ${al.map(a=>a[1]).join('/')}×</div><div style="font-size:12px;color:var(--muted)">${t('niggleWarnSub')}</div></div></div>`));}
+ const r=readinessToday();
+ if(r){const vd=readinessVerdict(r.tot);const b=$(`<div class="card tap" style="border-color:${cv(vd.c)}55;background:${cv(vd.c)}12;display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:${cv(vd.c)}22;display:flex;align-items:center;justify-content:center;font-size:20px">${vd.e}</div><div style="flex:1"><div class="dsp" style="font-size:15px;color:${cv(vd.c)}">${vd.t}</div><div style="font-size:12px;color:var(--muted)">${vd.d}</div></div></div>`);b.onclick=openReadiness;wrap.appendChild(b);}else{const b=$(`<div class="card tap glow" style="display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:var(--lime)22;display:flex;align-items:center;justify-content:center">${ic('<path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/>',cv('--lime'),20)}</div><div style="flex:1"><div class="dsp" style="font-size:15px">${t('readyCheck')}</div><div style="font-size:12px;color:var(--muted)">${t('readySub')}</div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted'),18)}</div>`);b.onclick=openReadiness;wrap.appendChild(b);}
+ const s=todaySess();const L=LIB[s.t]||LIB.Easy;const col=cv(L.col);const dn=S.done[s.id];
+ const sIdx=SESS.findIndex(x=>x.id===s.id);const tIdx=todayIndex();
+ const dayTag=sIdx===tIdx?`<span class="pill" style="background:var(--lime);color:#10131F">${t('tagToday')}</span>`:(sIdx<tIdx?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('tagBehind')}</span>`:`<span class="pill" style="background:var(--z1)22;color:var(--z1)">${t('tagAhead')}</span>`);
+ wrap.appendChild($(`<div class="h-sec" style="margin-top:22px;display:flex;justify-content:space-between;align-items:center"><span>${sIdx===tIdx?t('todayDo'):t('planDay')}</span><span style="font-family:Manrope;text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted2)">${tx(s.wlabel)} · ${sessDateStr(sIdx)}</span></div>`));
+ const big=$(`<div class="card tap" style="position:relative;overflow:hidden;border-color:${col}44"><div class="topo"></div><div style="position:relative"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">${dayTag}${zb(L.zone)}<span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:${col}">${tx(PHASES[s.phase].name).toUpperCase()}</span></div><div class="dsp" style="font-size:23px;line-height:1.15">${tx(s.title)}${tx(s.note)?' <span style="color:'+col+'">'+tx(s.note)+'</span>':''}</div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:3px">${tx(L.label)}</div>${s.km>0?`<div style="display:flex;gap:20px;margin-top:14px"><div><div class="num" style="font-size:26px">${s.km}<span style="font-size:13px;color:var(--muted)"> km</span></div></div><div><div class="num" style="font-size:26px;color:${cv('--orange')}">+${s.vert}<span style="font-size:13px;color:var(--muted)"> m</span></div></div></div>`:`<div style="margin-top:10px;color:var(--muted);font-size:13.5px">${tx(L.cue)||tx(L.purpose)||''}</div>`}</div></div>`);
+ big.onclick=()=>openSession(s);wrap.appendChild(big);
+ const row=$('<div style="display:flex;gap:9px;margin-top:10px"></div>');
+ if(isInput(s.t)){const d=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap" style="flex:2">${dn?t('done'):t('markDone')}</button>`);d.onclick=()=>{S.done[s.id]=!dn;save();render();};row.appendChild(d);}
+ const det=$(`<button class="btn btn-ghost tap" style="flex:1">${t('detail')}</button>`);det.onclick=()=>openSession(s);row.appendChild(det);wrap.appendChild(row);
+ const idx=sIdx;const stp=$('<div style="display:flex;gap:9px;margin-top:10px"></div>');
+ const prev=$(`<button class="btn btn-ghost tap" style="flex:1;opacity:${idx>0?1:.35}">${t('prevDay')}</button>`);if(idx>0)prev.onclick=()=>{todayPtr=SESS[idx-1].id;render();};
+ const tdyBtn=$(`<button class="btn btn-ghost tap" style="flex:1;${sIdx===tIdx?'opacity:.35':'color:var(--lime)'}">${t('jumpToday')}</button>`);if(sIdx!==tIdx)tdyBtn.onclick=()=>{todayPtr=null;render();};
+ const nxt=$(`<button class="btn btn-ghost tap" style="flex:1;opacity:${idx<SESS.length-1?1:.35}">${t('nextDay')}</button>`);if(idx<SESS.length-1)nxt.onclick=()=>{todayPtr=SESS[idx+1].id;render();};
+ stp.appendChild(prev);stp.appendChild(tdyBtn);stp.appendChild(nxt);wrap.appendChild(stp);
+ if(S.why)wrap.appendChild($(`<div class="card" style="margin-top:14px;border-left:3px solid var(--lime)"><div style="font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:5px">${t('whyTitle')}</div><div style="font-size:14px;line-height:1.5;font-style:italic">"${S.why}"</div></div>`));
+ const q=quoteOfDay();
+ wrap.appendChild($(`<div class="card" style="margin-top:14px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--card),var(--bg2));text-align:center;padding:22px 18px"><div class="topo"></div><div style="position:relative"><div style="font-size:30px;line-height:0;color:var(--lime);font-family:'Archivo';font-weight:900;opacity:.55">"</div><div class="dsp" style="font-size:16px;line-height:1.45;margin:6px 0 8px">${tx(q[0])}</div><div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.06em">${q[1]==='—'?t('quoteCredit'):'— '+q[1]}</div></div></div>`));
+ v.appendChild(wrap);wrap.querySelectorAll('.cu').forEach(el=>countUp(el,+el.dataset.to,800,""));
+}
+
+function Plan(v){
+ const wrap=$('<div></div>');
+ const leg=$('<div style="display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 4px"></div>');
+ Object.values(PHASES).forEach(p=>leg.appendChild($(`<span class="pill" style="background:${cv(p.col)}1c;color:${cv(p.col)}">${tx(p.name)}</span>`)));
+ wrap.appendChild(leg);
+ const acc=$('<div class="stagger" style="display:flex;flex-direction:column;gap:9px;margin-top:8px"></div>');
+ const nowWid=SESS[todayIndex()].wid;if(window._openWk===undefined)window._openWk=nowWid;
+ PROG.forEach(wk=>{const ph=PHASES[wk.phase];const col=cv(ph.col);const st=wkStat(wk.id);const pct=st.pk?Math.min(1,st.ak/st.pk):0;const open=window._openWk===wk.id;const isNow=wk.id===nowWid;
+  const c=$(`<div class="card ${isNow?'glow':''}" style="padding:0;overflow:hidden;${isNow?'border-color:'+cv('--lime')+'66':''}"></div>`);
+  const numlbl=tx(wk.label).match(/\d+/)?tx(wk.label).match(/\d+/)[0]:'P';
+  const head=$(`<button class="tap" style="width:100%;border:none;background:${isNow?cv('--lime')+'0c':'none'};padding:14px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;color:var(--txt)"><div style="width:40px;height:40px;border-radius:11px;background:${col}1c;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid ${col}40"><span class="num" style="font-size:15px;color:${col}">${numlbl}</span></div><div style="flex:1;text-align:left"><div style="font-weight:800;font-size:14px">${tx(wk.label)} ${isNow?'<span class="pill" style="background:var(--lime);color:#10131F;margin-left:4px">'+t('planLegendNow')+'</span>':''}</div><div style="font-size:11px;color:var(--muted)">${tx(ph.name)} · ${Math.round(st.pk)} km · ${st.d}/${st.t} ${t('done_n')}</div><div class="bar" style="margin-top:7px;height:5px"><i style="width:${pct*100}%;background:${col}"></i></div></div><span style="color:var(--muted);transform:rotate(${open?'180':'0'}deg);transition:transform .2s">${ic('<path d="M6 9l6 6 6-6"/>',cv('--muted'),18)}</span></button>`);
+  head.onclick=()=>{window._openWk=open?null:wk.id;render();};c.appendChild(head);
+  if(open){const body=$('<div style="padding:0 10px 10px"></div>');wk.days.forEach((d,i)=>{const sid=wk.id+"-"+i;const L=LIB[d.t]||LIB.Easy;const dcol=cv(L.col);const dn=S.done[sid];const inp=isInput(d.t);const rrow=$(`<div class="tap" style="display:flex;align-items:center;gap:11px;padding:10px 9px;border-radius:12px;margin-top:5px;background:${dn?cv('--lime')+'10':'var(--bg2)'};cursor:pointer"></div>`);if(inp){const cb=$(`<div class="chk ${dn?'on':''}" style="width:26px;height:26px">${TICK}</div>`);cb.onclick=e=>{e.stopPropagation();S.done[sid]=!dn;save();render();};rrow.appendChild(cb);}else rrow.appendChild($(`<div style="width:26px;display:flex;justify-content:center;color:var(--muted2)">${ic('<path d="M5 12h14"/>',cv('--muted2'),16)}</div>`));rrow.appendChild($(`<div style="width:4px;height:26px;border-radius:9px;background:${dcol};flex-shrink:0;opacity:.7"></div>`));rrow.appendChild($(`<div style="flex:1"><div style="font-weight:700;font-size:13px">${tx(d.title)} ${tx(d.note)?'<span style="color:'+dcol+';font-weight:800">'+tx(d.note)+'</span>':''}</div><div style="font-size:11px;color:var(--muted)">${d.day}${d.km>0?' · '+d.km+'km · +'+d.vert+'m':''} ${L.zone?zb(L.zone):''}</div></div>`));rrow.appendChild($(`<span style="color:var(--muted2)">${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted2'),15)}</span>`));rrow.onclick=()=>openSession(SESS.find(x=>x.id===sid));body.appendChild(rrow);});c.appendChild(body);}
+  acc.appendChild(c);
+ });
+ wrap.appendChild(acc);v.appendChild(wrap);
+}
+
+function exCard(e){const link=`https://www.youtube.com/results?search_query=${encodeURIComponent(e.q)}`;return $(`<div class="card" style="padding:13px 14px;display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:800;font-size:14px">${e.star?'<span style="color:var(--lime)">★</span> ':''}${tx(e.n)}</div><div style="font-size:12px;color:var(--muted);margin-top:1px">${tx(e.fix)}</div><div style="font-size:12px;color:var(--lime);font-weight:700;margin-top:3px">${tx(e.sr)}</div></div><a class="linkbtn tap" href="${link}" target="_blank" rel="noopener">${ic('<path d="M23 7l-7 5 7 5zM1 5h15v14H1z"/>',cv('--lime'),15)} ${t('watchForm')}</a></div>`);}
+function Strength(v){
+ const wrap=$('<div class="stagger"></div>');const seg=$('<div class="seg" style="margin:6px 0 4px"></div>');const cur=window._strTab||"rehab";
+ [["rehab","str_rehab"],["main","str_main"],["drill","str_drill"],["gear","str_gear"]].forEach(([k,lk])=>{const b=$(`<button class="${cur===k?'on':''}">${t(lk)}</button>`);b.onclick=()=>{window._strTab=k;render();};seg.appendChild(b);});
+ wrap.appendChild(seg);const body=$('<div style="margin-top:12px;display:flex;flex-direction:column;gap:9px"></div>');
+ if(cur==="rehab"){body.appendChild($(`<div class="card" style="background:var(--z1)10;border-color:var(--z1)40"><div style="font-size:13px;line-height:1.5">${t('rehabBanner')}</div></div>`));STR_REHAB.forEach(e=>body.appendChild(exCard(e)));}
+ else if(cur==="main"){body.appendChild($(`<div class="card" style="background:var(--orange)10;border-color:var(--orange)40"><div style="font-size:13px;line-height:1.5">${t('mainBanner')}</div></div>`));STR_MAIN.forEach(e=>body.appendChild(exCard(e)));body.appendChild($(`<div style="font-size:12px;color:var(--muted);padding:4px 6px;line-height:1.5">${t('mainProg')}</div>`));}
+ else if(cur==="drill"){body.appendChild($(`<div class="card" style="background:var(--z3)10;border-color:var(--z3)40"><div style="font-size:13px;line-height:1.5">${t('drillBanner')}</div></div>`));DRILLS.forEach(e=>body.appendChild(exCard(e)));}
+ else{body.appendChild($(`<div class="card" style="background:var(--lime)10;border-color:var(--lime)40"><div style="font-size:13px;line-height:1.5">${t('gearBanner')}</div></div>`));EQUIP.forEach((e,i)=>{const have=S.gear['eq'+i];const c=$(`<div class="card tap" style="padding:12px 13px;display:flex;align-items:center;gap:12px;${have?'border-color:var(--lime)44':''}"><div class="chk ${have?'on':''}" style="width:26px;height:26px">${TICK}</div><div style="flex:1"><div style="font-weight:800;font-size:13.5px">${e.star?'<span style="color:var(--lime)">★</span> ':''}${tx(e.n)}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${tx(e.why)}</div></div><div class="num" style="font-size:12px;color:var(--lime)">${e.cost}</div></div>`);c.onclick=()=>{S.gear['eq'+i]=!have;save();render();};body.appendChild(c);});}
+ wrap.appendChild(body);v.appendChild(wrap);
+}
+
+function Fuel(v){
+ const wrap=$('<div class="stagger"></div>');const seg=$('<div class="seg" style="margin:6px 0 4px"></div>');const cur=window._fuelTab||"food";
+ [["food","fuel_food"],["guide","fuel_guide"],["race","fuel_race"],["zone","fuel_zone"]].forEach(([k,lk])=>{const b=$(`<button class="${cur===k?'on':''}">${t(lk)}</button>`);b.onclick=()=>{window._fuelTab=k;render();};seg.appendChild(b);});
+ wrap.appendChild(seg);const body=$('<div style="margin-top:12px;display:flex;flex-direction:column;gap:11px"></div>');
+ if(cur==="food"){
+  const ds=foodPtr||todayStr();const tg=foodTarget(ds);const tot=foodTotals(ds);const pTarget=proteinTarget();
+  const isToday=ds===todayStr();const dd=new Date(ds+'T00:00:00');const dlabel=(LANG==='th'?days_th:days_en)[dd.getDay()]+' '+dd.getDate()+'/'+(dd.getMonth()+1);
+  const mode=tg.mode==="deficit"?t('deficitTag'):t('eatFull');const mcol=tg.mode==="deficit"?cv('--z3'):cv('--lime');
+  // day nav
+  const navr=$('<div style="display:flex;align-items:center;justify-content:space-between;gap:8px"></div>');
+  const pv=$(`<button class="btn btn-ghost tap" style="width:auto;padding:9px 14px">‹</button>`);pv.onclick=()=>{const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-1);foodPtr=d.toISOString().slice(0,10);render();};
+  const lbl=$(`<div style="text-align:center;flex:1"><div class="dsp" style="font-size:14px">${isToday?t('foodToday'):dlabel}</div><div style="font-size:10.5px;color:var(--muted)">${isToday?dlabel:''}</div></div>`);
+  const nx=$(`<button class="btn btn-ghost tap" style="width:auto;padding:9px 14px">›</button>`);nx.onclick=()=>{const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+1);foodPtr=d.toISOString().slice(0,10);render();};
+  navr.appendChild(pv);navr.appendChild(lbl);navr.appendChild(nx);body.appendChild(navr);
+  // target + rings
+  const kpct=Math.min(1,tot.kcal/tg.hi);const ppct=Math.min(1,tot.p/pTarget);
+  const kcalLeft=tg.hi-tot.kcal;
+  const card=$(`<div class="card" style="position:relative;overflow:hidden"><div class="topo"></div><div style="position:relative"></div></div>`);const inner=card.querySelector('div[style*="relative"]');
+  inner.appendChild($(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div><div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">${t('targetKcal')}</div><div class="num" style="font-size:18px">${tg.lo.toLocaleString()}–${tg.hi.toLocaleString()} <span style="font-size:11px;color:var(--muted)">kcal</span></div></div><span class="pill" style="background:${mcol}22;color:${mcol}">${mode}</span></div>`));
+  const rings=$('<div style="display:flex;gap:14px;align-items:center"></div>');
+  rings.appendChild($(`<div style="position:relative;width:90px;height:90px;flex-shrink:0">${ring(kpct,90,9,kcalLeft<0?cv('--bad'):cv('--lime'))}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:20px;color:${kcalLeft<0?cv('--bad'):cv('--lime')}">${Math.round(tot.kcal)}</div><div style="font-size:8.5px;color:var(--muted);font-weight:700">kcal</div></div></div>`));
+  const bars=$('<div style="flex:1"></div>');
+  bars.appendChild($(`<div style="margin-bottom:11px"><div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:4px"><span style="color:var(--muted);font-weight:600">${t('protein')}</span><span style="font-weight:700"><span style="color:${tot.p>=pTarget?cv('--good'):cv('--txt')}">${Math.round(tot.p)}</span>/${pTarget} g</span></div><div class="bar"><i style="width:${ppct*100}%;background:${cv('--good')}"></i></div></div>`));
+  bars.appendChild($(`<div><div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:4px"><span style="color:var(--muted);font-weight:600">${t('carbsL')}</span><span style="font-weight:700">${Math.round(tot.c)} g</span></div><div style="font-size:10.5px;color:var(--muted2);margin-top:2px">${kcalLeft>=0?t('kcalLeft')+' '+Math.round(kcalLeft)+' kcal':t('kcalOver')+' '+Math.round(-kcalLeft)+' kcal'}</div></div>`));
+  rings.appendChild(bars);inner.appendChild(rings);body.appendChild(card);
+  // add button
+  const add=$(`<button class="btn btn-lime tap">${t('addFood')}</button>`);add.onclick=()=>openFoodAdd(ds);body.appendChild(add);
+  // entries
+  const arr=(S.food&&S.food[ds])||[];
+  if(!arr.length)body.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:18px">${t('noFood')}</div>`));
+  arr.forEach((f,fi)=>{const nm=f.n?tx(f.n):(f.name||'');const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:11px"><div style="flex:1"><div style="font-weight:700;font-size:13.5px">${nm}</div><div style="font-size:11px;color:var(--muted)">${Math.round(f.kcal)} kcal · P ${Math.round(f.p||0)} · C ${Math.round(f.c||0)}</div></div></div>`);const del=$(`<button class="tap" style="border:none;background:var(--bg2);width:30px;height:30px;border-radius:9px;color:var(--muted);cursor:pointer;font-size:16px">×</button>`);del.onclick=()=>{S.food[ds].splice(fi,1);save();render();};row.appendChild(del);body.appendChild(row);});
+  body.appendChild($(`<div style="font-size:11px;color:var(--muted2);text-align:center;margin-top:6px;line-height:1.5;padding:0 8px">${t('energyNote')}</div>`));
+ }
+ else if(cur==="guide"){
+  const s=todaySess();const et=energyType(s.t);const e=ENERGY[s.t]||ENERGY.Easy;
+  const typeKey={rest:'dietType_rest',easy:'dietType_easy',quality:'dietType_quality',long:'dietType_long',race:'dietType_race'}[et];
+  const mode=e[2]==="deficit"?t('deficitTag'):t('eatFull');const mcol=e[2]==="deficit"?cv('--z3'):cv('--lime');
+  body.appendChild($(`<div class="card glow" style="background:linear-gradient(135deg,var(--card),var(--bg2))"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="dsp" style="font-size:15px">${t('energyGuide')}</span><span class="pill" style="background:${mcol}22;color:${mcol}">${mode}</span></div><div style="display:flex;align-items:baseline;gap:8px"><span class="num" style="font-size:30px;color:var(--lime)">${e[0].toLocaleString()}–${e[1].toLocaleString()}</span><span style="font-size:12px;color:var(--muted);font-weight:700">${t('kcalDay')}</span></div><div style="font-size:11.5px;color:var(--muted);margin-top:3px">${t('energyFor')} ${t(typeKey)}</div><div style="font-size:11px;color:var(--muted2);margin-top:9px;line-height:1.5;border-top:1px solid var(--line);padding-top:9px">${t('energyNote')}</div></div>`));
+  FUEL.forEach(sec=>{const c=$(`<div class="card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:17px">${sec.icon}</span><span class="dsp" style="font-size:15px">${tx(sec.h)}</span></div></div>`);sec.rows.forEach((r,j)=>c.appendChild($(`<div style="display:flex;justify-content:space-between;gap:14px;padding:6px 0;${j<sec.rows.length-1?'border-bottom:1px solid var(--line)':''}"><span style="font-weight:700;font-size:12.5px;color:var(--lime);flex-shrink:0">${tx(r[0])}</span><span style="font-size:12.5px;color:var(--txt);text-align:right;opacity:.9">${tx(r[1])}</span></div>`)));body.appendChild(c);});}
+ else if(cur==="race"){body.appendChild($(`<div class="card glow"><div class="dsp" style="font-size:16px;margin-bottom:3px">${t('goalTitle')}</div><div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">${t('goalSub')}</div>${PACING.map(p=>`<div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)"><span style="font-weight:800;font-size:13px;color:var(--orange);flex-shrink:0;width:90px">${tx(p[0])}</span><span style="font-size:12.5px;opacity:.9">${tx(p[1])}</span></div>`).join('')}</div>`));const tl=$(`<div class="card"><div class="dsp" style="font-size:16px;margin-bottom:10px">${t('timelineTitle')}</div></div>`);RACEFUEL.forEach((r,j)=>tl.appendChild($(`<div style="display:flex;gap:12px;padding:8px 0;${j<RACEFUEL.length-1?'border-bottom:1px solid var(--line)':''}"><span style="font-weight:800;font-size:12px;color:var(--lime);flex-shrink:0;width:90px">${tx(r[0])}</span><span style="font-size:12.5px;opacity:.92;line-height:1.45">${tx(r[1])}</span></div>`)));body.appendChild(tl);}
+ else{body.appendChild($(`<div class="card" style="background:var(--lime)0c"><div style="font-size:12.5px;line-height:1.5">${t('hrIntro')} <b style="color:var(--lime)">${hrmax()}</b> ${t('hrIntro2')}</div></div>`));zones().forEach(z=>{const col=cv(z.col);body.appendChild($(`<div class="card" style="padding:13px 14px;display:flex;align-items:center;gap:13px;border-left:4px solid ${col}"><div style="width:46px;text-align:center"><div class="num" style="font-size:17px;color:${col}">${z.z}</div></div><div style="flex:1"><div style="font-weight:800;font-size:13.5px">${tx(z.name)} <span style="color:var(--muted);font-weight:600">${z.pct}</span></div><div style="font-size:12px;color:var(--muted)">${tx(z.feel)}</div></div><div class="num" style="font-size:14px;color:${col};white-space:nowrap">${z.lo}-${z.hi}<div style="font-size:8px;color:var(--muted);text-align:right">bpm</div></div></div>`));});body.appendChild($(`<div class="card" style="background:var(--bg2)"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">${t('fieldTest')}</div><div style="font-size:12.5px;line-height:1.5">${t('fieldTestBody')}</div></div>`));}
+ wrap.appendChild(body);v.appendChild(wrap);
+}
+
+function Log(v){
+ const wrap=$('<div class="stagger"></div>');const seg=$('<div class="seg" style="margin:6px 0 4px"></div>');const cur=window._logTab||"why";
+ [["why","log_why"],["niggle","log_niggle"],["weight","log_weight"]].forEach(([k,lk])=>{const b=$(`<button class="${cur===k?'on':''}">${t(lk)}</button>`);b.onclick=()=>{window._logTab=k;render();};seg.appendChild(b);});
+ wrap.appendChild(seg);const body=$('<div style="margin-top:12px"></div>');
+ if(cur==="why"){body.appendChild($(`<div class="card glow"><div class="dsp" style="font-size:16px;margin-bottom:4px">${t('whyCardTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:12px">${t('whyCardSub')}</div></div>`));const ta=$(`<textarea class="in" rows="5" placeholder="${t('whyPlaceholder')}" style="resize:none">${S.why||''}</textarea>`);ta.oninput=e=>{S.why=e.target.value;save();};body.appendChild(ta);}
+ else if(cur==="niggle"){const al=niggleAlerts();if(al.length)body.appendChild($(`<div class="card" style="background:var(--bad)16;border-color:var(--bad)66;margin-bottom:11px"><div class="dsp" style="font-size:14px;color:var(--bad)">⚠️ ${al.map(a=>(NIGGLE_AREAS.find(x=>x.th===a[0]||x.en===a[0])?tx(NIGGLE_AREAS.find(x=>x.th===a[0]||x.en===a[0])):a[0])+' ('+a[1]+'×)').join(', ')}</div><div style="font-size:12px;color:var(--muted);margin-top:3px">${t('niggleAlertSub')}</div></div>`));body.appendChild($(`<div class="card" style="background:var(--warn)0e;border-color:var(--warn)40"><div style="font-size:12.5px;line-height:1.5">${t('niggleBanner')}</div></div>`));const add=$(`<button class="btn btn-ghost tap" style="margin-top:11px">${t('addNiggle')}</button>`);add.onclick=openNiggle;body.appendChild(add);const list=$('<div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>');if(!S.niggles.length)list.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:20px">${t('noNiggle')}</div>`));[...S.niggles].reverse().forEach(n=>{const sevtxt=[t('sevNone'),t('sev1'),t('sev2'),t('sev3')][n.sev];const col=[cv('--good'),cv('--good'),cv('--warn'),cv('--bad')][n.sev];const am=NIGGLE_AREAS.find(x=>x.th===n.area||x.en===n.area);const an=am?tx(am):n.area;list.appendChild($(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:11px"><div style="width:8px;height:8px;border-radius:9px;background:${col};flex-shrink:0"></div><div style="flex:1"><div style="font-weight:700;font-size:13px">${an} · <span style="color:${col}">${sevtxt}</span></div><div style="font-size:11px;color:var(--muted)">${n.date}${n.note?' · '+n.note:''}</div></div></div>`));});body.appendChild(list);}
+ else{
+  body.appendChild($(`<div class="card" style="background:var(--orange)0e;border-color:var(--orange)40"><div style="font-size:12.5px;line-height:1.5">${t('weightBanner')}</div></div>`));
+  // InBody baseline card
+  const sw=+S.startWeight||START_WEIGHT_DEFAULT, tw=+S.targetWeight||TARGET_WEIGHT_DEFAULT;
+  const wkArr=[];for(let i=1;i<=12;i++){const vv=parseFloat(S.weights[i]);if(!isNaN(vv))wkArr.push([i,vv]);}
+  const nowW=wkArr.length?wkArr[wkArr.length-1][1]:sw;
+  const lost=(sw-nowW),toGo=(nowW-tw);
+  body.appendChild($(`<div class="card" style="margin-top:11px"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">${t('baseInbody')}</div>
+   <div style="display:flex;gap:10px;text-align:center">
+    <div style="flex:1"><div class="num" style="font-size:21px">${sw.toFixed(1)}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('baseStart')}</div></div>
+    <div style="flex:1"><div class="num" style="font-size:21px;color:var(--lime)">${nowW.toFixed(1)}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('baseNow')}</div></div>
+    <div style="flex:1"><div class="num" style="font-size:21px;color:var(--orange)">${tw.toFixed(1)}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('baseTarget')}</div></div>
+   </div>
+   <div style="display:flex;gap:8px;margin-top:11px">
+    <div style="flex:1;background:var(--bg2);border-radius:10px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--muted);font-weight:700">${t('lost')}</div><div class="num" style="font-size:15px;color:${lost>=0?'var(--good)':'var(--muted)'}">${lost>=0?'−':'+'}${Math.abs(lost).toFixed(1)} kg</div></div>
+    <div style="flex:1;background:var(--bg2);border-radius:10px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--muted);font-weight:700">${t('toGo')}</div><div class="num" style="font-size:15px;color:var(--orange)">${Math.max(0,toGo).toFixed(1)} kg</div></div>
+   </div>
+   <div style="display:flex;gap:14px;margin-top:11px;font-size:11px;color:var(--muted);justify-content:center;flex-wrap:wrap">
+    <span>${t('fat')} <b style="color:var(--txt)">${INBODY.fat} kg</b> (${INBODY.pbf}%)</span><span>${t('muscleSmm')} <b style="color:var(--lime)">${INBODY.smm} kg</b></span><span>${t('visceral')} <b style="color:var(--txt)">${INBODY.visceral}</b></span><span>BMR <b style="color:var(--txt)">${INBODY.bmr}</b></span>
+   </div></div>`));
+  // chart with goal line
+  if(wkArr.length>=1){
+   const allv=wkArr.map(x=>x[1]).concat([sw,tw]);const mn=Math.min(...allv)-0.5,mx=Math.max(...allv)+0.5,rng=mx-mn||1;
+   const W=300,H=120,pad=10;const xAt=wk2=>pad+(W-2*pad)*((wk2-0)/13);const yAt=val=>pad+(H-2*pad)*(1-(val-mn)/rng);
+   // goal line: start (wk0) -> target (wk12, race)
+   const gx1=xAt(0),gy1=yAt(sw),gx2=xAt(12),gy2=yAt(tw);
+   const pts=wkArr.map(x=>[xAt(x[0]),yAt(x[1]),x[0],x[1]]);
+   const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+   const dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.3" fill="${cv('--lime')}"/>`).join('');
+   const lastp=pts.length?pts[pts.length-1]:null;
+   const lbl=lastp?`<text x="${lastp[0].toFixed(1)}" y="${(lastp[1]-7).toFixed(1)}" fill="${cv('--txt')}" font-size="9" font-family="Archivo" font-weight="700" text-anchor="middle">${lastp[3]}</text>`:'';
+   body.appendChild($(`<div class="card" style="margin-top:11px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">${t('weightTrend')}</span><span style="font-size:10px;color:var(--muted)"><span style="color:var(--lime)">●</span> ${t('baseNow')} · <span style="color:var(--orange)">┄</span> ${t('baseTarget')}</span></div>
+   <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">
+    <line x1="${gx1.toFixed(1)}" y1="${gy1.toFixed(1)}" x2="${gx2.toFixed(1)}" y2="${gy2.toFixed(1)}" stroke="${cv('--orange')}" stroke-width="2" stroke-dasharray="5 4" opacity=".8"/>
+    <circle cx="${gx2.toFixed(1)}" cy="${gy2.toFixed(1)}" r="3" fill="${cv('--orange')}"/>
+    ${pts.length>1?`<path d="${path}" fill="none" stroke="${cv('--lime')}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`:''}
+    ${dots}${lbl}
+   </svg></div>`));
+  }
+  // prefill helper note
+  const ta=$('<div style="margin-top:11px;display:flex;flex-direction:column;gap:7px"></div>');
+  PROG.filter(w=>w.id.startsWith('w')).forEach(w=>{const num=tx(w.label).match(/\d+/)[0];const rrow=$(`<div class="card" style="padding:10px 13px;display:flex;align-items:center;gap:12px"><div class="num" style="width:30px;text-align:center;font-size:15px;color:var(--muted)">${num}</div><div style="flex:1;font-size:12px;color:var(--muted)">Week ${num}</div></div>`);const inp=$(`<input class="in" type="number" inputmode="decimal" placeholder="${num==1?sw.toFixed(1):'kg'}" value="${S.weights[num]||''}" style="width:80px;text-align:center">`);inp.oninput=e=>{S.weights[num]=e.target.value;save();};rrow.appendChild(inp);ta.appendChild(rrow);});body.appendChild(ta);}
+ wrap.appendChild(body);v.appendChild(wrap);
+}
+function doExport(){const blob=new Blob([JSON.stringify(S)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rtc70_backup_'+todayStr()+'.json';a.click();S.lastBackup=Date.now();save();}
+function openFoodAdd(ds){
+ let cat="meal",query="";
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:12px">${t('foodSheetTitle')}</div></div>`);
+ const sb=$(`<input class="in" placeholder="${t('foodSearch')}" style="margin-bottom:11px">`);sb.oninput=e=>{query=e.target.value.toLowerCase();drawList();};sheet.appendChild(sb);
+ const catRow=$('<div class="seg" style="margin-bottom:12px;flex-wrap:wrap">');
+ [["meal","cat_meal"],["protein","cat_protein"],["snack","cat_snack"],["fuel","cat_fuel"],["drink","cat_drink"],["custom","cat_custom"]].forEach(([k,lk])=>{const b=$(`<button class="${cat===k?'on':''}" style="flex:none;padding:7px 11px">${t(lk)}</button>`);b.onclick=()=>{cat=k;catRow.querySelectorAll('button').forEach(x=>x.className='');b.className='on';drawList();};catRow.appendChild(b);});
+ sheet.appendChild(catRow);
+ const list=$('<div style="display:flex;flex-direction:column;gap:7px"></div>');sheet.appendChild(list);
+ function addItem(item){if(!S.food)S.food={};if(!S.food[ds])S.food[ds]=[];S.food[ds].push(item);save();closeSheet();render();}
+ function drawList(){list.innerHTML="";
+  if(cat==="custom"||query){
+   // custom form (also show when typing a name not in DB)
+  }
+  if(cat==="custom"){
+   const f=$('<div class="card"></div>');
+   const nm=$(`<input class="in" placeholder="${t('customName')}" style="margin-bottom:8px" value="${query||''}">`);
+   const kc=$(`<input class="in" type="number" inputmode="numeric" placeholder="${t('customKcal')}" style="margin-bottom:8px">`);
+   const pr=$(`<input class="in" type="number" inputmode="decimal" placeholder="${t('customP')}" style="margin-bottom:8px">`);
+   const cb=$(`<input class="in" type="number" inputmode="decimal" placeholder="${t('customC')}" style="margin-bottom:10px">`);
+   const ab=$(`<button class="btn btn-lime tap">${t('addBtn')}</button>`);
+   ab.onclick=()=>{const k=parseFloat(kc.value);if(!nm.value||isNaN(k))return;addItem({name:nm.value,kcal:k,p:parseFloat(pr.value)||0,c:parseFloat(cb.value)||0});};
+   f.appendChild(nm);f.appendChild(kc);f.appendChild(pr);f.appendChild(cb);f.appendChild(ab);list.appendChild(f);return;
+  }
+  let items=FOODDB.filter(x=>x.cat===cat);
+  if(query)items=FOODDB.filter(x=>tx(x.n).toLowerCase().includes(query)||x.n.th.includes(query)||x.n.en.toLowerCase().includes(query));
+  items.forEach(it=>{const row=$(`<div class="card tap" style="padding:11px 13px;display:flex;align-items:center;gap:11px;cursor:pointer"><div style="flex:1"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} ${t('perServe')}</div></div><div style="color:var(--lime);font-size:22px;font-weight:300">+</div></div>`);row.onclick=()=>addItem({n:it.n,kcal:it.kcal,p:it.p,c:it.c});list.appendChild(row);});
+  if(!items.length)list.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:16px">— ${t('cat_custom')} —</div>`));
+ }
+ drawList();showSheet(sheet);
+}
+function notifications(){
+ const out=[];
+ niggleAlerts().forEach(a=>{const am=NIGGLE_AREAS.find(x=>x.th===a[0]||x.en===a[0]);out.push({emoji:'🩹',col:'--bad',title:(am?tx(am):a[0])+' '+t('niggleWarn')+' '+a[1]+'×',sub:t('niggleWarnSub'),act:()=>{tab='log';window._logTab='niggle';}});});
+ if(daysSinceBackup()>=7)out.push({emoji:'💾',col:'--warn',title:t('notifBackup'),sub:tx(UI.backupReminderSub)(daysSinceBackup()),act:()=>{doExport();}});
+ if(!readinessToday())out.push({emoji:'🌅',col:'--z1',title:t('notifReady'),sub:t('notifReadySub'),act:()=>{openReadiness();}});
+ const fkey=todayStr();if(!(S.food&&S.food[fkey]&&S.food[fkey].length))out.push({emoji:'🍽',col:'--lime',title:t('notifFood'),sub:t('notifFoodSub'),act:()=>{tab='fuel';window._fuelTab='food';foodPtr=null;}});
+ return out;
+}
+function openNotifications(){
+ const nt=notifications();
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:20px;margin-bottom:14px">🔔 ${t('notifTitle')}</div></div>`);
+ if(!nt.length)sheet.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:14px;padding:24px">${t('notifEmpty')}</div>`));
+ nt.forEach(n=>{const col=cv(n.col);const c=$(`<div class="card tap" style="margin-bottom:9px;display:flex;align-items:center;gap:12px;border-color:${col}44;background:${col}10"><div style="width:40px;height:40px;border-radius:12px;background:${col}22;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">${n.emoji}</div><div style="flex:1"><div class="dsp" style="font-size:14px;color:${col}">${n.title}</div><div style="font-size:12px;color:var(--muted)">${n.sub}</div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted2'),16)}</div>`);c.onclick=()=>{closeSheet();n.act();render();};sheet.appendChild(c);});
+ showSheet(sheet);
+}
+function openSettings(){
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:20px;margin-bottom:14px">${t('setTitle')}</div></div>`);
+ const fld=(label,el)=>{const w=$(`<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${label}</div></div>`);w.appendChild(el);return w;};
+ const sd=$(`<input class="in" type="date" value="${S.startDate}">`);sd.onchange=e=>{S.startDate=e.target.value;save();closeSheet();render();};sheet.appendChild(fld(t('startDate'),sd));
+ const rd=$(`<input class="in" type="date" value="${S.raceDate}">`);rd.onchange=e=>{S.raceDate=e.target.value;save();closeSheet();render();};sheet.appendChild(fld(t('raceDateL'),rd));
+ const hm=$(`<input class="in" type="number" inputmode="numeric" placeholder="${HRMAX_DEFAULT}" value="${S.hrmax||''}">`);hm.oninput=e=>{S.hrmax=e.target.value;save();};const hmWrap=fld(t('maxhrL')+' '+HRMAX_DEFAULT,hm);hmWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('maxhrHint')}</div>`));sheet.appendChild(hmWrap);
+ const swi=$(`<input class="in" type="number" inputmode="decimal" placeholder="${START_WEIGHT_DEFAULT}" value="${S.startWeight||''}">`);swi.oninput=e=>{S.startWeight=e.target.value;save();};sheet.appendChild(fld(t('startWeightL'),swi));
+ const twi=$(`<input class="in" type="number" inputmode="decimal" placeholder="${TARGET_WEIGHT_DEFAULT}" value="${S.targetWeight||''}">`);twi.oninput=e=>{S.targetWeight=e.target.value;save();};const twWrap=fld(t('targetWeightL'),twi);twWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('targetHint')}</div>`));sheet.appendChild(twWrap);
+ sheet.appendChild($('<div class="divline"></div>'));
+ const riRows=[[{th:"ระยะ",en:"Distance"},"72.59 km"],[{th:"Elevation",en:"Elevation"},"+3,586 / −3,598 m"],[{th:"Cut-off",en:"Cut-off"},LANG==="th"?"15 ชม.":"15 h"],[{th:"ออกตัว",en:"Start"},LANG==="th"?"16:00 (กลางคืน)":"16:00 (night)"],[{th:"Aid",en:"Aid"},LANG==="th"?"3 จุด":"3 stations"],[{th:"ITRA",en:"ITRA"},"Mtn Level 6"]];
+ let riHtml="";riRows.forEach((r,j)=>{riHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0;'+(j<5?'border-bottom:1px solid var(--line)':'')+'"><span style="font-size:12.5px;color:var(--muted)">'+tx(r[0])+'</span><span style="font-size:12.5px;font-weight:700">'+r[1]+'</span></div>';});
+ sheet.appendChild($(`<div class="card" style="background:var(--bg);margin-bottom:14px"><div class="dsp" style="font-size:14px;margin-bottom:8px">${t('raceInfo')}</div>${riHtml}</div>`));
+ sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">${t('backupSection')}${S.lastBackup?' · '+t('backupLast')+' '+daysSinceBackup()+' '+t('backupDaysAgo'):''}</div>`));
+ const bk=$('<div style="display:flex;gap:9px"></div>');const exp=$(`<button class="btn btn-lime tap" style="flex:1">${t('export')}</button>`);exp.onclick=()=>{doExport();closeSheet();render();};const imp=$(`<button class="btn btn-ghost tap" style="flex:1">${t('import')}</button>`);imp.onclick=()=>{const f=document.createElement('input');f.type='file';f.accept='.json';f.onchange=e=>{const rd2=new FileReader();rd2.onload=()=>{try{S=Object.assign(S,JSON.parse(rd2.result));LANG=S.lang||LANG;save();closeSheet();render();}catch(err){alert(t('badFile'));}};rd2.readAsText(e.target.files[0]);};f.click();};bk.appendChild(exp);bk.appendChild(imp);sheet.appendChild(bk);
+ sheet.appendChild($(`<div style="font-size:11px;color:var(--muted2);text-align:center;margin-top:16px;line-height:1.5">${t('disclaimer')}</div>`));
+ showSheet(sheet);
+}
+function openNiggle(){
+ let area=NIGGLE_AREAS[0],sev=1,note="";
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:14px">${t('niggleSheetTitle')}</div></div>`);
+ const ab=$(`<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('area')}</div></div>`);const ag=$('<div style="display:flex;flex-wrap:wrap;gap:7px"></div>');NIGGLE_AREAS.forEach((a,ai)=>{const b=$(`<button class="pill tap" data-i="${ai}" style="cursor:pointer;border:1px solid var(--line);background:${a===area?cv('--lime'):'var(--bg2)'};color:${a===area?'#10131F':'var(--txt)'};padding:8px 13px">${tx(a)}</button>`);b.onclick=()=>{area=a;ag.querySelectorAll('button').forEach((x,xi)=>{const on=NIGGLE_AREAS[xi]===area;x.style.background=on?cv('--lime'):cv('--bg2');x.style.color=on?'#10131F':cv('--txt');});};ag.appendChild(b);});ab.appendChild(ag);sheet.appendChild(ab);
+ sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('level')}</div>`));const sg=$('<div class="seg" style="margin-bottom:14px"></div>');[t('sev1'),t('sev2'),t('sev3')].forEach((l,i)=>{const val=i+1;const b=$(`<button class="${val===sev?'on':''}">${l}</button>`);b.onclick=()=>{sev=val;sg.querySelectorAll('button').forEach((x,j)=>x.className=(j+1)===sev?'on':'');};sg.appendChild(b);});sheet.appendChild(sg);
+ const nt=$(`<textarea class="in" rows="2" placeholder="${t('niggleNotePh')}" style="resize:none;margin-bottom:14px"></textarea>`);nt.oninput=e=>note=e.target.value;sheet.appendChild(nt);
+ const sv=$(`<button class="btn btn-lime tap">${t('save')}</button>`);sv.onclick=()=>{S.niggles.push({date:todayKey(),area:area.th,sev,note});save();closeSheet();render();};sheet.appendChild(sv);showSheet(sheet);
+}
+if('serviceWorker' in navigator){try{const swCode="const C='rtc70-v2';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.open(C).then(c=>c.match(e.request).then(r=>{const f=fetch(e.request).then(res=>{if(res&&res.status===200)c.put(e.request,res.clone());return res}).catch(()=>r);return r||f})))});";const blob=new Blob([swCode],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});}catch(e){}}
+render();
+</script>
+</body>
+</html>
