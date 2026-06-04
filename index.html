@@ -219,6 +219,10 @@ const UI={
  ws_onpace:{th:"ระยะตามแผน ✓",en:"volume on plan ✓"},
  ws_under:{th:"ระยะยังต่ำกว่าแผน",en:"volume under plan"},
  ws_notstart:{th:"ยังไม่เริ่มสัปดาห์นี้",en:"week not started yet"},
+ baseLeadTitle:{th:"ช่วง Base ก่อนเข้าแผน",en:"Base lead-in"},
+ baseLeadSub:{th:"แผนหลักเริ่ม {d} · อีก {n} สัปดาห์",en:"Main plan starts {d} · in {n} weeks"},
+ baseLeadBody:{th:"ฐานคุณพร้อมแล้ว (วิ่ง 25K+1200m ได้) — ช่วงนี้สะสมแบบสบายๆ:<br>• Easy 3–4 ครั้ง/สัปดาห์ คุมโซน 2<br>• Long run 20–25K ทุก 10–14 วัน (ไต่ระดับด้วยถ้าได้)<br>• เล่นเวท + rehab 2 ครั้ง/สัปดาห์ (ITB/Achilles/plantar)<br>• อย่าเพิ่งซัดหนัก — เก็บแรงไว้เข้าแผนจริง",en:"Your base is ready (25K+1200m done) — keep it relaxed for now:<br>• Easy 3–4×/week in Zone 2<br>• Long run 20–25K every 10–14 days (add vert if you can)<br>• Strength + rehab 2×/week (ITB/Achilles/plantar)<br>• Don't go hard yet — save it for the plan"},
+ baseLeadPreview:{th:"ตัวอย่างวันแรกของแผน",en:"First day of the plan"},
  importBtn:{th:"📥 นำเข้าไฟล์ .gpx / .tcx",en:"📥 Import .gpx / .tcx"},
  importHint:{th:"จาก Strava / Huawei (Export GPX) — เติม ระยะ/ไต่ระดับ/HR อัตโนมัติ",en:"From Strava / Huawei (Export GPX) — auto-fills distance/vert/HR"},
  importDone:{th:"นำเข้าแล้ว",en:"Imported"},
@@ -271,7 +275,7 @@ function dateHeader(){const d=new Date();return LANG==='th'?`วันนี้,
 
 /* ============ DATA (bilingual) ============ */
 const RACE={dist:72.59,gain:3586,loss:3598,cutoff:15,start:"16:00",aid:3,level:6};
-const RACE_DATE_DEFAULT="2026-10-18";
+const RACE_DATE_DEFAULT="2026-10-16";
 const HRMAX_DEFAULT=184;
 const INBODY={date:"03.06.2026",weight:88.3,smm:36.3,fat:24.8,pbf:28.0,bmr:1743,target:74.8,visceral:10,whr:0.96,ffm:63.5};
 const START_WEIGHT_DEFAULT=88.3, TARGET_WEIGHT_DEFAULT=84.5;
@@ -315,7 +319,7 @@ const PROG=[
  {id:"w9",label:{th:"Week 9 · PEAK",en:"Week 9 · PEAK"},phase:"P3",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy + strides","Easy + strides",10,200),D("Wed","Strength","Strength (taper load)","Strength (taper load)",0,0),D("Thu","Night","Night (start sim 16:00)","Night (start sim 16:00)",14,700),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","PEAK Long (full gear)","PEAK Long (full gear)",34,1450,"34K","34K"),D("Sun","B2B","Recovery + downhill","Recovery + downhill",15,600)]},
  {id:"w10",label:{th:"Week 10 · PEAK",en:"Week 10 · PEAK"},phase:"P3",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy + strides","Easy + strides",10,200),D("Wed","Strength","Strength (light)","Strength (light)",0,0),D("Thu","Downhill","Hill + downhill","Hill + downhill",12,600),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long · time-on-feet 7h","Long · time-on-feet 7h",30,1350,"30K","30K"),D("Sun","Easy","Recovery jog","Recovery jog",12,350)]},
  {id:"w11",label:{th:"Week 11 · taper",en:"Week 11 · taper"},phase:"P4",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy run","Easy run",8,150),D("Wed","Strength","Strength (v.light)","Strength (v.light)",0,0),D("Thu","Hill","Short hill (sharpen)","Short hill (sharpen)",7,300),D("Fri","Rest","Recovery","Recovery",0,0),D("Sat","Long","Long run (reduced)","Long run (reduced)",16,500),D("Sun","Easy","Easy recovery","Easy recovery",6,100)]},
- {id:"w12",label:{th:"Week 12 · RACE",en:"Week 12 · RACE"},phase:"P4",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy shakeout","Easy shakeout",6,80),D("Wed","Rest","Recovery","Recovery",0,0),D("Thu","Easy","Easy + strides","Easy + strides",5,60),D("Fri","Rest","Rest / gear check","Rest / gear check",0,0),D("Sat","Easy","Pre-race jog 20 นาที","Pre-race jog 20 min",3,30),D("Sun","Race","RACE DAY — RTC 70","RACE DAY — RTC 70",72.6,3586)]},
+ {id:"w12",label:{th:"Week 12 · RACE",en:"Week 12 · RACE"},phase:"P4",days:[D("Mon","Rest","Recovery","Recovery",0,0),D("Tue","Easy","Easy shakeout","Easy shakeout",6,80),D("Wed","Rest","Recovery / gear check","Recovery / gear check",0,0),D("Thu","Easy","Pre-race jog 20 นาที","Pre-race jog 20 min",3,30),D("Fri","Race","RACE DAY — RTC 70","RACE DAY — RTC 70",72.6,3586),D("Sat","Rest","พักฟื้นหลังแข่ง","Post-race recovery",0,0),D("Sun","Rest","พักฟื้นหลังแข่ง","Post-race recovery",0,0)]},
 ];
 const SESS=[];PROG.forEach(wk=>wk.days.forEach((d,i)=>SESS.push(Object.assign({},d,{wid:wk.id,idx:i,id:wk.id+"-"+i,phase:wk.phase,wlabel:wk.label}))));
 const STR_REHAB=[
@@ -597,6 +601,8 @@ let S={done:{},actual:{},weights:{},gear:{},rehab:{},readiness:{},niggles:[],why
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 // migrate: program weeks run Mon–Sun, so startDate must be a Monday (fixes today-session weekday mismatch)
 if(S.startDate){const d=new Date(S.startDate+'T00:00:00');if(d.getDay()!==1)S.startDate=mondayOf(S.startDate);}
+// one-time reset: make the week of 1 Jun 2026 = first plan week, race 16 Oct 2026
+if(S.planAnchor!=='planB-20260713'){S.startDate='2026-07-13';S.raceDate='2026-10-16';S.planAnchor='planB-20260713';if(S.baselineLong==null)S.baselineLong=25;if(S.baselineVert==null)S.baselineVert=1200;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 LANG=S.lang||"th";
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const todayKey=()=>todayStr();
@@ -620,7 +626,7 @@ function raceReadiness(){
  const consistency=pSess?Math.min(1,dSess/pSess):0;
  const volume=pk?Math.min(1,ak/pk):0;
  const vert=pv?Math.min(1,av/pv):0;
- const longRun=Math.min(1,longest/34);
+ const longRun=Math.min(1,Math.max(longest,+S.baselineLong||0)/34);
  const health=Math.max(0,1-0.34*niggleAlerts().length);
  let rs=[];for(let i=0;i<12&&rs.length<7;i++){const d=new Date();d.setDate(d.getDate()-i);const r=S.readiness[ymd(d)];if(r)rs.push(r.tot/6);}
  const readinessC=rs.length?rs.reduce((a,b)=>a+b,0)/rs.length:0.7;
@@ -646,6 +652,9 @@ function sessDate(i){const d=new Date(S.startDate+'T00:00:00');d.setDate(d.getDa
 function sessDateStr(i){const d=sessDate(i);const dd=(LANG==='th'?days_th:days_en)[d.getDay()];return dd+' '+d.getDate()+'/'+(d.getMonth()+1);}
 function todayIndex(){const t2=new Date(todayStr()+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
 function todaySess(){if(todayPtr){const f=SESS.find(s=>s.id===todayPtr);if(f)return f;}return SESS[todayIndex()];}
+function prePlan(){return new Date(todayStr()+'T00:00:00')<new Date(S.startDate+'T00:00:00');}
+function daysToPlan(){return Math.max(0,Math.round((new Date(S.startDate+'T00:00:00')-new Date(todayStr()+'T00:00:00'))/864e5));}
+function fmtDate(ds){const d=new Date(ds+'T00:00:00');return LANG==='th'?(d.getDate()+' '+mon_th[d.getMonth()]):(d.getDate()+' '+mon_en[d.getMonth()]);}
 function niggleAlerts(){const c={};(S.niggles||[]).forEach(n=>{if(n.sev>=2)c[n.area]=(c[n.area]||0)+1;});return Object.entries(c).filter(([a,n])=>n>=3);}
 function daysSinceBackup(){if(!S.lastBackup)return 999;return Math.floor((Date.now()-S.lastBackup)/864e5);}
 function zb(z){if(!z)return"";const Z=zones().find(x=>x.z===z);const col=Z?cv(Z.col):cv("--lime");return `<span class="zbadge" style="background:${col}22;color:${col}">${z}</span>`;}
@@ -757,6 +766,7 @@ function Today(v){
  const wrap=$('<div class="stagger"></div>');
  // date header
  wrap.appendChild($(`<div style="margin:2px 2px 14px"><div class="dsp" style="font-size:24px">${dateHeader()}</div></div>`));
+ if(prePlan()){const z1=cv('--z1');const wks=Math.round(daysToPlan()/7);wrap.appendChild($(`<div class="card glow" style="margin-bottom:12px;border-left:3px solid ${z1};background:${z1}10"><div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="font-size:20px">🌱</span><div><div class="dsp" style="font-size:16px;color:${z1}">${t('baseLeadTitle')}</div><div style="font-size:11.5px;color:var(--muted)">${t('baseLeadSub').replace('{d}',fmtDate(S.startDate)).replace('{n}',wks)}</div></div></div><div style="font-size:12.5px;line-height:1.7;color:var(--txt);margin-top:8px">${t('baseLeadBody')}</div></div>`));}
  // 3-ring overview
  const t2=totals();const nowWid=SESS[todayIndex()].wid;const ws=wkStat(nowWid);
  const weekPct=ws.t?ws.d/ws.t:0;
@@ -806,7 +816,7 @@ function Today(v){
  const easedTag=eased?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('adaptEasedTag')}</span>`:'';
  const wasW=t('planDay')==='Planned'?'was':'จาก';
  const dayTag=sIdx===tIdx?`<span class="pill" style="background:var(--lime);color:#10131F">${t('tagToday')}</span>`:(sIdx<tIdx?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('tagBehind')}</span>`:`<span class="pill" style="background:var(--z1)22;color:var(--z1)">${t('tagAhead')}</span>`);
- wrap.appendChild($(`<div class="h-sec" style="margin-top:22px;display:flex;justify-content:space-between;align-items:center"><span>${sIdx===tIdx?t('todayDo'):t('planDay')}</span><span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted2)">${tx(s.wlabel)} · ${sessDateStr(sIdx)}</span></div>`));
+ wrap.appendChild($(`<div class="h-sec" style="margin-top:22px;display:flex;justify-content:space-between;align-items:center"><span>${prePlan()?t('baseLeadPreview'):(sIdx===tIdx?t('todayDo'):t('planDay'))}</span><span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted2)">${tx(s.wlabel)} · ${sessDateStr(sIdx)}</span></div>`));
  const big=$(`<div class="card tap" style="position:relative;overflow:hidden;border-color:${col}44"><div class="topo"></div><div style="position:relative"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">${dayTag}${easedTag}${zb(L.zone)}<span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:${col}">${tx(PHASES[s.phase].name).toUpperCase()}</span></div><div class="dsp" style="font-size:23px;line-height:1.15">${tx(s.title)}${tx(s.note)?' <span style="color:'+col+'">'+tx(s.note)+'</span>':''}</div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:3px">${tx(L.label)}</div>${s.km>0?`<div style="display:flex;gap:20px;margin-top:14px"><div><div class="num" style="font-size:26px">${ekm}<span style="font-size:13px;color:var(--muted)"> km</span></div>${eased?`<div style="font-size:9px;color:var(--muted2)">${wasW} ${s.km}</div>`:''}</div><div><div class="num" style="font-size:26px;color:${cv('--orange')}">+${evert}<span style="font-size:13px;color:var(--muted)"> m</span></div>${eased?`<div style="font-size:9px;color:var(--muted2)">${wasW} +${s.vert}</div>`:''}</div></div>`:`<div style="margin-top:10px;color:var(--muted);font-size:13.5px">${tx(L.cue)||tx(L.purpose)||''}</div>`}</div></div>`);
  big.onclick=()=>openSession(s);wrap.appendChild(big);
  const row=$('<div style="display:flex;gap:9px;margin-top:10px"></div>');
