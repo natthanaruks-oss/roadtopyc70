@@ -144,7 +144,14 @@ const UI={
  fuel_balance:{th:"พลังงาน",en:"Energy"},
  eb_today:{th:"สมดุลพลังงานวันนี้",en:"Today's energy balance"},
  eb_in:{th:"กินเข้า",en:"In"},eb_out:{th:"เผาผลาญ",en:"Out"},eb_net:{th:"สุทธิ",en:"Net"},
- eb_maint:{th:"พื้นฐาน (BMR×กิจกรรม)",en:"Base (BMR×activity)"},eb_ex:{th:"จากการซ้อม",en:"From training"},
+ eb_maint:{th:"พื้นฐาน (BMR×กิจกรรมนอกซ้อม)",en:"Base (BMR×non-exercise)"},eb_ex:{th:"จากการซ้อม",en:"From training"},
+ eb_logprompt:{th:"ยังไม่ได้บันทึกอาหารวันนี้ — บันทึกเพื่อดูสมดุลพลังงาน",en:"No food logged today — log to see your balance"},
+ eb_estimate:{th:"(ประเมิน)",en:"(est.)"},
+ bmrL:{th:"BMR (เผาผลาญพื้นฐาน)",en:"BMR (basal rate)"},
+ bmrHint:{th:"จาก InBody ของคุณ · แก้ได้ถ้าสแกนใหม่",en:"From your InBody · edit if re-scanned"},
+ afL:{th:"ระดับกิจกรรมนอกการซ้อม",en:"Non-exercise activity"},
+ af_sed:{th:"นั่งทำงาน",en:"Desk job"},af_light:{th:"ขยับบ้าง",en:"Light"},af_mod:{th:"ขยับเยอะ",en:"Active"},af_high:{th:"ใช้แรงมาก",en:"Very active"},
+ afHint:{th:"แคลการซ้อมถูกบวกแยกอยู่แล้ว เลือกเฉพาะกิจกรรมตอนไม่ซ้อม (นั่งทำงาน = ค่าเริ่มต้น)",en:"Training calories are added separately — pick only your non-training lifestyle (desk job = default)"},
  eb_deficit:{th:"ขาดดุล",en:"Deficit"},eb_surplus:{th:"เกินดุล",en:"Surplus"},
  eb_cumTitle:{th:"ขาดดุลสะสม (14 วัน)",en:"Cumulative balance (14 days)"},
  eb_cumKcal:{th:"ขาดดุลรวม",en:"Total deficit"},eb_fat:{th:"≈ ไขมันที่ลด",en:"≈ fat lost"},
@@ -603,6 +610,31 @@ const FOODDB=[
  {cat:"drink",n:{th:"โปรตีนเชค + นม",en:"Protein shake + milk"},kcal:280,p:32,c:18},
  {cat:"drink",n:{th:"เอสเพรสโซ่",en:"Espresso"},kcal:5,p:0,c:0},
  {cat:"drink",n:{th:"ไวน์แดง 1 แก้ว",en:"Red wine 1 glass"},kcal:125,p:0,c:4},
+ {cat:"meal",n:{th:"ข้าวหน้าเป็ดย่าง",en:"Roast duck rice"},kcal:620,p:32,c:78},
+ {cat:"meal",n:{th:"ข้าวหมูแดง/หมูกรอบ",en:"BBQ pork / crispy pork rice"},kcal:650,p:28,c:80},
+ {cat:"meal",n:{th:"ข้าวหน้าหมูแดงราดน้ำ",en:"Char siu rice w/ gravy"},kcal:600,p:26,c:82},
+ {cat:"meal",n:{th:"บะหมี่เกี๊ยวหมูแดง",en:"Wonton egg noodles w/ pork"},kcal:480,p:24,c:60},
+ {cat:"meal",n:{th:"ข้าวผัดปู",en:"Crab fried rice"},kcal:560,p:22,c:72},
+ {cat:"meal",n:{th:"ข้าวผัดหมู/ไก่/กุ้ง",en:"Fried rice (pork/chicken/shrimp)"},kcal:550,p:22,c:70},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวคั่วไก่",en:"Stir-fried noodles w/ chicken"},kcal:520,p:22,c:66},
+ {cat:"meal",n:{th:"ราดหน้าหมู/ทะเล",en:"Rad na (pork/seafood)"},kcal:540,p:24,c:64},
+ {cat:"meal",n:{th:"ผัดซีอิ๊วหมู",en:"Pad see ew w/ pork"},kcal:560,p:22,c:70},
+ {cat:"meal",n:{th:"ข้าวต้มหมูสับ",en:"Rice porridge w/ pork"},kcal:300,p:18,c:40},
+ {cat:"meal",n:{th:"โจ๊กหมู+ไข่",en:"Congee w/ pork & egg"},kcal:330,p:20,c:42},
+ {cat:"meal",n:{th:"เกี๊ยวน้ำหมูแดง",en:"Wonton soup w/ char siu"},kcal:360,p:22,c:40},
+ {cat:"meal",n:{th:"ข้าวขาหมู",en:"Stewed pork leg rice"},kcal:680,p:30,c:78},
+ {cat:"meal",n:{th:"เป็ดพะโล้+ข้าว",en:"Five-spice stewed duck rice"},kcal:600,p:30,c:72},
+ {cat:"meal",n:{th:"ติ่มซำ 4 ชิ้น (ฮะเก๋า/ขนมจีบ)",en:"Dim sum 4 pcs (har gow/siu mai)"},kcal:280,p:14,c:30},
+ {cat:"meal",n:{th:"ซาลาเปาหมูแดง 1 ลูก",en:"Char siu bao 1 pc"},kcal:230,p:9,c:38},
+ {cat:"meal",n:{th:"ข้าวหน้าไก่ตุ๋นเห็ดหอม",en:"Steamed chicken & shiitake rice"},kcal:520,p:30,c:66},
+ {cat:"protein",n:{th:"เป็ดย่าง 100g",en:"Roast duck 100g"},kcal:240,p:19,c:0},
+ {cat:"protein",n:{th:"หมูแดง 100g",en:"Char siu pork 100g"},kcal:230,p:24,c:8},
+ {cat:"protein",n:{th:"เต้าหู้ผัด/นึ่ง 100g",en:"Tofu (stir/steam) 100g"},kcal:120,p:12,c:4},
+ {cat:"protein",n:{th:"ปลานึ่งซีอิ๊ว 150g",en:"Steamed fish w/ soy 150g"},kcal:220,p:34,c:3},
+ {cat:"snack",n:{th:"ปอเปี๊ยะทอด 1 ชิ้น",en:"Fried spring roll 1 pc"},kcal:120,p:3,c:13},
+ {cat:"snack",n:{th:"ขนมเปี๊ยะ 1 ชิ้น",en:"Chinese pastry 1 pc"},kcal:200,p:3,c:30},
+ {cat:"drink",n:{th:"ชาจีน/อูหลง",en:"Chinese tea / oolong"},kcal:2,p:0,c:0},
+ {cat:"drink",n:{th:"น้ำเก๊กฮวย",en:"Chrysanthemum drink"},kcal:90,p:0,c:22},
 ];
 function dateIndex(ds){const t2=new Date(ds+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
 FOODDB.forEach((f,i)=>{f.id='b'+i;});
@@ -624,11 +656,16 @@ function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.
 function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
 function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0)}),{kcal:0,p:0,c:0});}
 function currentWeight(){for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;}
-function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.4));}
+function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.2));}
 function exerciseKcal(s,w){if(!s)return 0;if(s.km>0)return Math.round(w*(s.km+s.vert*0.01));if(s.t==='Strength')return 250;if(s.t==='Rehab')return 150;return 0;}
-function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si];const a=(S.actual&&S.actual[s.id])||{};const done=S.done&&S.done[s.id];
- let ex=0;if(done){if(s.km>0){const km=parseFloat(a.km)||s.km,vt=parseFloat(a.v)||s.vert;ex=Math.round(w*(km+vt*0.01));}else ex=exerciseKcal(s,w);}
- const maint=maintenanceKcal();const out=maint+ex;return{inK,out,maint,ex,net:inK-out};}
+function dayEnergy(ds){const inK=foodTotals(ds).kcal;const logged=inK>0;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si]||{km:0,t:'Rest'};const a=(S.actual&&s.id&&S.actual[s.id])||{};const done=S.done&&s.id&&S.done[s.id];
+ // exercise: prefer actual logged distance/vert; else planned only if marked done
+ let ex=0;
+ if(s.km>0){const km=parseFloat(a.km),vt=parseFloat(a.v);
+   if(!isNaN(km))ex=Math.round(w*(km+(isNaN(vt)?0:vt)*0.01));
+   else if(done)ex=Math.round(w*(s.km+s.vert*0.01));
+ }else if(done){ex=exerciseKcal(s,w);}
+ const maint=maintenanceKcal();const out=maint+ex;return{inK,out,maint,ex,net:inK-out,logged};}
 </script>
 <script>
 /* ============ STATE ============ */
@@ -965,7 +1002,12 @@ function Fuel(v){
   const defcol=E.net<0?cv('--lime'):cv('--orange');
   // today ring: In vs Out
   const pctIn=E.out?Math.min(1,E.inK/E.out):0;
+  if(!E.logged){
+   body.appendChild($(`<div class="card"><div class="dsp" style="font-size:15px;margin-bottom:12px">${t('eb_today')}</div><div style="text-align:center;padding:10px 0"><div style="font-size:34px;margin-bottom:8px">🍽️</div><div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px">${t('eb_logprompt')}</div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);padding-top:10px"><span>🔥 ${t('eb_out')} ${t('eb_estimate')}</span><span class="num">${Math.round(E.out).toLocaleString()}</span></div><div style="font-size:10.5px;color:var(--muted2);margin-top:6px">${t('eb_maint')}: ${E.maint.toLocaleString()} · ${t('eb_ex')}: ${E.ex.toLocaleString()}</div></div>`));
+   const gob=$(`<button class="btn btn-lime tap" style="margin-top:10px">＋ ${t('foodSheetTitle')}</button>`);gob.onclick=()=>openFoodAdd(todayStr());body.appendChild(gob);
+  }else{
   body.appendChild($(`<div class="card"><div class="dsp" style="font-size:15px;margin-bottom:12px">${t('eb_today')}</div><div style="display:flex;align-items:center;gap:16px"><div style="position:relative;width:84px;height:84px;flex-shrink:0">${ring(pctIn,84,9,defcol)}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:16px;color:${defcol}">${E.net>0?'+':''}${Math.round(E.net)}</div><div style="font-size:8px;color:var(--muted);font-weight:700">${t('eb_net')}</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">🍽 ${t('eb_in')}</span><span class="num" style="color:var(--good)">${Math.round(E.inK).toLocaleString()}</span></div><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">🔥 ${t('eb_out')}</span><span class="num">${Math.round(E.out).toLocaleString()}</span></div><div style="height:1px;background:var(--line)"></div><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800"><span style="color:${defcol}">${E.net<0?t('eb_deficit'):t('eb_surplus')}</span><span class="num" style="color:${defcol}">${Math.abs(Math.round(E.net)).toLocaleString()}</span></div></div></div><div style="font-size:10.5px;color:var(--muted2);margin-top:11px;line-height:1.5">${t('eb_maint')}: ${E.maint.toLocaleString()} · ${t('eb_ex')}: ${E.ex.toLocaleString()} (${w}kg)</div><div style="font-size:11px;color:${hard&&E.net<-300?cv('--warn'):cv('--muted')};margin-top:6px">${hard?t('eb_hint_eat'):t('eb_hint_def')}</div></div>`));
+  }
   // 14-day cumulative
   const days=[];for(let i=13;i>=0;i--){const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-i);const k=ymd(d);const e=dayEnergy(k);days.push({d,k,net:e.net,logged:foodTotals(k).kcal>0});}
   const logged=days.filter(x=>x.logged);
@@ -1194,6 +1236,8 @@ function openSettings(){
  const hm=$(`<input class="in" type="number" inputmode="numeric" placeholder="${HRMAX_DEFAULT}" value="${S.hrmax||''}">`);hm.oninput=e=>{S.hrmax=e.target.value;save();};const hmWrap=fld(t('maxhrL')+' '+HRMAX_DEFAULT,hm);hmWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('maxhrHint')}</div>`));sheet.appendChild(hmWrap);
  const swi=$(`<input class="in" type="number" inputmode="decimal" placeholder="${START_WEIGHT_DEFAULT}" value="${S.startWeight||''}">`);swi.oninput=e=>{S.startWeight=e.target.value;save();};sheet.appendChild(fld(t('startWeightL'),swi));
  const twi=$(`<input class="in" type="number" inputmode="decimal" placeholder="${TARGET_WEIGHT_DEFAULT}" value="${S.targetWeight||''}">`);twi.oninput=e=>{S.targetWeight=e.target.value;save();};const twWrap=fld(t('targetWeightL'),twi);twWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('targetHint')}</div>`));sheet.appendChild(twWrap);
+ const bmi=$(`<input class="in" type="number" inputmode="numeric" placeholder="${INBODY.bmr}" value="${S.bmr||''}">`);bmi.oninput=e=>{S.bmr=e.target.value;save();};const bmWrap=fld(t('bmrL'),bmi);bmWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('bmrHint')} (InBody = ${INBODY.bmr} kcal)</div>`));sheet.appendChild(bmWrap);
+ const afSeg=$('<div class="seg" style="flex-wrap:wrap"></div>');const curAf=+S.activityFactor||1.2;[[1.2,'af_sed'],[1.375,'af_light'],[1.55,'af_mod'],[1.725,'af_high']].forEach(([v,lk])=>{const b=$(`<button class="${Math.abs(curAf-v)<0.01?'on':''}" style="flex:none;padding:7px 10px;font-size:11.5px">${t(lk)}</button>`);b.onclick=()=>{S.activityFactor=v;save();afSeg.querySelectorAll('button').forEach(x=>x.className='');b.className='on';};afSeg.appendChild(b);});const afWrap=fld(t('afL'),afSeg);afWrap.appendChild($(`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${t('afHint')}</div>`));sheet.appendChild(afWrap);
  sheet.appendChild($('<div class="divline"></div>'));
  const riRows=[[{th:"ระยะ",en:"Distance"},"72.59 km"],[{th:"Elevation",en:"Elevation"},"+3,586 / −3,598 m"],[{th:"Cut-off",en:"Cut-off"},LANG==="th"?"15 ชม.":"15 h"],[{th:"ออกตัว",en:"Start"},LANG==="th"?"16:00 (กลางคืน)":"16:00 (night)"],[{th:"Aid",en:"Aid"},LANG==="th"?"3 จุด":"3 stations"],[{th:"ITRA",en:"ITRA"},"Mtn Level 6"]];
  let riHtml="";riRows.forEach((r,j)=>{riHtml+='<div style="display:flex;justify-content:space-between;padding:5px 0;'+(j<5?'border-bottom:1px solid var(--line)':'')+'"><span style="font-size:12.5px;color:var(--muted)">'+tx(r[0])+'</span><span style="font-size:12.5px;font-weight:700">'+r[1]+'</span></div>';});
