@@ -141,6 +141,19 @@ const UI={
  startWeightL:{th:"น้ำหนักตั้งต้น (kg)",en:"Start weight (kg)"},targetWeightL:{th:"เป้าน้ำหนักวันแข่ง (kg)",en:"Race-day target (kg)"},
  targetHint:{th:"แนะนำ ~84–85 (ลด ~3–4 kg) · 74.8 จาก InBody = เป้าหลังแข่ง ค่อยลดต่อ",en:"Suggest ~84–85 (lose ~3–4 kg) · InBody's 74.8 = post-race goal"},
  fuel_food:{th:"อาหาร",en:"Food"},fuel_guide:{th:"ไกด์",en:"Guide"},
+ fuel_balance:{th:"พลังงาน",en:"Energy"},
+ eb_today:{th:"สมดุลพลังงานวันนี้",en:"Today's energy balance"},
+ eb_in:{th:"กินเข้า",en:"In"},eb_out:{th:"เผาผลาญ",en:"Out"},eb_net:{th:"สุทธิ",en:"Net"},
+ eb_maint:{th:"พื้นฐาน (BMR×กิจกรรม)",en:"Base (BMR×activity)"},eb_ex:{th:"จากการซ้อม",en:"From training"},
+ eb_deficit:{th:"ขาดดุล",en:"Deficit"},eb_surplus:{th:"เกินดุล",en:"Surplus"},
+ eb_cumTitle:{th:"ขาดดุลสะสม (14 วัน)",en:"Cumulative balance (14 days)"},
+ eb_cumKcal:{th:"ขาดดุลรวม",en:"Total deficit"},eb_fat:{th:"≈ ไขมันที่ลด",en:"≈ fat lost"},
+ eb_fatNote:{th:"อิง 7,700 kcal ≈ ไขมัน 1 kg · ประเมินคร่าวๆ",en:"7,700 kcal ≈ 1 kg fat · rough estimate"},
+ eb_wpredict:{th:"คาดการณ์ vs จริง",en:"Predicted vs actual"},
+ eb_wpred:{th:"ควรลด",en:"Predicted"},eb_wact:{th:"ลดจริง",en:"Actual"},
+ eb_nodata:{th:"บันทึกอาหารให้ครบวันเพื่อดูสมดุลที่แม่นยำ",en:"Log full days of food for accurate balance"},
+ eb_hint_def:{th:"ขาดดุล = ลดน้ำหนัก (ดีในวันพัก/เบา)",en:"Deficit = losing weight (good on rest/easy days)"},
+ eb_hint_eat:{th:"⚠️ วันซ้อมหนักไม่ควรขาดดุลมาก — เติมให้พอ",en:"⚠️ Don't under-eat on hard days — fuel up"},
  foodToday:{th:"วันนี้",en:"Today"},
  kcalLeft:{th:"เหลือได้อีก",en:"left"},kcalOver:{th:"เกิน",en:"over"},
  protein:{th:"โปรตีน",en:"Protein"},carbsL:{th:"คาร์บ",en:"Carbs"},
@@ -148,6 +161,7 @@ const UI={
  noFood:{th:"ยังไม่ได้บันทึกวันนี้ — กดเพิ่มอาหารด้านบน",en:"Nothing logged today — tap add food above"},
  foodSheetTitle:{th:"เพิ่มอาหาร",en:"Add food"},
  foodSearch:{th:"ค้นหา / พิมพ์ชื่อ...",en:"Search / type name..."},
+ cat_recent:{th:"⭐ ล่าสุด",en:"⭐ Recent"},recent_empty:{th:"ยังไม่มีประวัติ — เริ่มบันทึกอาหารก่อน",en:"No history yet — log some food first"},
  cat_meal:{th:"ข้าว/เส้น",en:"Meals"},cat_protein:{th:"โปรตีน",en:"Protein"},cat_snack:{th:"ว่าง/ผลไม้",en:"Snacks"},cat_fuel:{th:"ของวิ่ง",en:"Run fuel"},cat_drink:{th:"เครื่องดื่ม",en:"Drinks"},cat_custom:{th:"กรอกเอง",en:"Custom"},
  customName:{th:"ชื่ออาหาร",en:"Food name"},customKcal:{th:"แคลอรี่ (kcal)",en:"Calories (kcal)"},customP:{th:"โปรตีน (g) — ไม่บังคับ",en:"Protein (g) — optional"},customC:{th:"คาร์บ (g) — ไม่บังคับ",en:"Carbs (g) — optional"},
  addBtn:{th:"เพิ่ม",en:"Add"},
@@ -593,9 +607,28 @@ const FOODDB=[
 function dateIndex(ds){const t2=new Date(ds+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
 FOODDB.forEach((f,i)=>{f.id='b'+i;});
 function allFoods(){const edits=S.foodEdits||{},hidden=S.foodHidden||[];const base=FOODDB.filter(f=>!hidden.includes(f.id)).map(f=>{const e=edits[f.id];return e?Object.assign({},f,e,{n:e.n||f.n}):f;});return base.concat(S.customFoods||[]);}
+function recentFoods(){
+ // derive most-recently / frequently logged foods from S.food history
+ const food=S.food||{};const all=allFoods();const map={};
+ Object.keys(food).sort().forEach((ds,di)=>{(food[ds]||[]).forEach(e=>{
+  const label=e.n?e.n.th:(e.name||'');if(!label)return;const key=label.toLowerCase();
+  // base per serving: prefer canonical DB match, else reconstruct from logged qty
+  let base=all.find(f=>f.n.th.toLowerCase()===key||(f.n.en||'').toLowerCase()===key);
+  if(base)base={n:base.n,kcal:base.kcal,p:base.p,c:base.c};
+  else{const q=e.qty||1;base={n:e.n||{th:label,en:label},kcal:Math.round((e.kcal||0)/q),p:+((e.p||0)/q).toFixed(1),c:+((e.c||0)/q).toFixed(1)};}
+  if(!map[key])map[key]={base,count:0,last:ds};map[key].count++;map[key].last=ds;
+ });});
+ return Object.values(map).sort((a,b)=>a.last<b.last?1:a.last>b.last?-1:b.count-a.count).slice(0,15);
+}
 function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;return{lo:e[0],hi:e[1],mode:e[2],type:energyType(s.t),sess:s};}
 function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
 function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0)}),{kcal:0,p:0,c:0});}
+function currentWeight(){for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;}
+function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.4));}
+function exerciseKcal(s,w){if(!s)return 0;if(s.km>0)return Math.round(w*(s.km+s.vert*0.01));if(s.t==='Strength')return 250;if(s.t==='Rehab')return 150;return 0;}
+function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si];const a=(S.actual&&S.actual[s.id])||{};const done=S.done&&S.done[s.id];
+ let ex=0;if(done){if(s.km>0){const km=parseFloat(a.km)||s.km,vt=parseFloat(a.v)||s.vert;ex=Math.round(w*(km+vt*0.01));}else ex=exerciseKcal(s,w);}
+ const maint=maintenanceKcal();const out=maint+ex;return{inK,out,maint,ex,net:inK-out};}
 </script>
 <script>
 /* ============ STATE ============ */
@@ -761,7 +794,7 @@ function openSession(s){
    if(window._importMsg){const im=window._importMsg;window._importMsg=null;if(im.err)sheet.appendChild($(`<div class="card" style="margin-top:9px;border-color:${cv('--bad')}55;background:${cv('--bad')}12;font-size:12.5px;color:${cv('--bad')};text-align:center">${t('importFail')}</div>`));else{const r=im.r;sheet.appendChild($(`<div class="card" style="margin-top:9px;border-color:${cv('--lime')}66;background:${cv('--lime')}12;font-size:12.5px;text-align:center;line-height:1.6">✓ ${t('importDone')}<br><b style="font-size:14px">${r.km} km · +${r.vert} m</b>${r.hrAvg?` · HR ${r.hrAvg}/${r.hrMax}`:''}${r.dur?` · ${fmtDur(r.dur)}`:''}</div>`));}}
   }
   if(dn){const fields=s.km>0?[["km",t('kmActual')],["v",t('vertActual')],["rpe",t('rpeL')]]:[["rpe",t('rpeL')]];const g=$(`<div style="display:grid;grid-template-columns:${s.km>0?'1fr 1fr 1fr':'1fr'};gap:8px;margin-top:12px"></div>`);fields.forEach(([f,ph])=>{const wp=$(`<div><div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px">${ph}</div></div>`);const inp=$(`<input class="in" type="number" inputmode="decimal" value="${a[f]||''}">`);inp.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{[f]:e.target.value});save();};wp.appendChild(inp);g.appendChild(wp);});sheet.appendChild(g);
-   if(s.km>0){const hg=$('<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"></div>');[["hra",t('hrAvgL')],["hrm",t('hrMaxL')]].forEach(([f,ph])=>{const wp=$(`<div><div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px">${ph}</div></div>`);const inp=$(`<input class="in" type="number" inputmode="numeric" value="${a[f]||''}">`);inp.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{[f]:e.target.value});save();closeSheet();openSession(SESS.find(x=>x.id===s.id));};wp.appendChild(inp);hg.appendChild(wp);});sheet.appendChild(hg);
+   if(s.km>0){const hg=$('<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"></div>');[["hra",t('hrAvgL')],["hrm",t('hrMaxL')]].forEach(([f,ph])=>{const wp=$(`<div><div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px">${ph}</div></div>`);const inp=$(`<input class="in" type="number" inputmode="numeric" value="${a[f]||''}">`);inp.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{[f]:e.target.value});save();};inp.onchange=()=>{closeSheet();openSession(SESS.find(x=>x.id===s.id));};wp.appendChild(inp);hg.appendChild(wp);});sheet.appendChild(hg);
     const hav=parseFloat(a.hra);if(!isNaN(hav)){const Z=zones().find(z=>hav<=z.hi)||zones()[zones().length-1];const zc=cv(Z.col);sheet.appendChild($(`<div style="margin-top:8px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)">${t('hrZoneNote')}: <span class="zbadge" style="background:${zc}22;color:${zc}">${Z.z}</span> <span style="color:${zc};font-weight:700">${tx(Z.name)}</span></div>`));}}
    const nt=$(`<textarea class="in" rows="2" placeholder="${t('notePlaceholder')}" style="margin-top:8px;resize:none">${a.note||''}</textarea>`);nt.oninput=e=>{S.actual[s.id]=Object.assign({},S.actual[s.id],{note:e.target.value});save();};sheet.appendChild(nt);}}
  showSheet(sheet);
@@ -800,10 +833,12 @@ function Today(v){
  wrap.appendChild($(`<div class="card" style="margin-top:10px;display:flex;gap:13px;align-items:flex-start;border-left:3px solid ${cic};background:${cic}0e"><div style="font-size:24px;line-height:1.1">${ci.emoji}</div><div style="flex:1"><div style="font-size:10px;font-weight:800;color:${cic};text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">${t('coachTitle')}</div><div style="font-size:13.5px;line-height:1.45">${ci.msg}</div></div></div>`));
  // water tracker
  const wnow=waterToday(),wtg=waterTarget(),wpc=Math.min(1,wnow/wtg);
- const wc=$(`<div class="card" style="margin-top:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">💧</span><span class="dsp" style="font-size:14px">${t('water')}</span></div><div class="num" style="font-size:15px;color:var(--z1)">${(wnow/1000).toFixed(2).replace(/0$/,'')}<span style="font-size:10px;color:var(--muted)">/${(wtg/1000).toFixed(1)}L</span></div></div><div class="bar" style="margin-bottom:11px"><i style="width:${wpc*100}%;background:var(--z1)"></i></div></div>`);
+ const fmtW=v=>(v/1000).toFixed(2).replace(/0$/,'');
+ const wc=$(`<div class="card" style="margin-top:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">💧</span><span class="dsp" style="font-size:14px">${t('water')}</span></div><div class="num" style="font-size:15px;color:var(--z1)"><span id="wval">${fmtW(wnow)}</span><span style="font-size:10px;color:var(--muted)">/${(wtg/1000).toFixed(1)}L</span></div></div><div class="bar" style="margin-bottom:11px"><i id="wbar" style="width:${wpc*100}%;background:var(--z1);transition:width .25s ease"></i></div></div>`);
+ const setWater=v=>{if(!S.water)S.water={};S.water[todayStr()]=Math.max(0,v);save();const nv=waterToday();const vEl=document.getElementById('wval'),bEl=document.getElementById('wbar');if(vEl)vEl.textContent=fmtW(nv);if(bEl)bEl.style.width=(Math.min(1,nv/wtg)*100)+'%';};
  const wrow=$('<div style="display:flex;gap:8px"></div>');
- const wminus=$(`<button class="btn btn-ghost tap" style="flex:1;padding:10px">−250</button>`);wminus.onclick=()=>{if(!S.water)S.water={};S.water[todayStr()]=Math.max(0,waterToday()-250);save();render();};
- const wplus=$(`<button class="btn btn-lime tap" style="flex:2;padding:10px">${t('waterAdd')}</button>`);wplus.onclick=()=>{if(!S.water)S.water={};S.water[todayStr()]=waterToday()+250;save();render();};
+ const wminus=$(`<button class="btn btn-ghost tap" style="flex:1;padding:10px">−250</button>`);wminus.onclick=()=>setWater(waterToday()-250);
+ const wplus=$(`<button class="btn btn-lime tap" style="flex:2;padding:10px">${t('waterAdd')}</button>`);wplus.onclick=()=>setWater(waterToday()+250);
  wrow.appendChild(wminus);wrow.appendChild(wplus);wc.appendChild(wrow);wrap.appendChild(wc);
  // adaptive plan suggestion
  const adp=adaptiveSuggestion();const adc=cv(adp.col);const tSess=SESS[todayIndex()];
@@ -876,7 +911,7 @@ function Strength(v){
 
 function Fuel(v){
  const wrap=$('<div class="stagger"></div>');const seg=$('<div class="seg" style="margin:6px 0 4px"></div>');const cur=window._fuelTab||"food";
- [["food","fuel_food"],["guide","fuel_guide"],["race","fuel_race"],["zone","fuel_zone"]].forEach(([k,lk])=>{const b=$(`<button class="${cur===k?'on':''}">${t(lk)}</button>`);b.onclick=()=>{window._fuelTab=k;render();};seg.appendChild(b);});
+ [["food","fuel_food"],["balance","fuel_balance"],["guide","fuel_guide"],["race","fuel_race"],["zone","fuel_zone"]].forEach(([k,lk])=>{const b=$(`<button class="${cur===k?'on':''}">${t(lk)}</button>`);b.onclick=()=>{window._fuelTab=k;render();};seg.appendChild(b);});
  wrap.appendChild(seg);const body=$('<div style="margin-top:12px;display:flex;flex-direction:column;gap:11px"></div>');
  if(cur==="food"){
   const ds=foodPtr||todayStr();const tg=foodTarget(ds);const tot=foodTotals(ds);const pTarget=proteinTarget();
@@ -922,6 +957,30 @@ function Fuel(v){
    const card=$(`<div class="card" style="margin-top:14px"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">${t('nutWeekTitle')}</div><div style="display:flex;gap:16px;margin-bottom:10px"><div><div class="num" style="font-size:20px;color:var(--lime)">${avgK.toLocaleString()}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('nutWeekKcal')}</div></div><div><div class="num" style="font-size:20px;color:var(--good)">${avgP}<span style="font-size:11px;color:var(--muted)">/${pT}g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('nutWeekP')}</div></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${bars}${pline?`<path d="${pline}" fill="none" stroke="${cv('--good')}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`:''}${lblx}</svg><div style="display:flex;gap:14px;justify-content:center;font-size:10px;color:var(--muted);margin-top:4px"><span><span style="color:var(--lime)">▮</span> kcal</span><span><span style="color:var(--good)">━</span> ${t('protein')}</span></div></div>`);
    body.appendChild(card);
   }else{body.appendChild($(`<div class="card" style="margin-top:14px;text-align:center;color:var(--muted2);font-size:12.5px;padding:18px">${t('nutNoData')}</div>`));}
+ }
+ else if(cur==="balance"){
+  const ds=todayStr();const E=dayEnergy(ds);const w=currentWeight();
+  const s=SESS[dateIndex(ds)];const hard=(s.t==='Long'||s.t==='B2B'||s.t==='Tempo'||s.t==='Hill'||s.t==='Race');
+  const hasFood=E.inK>0;
+  const defcol=E.net<0?cv('--lime'):cv('--orange');
+  // today ring: In vs Out
+  const pctIn=E.out?Math.min(1,E.inK/E.out):0;
+  body.appendChild($(`<div class="card"><div class="dsp" style="font-size:15px;margin-bottom:12px">${t('eb_today')}</div><div style="display:flex;align-items:center;gap:16px"><div style="position:relative;width:84px;height:84px;flex-shrink:0">${ring(pctIn,84,9,defcol)}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:16px;color:${defcol}">${E.net>0?'+':''}${Math.round(E.net)}</div><div style="font-size:8px;color:var(--muted);font-weight:700">${t('eb_net')}</div></div></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">🍽 ${t('eb_in')}</span><span class="num" style="color:var(--good)">${Math.round(E.inK).toLocaleString()}</span></div><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">🔥 ${t('eb_out')}</span><span class="num">${Math.round(E.out).toLocaleString()}</span></div><div style="height:1px;background:var(--line)"></div><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800"><span style="color:${defcol}">${E.net<0?t('eb_deficit'):t('eb_surplus')}</span><span class="num" style="color:${defcol}">${Math.abs(Math.round(E.net)).toLocaleString()}</span></div></div></div><div style="font-size:10.5px;color:var(--muted2);margin-top:11px;line-height:1.5">${t('eb_maint')}: ${E.maint.toLocaleString()} · ${t('eb_ex')}: ${E.ex.toLocaleString()} (${w}kg)</div><div style="font-size:11px;color:${hard&&E.net<-300?cv('--warn'):cv('--muted')};margin-top:6px">${hard?t('eb_hint_eat'):t('eb_hint_def')}</div></div>`));
+  // 14-day cumulative
+  const days=[];for(let i=13;i>=0;i--){const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-i);const k=ymd(d);const e=dayEnergy(k);days.push({d,k,net:e.net,logged:foodTotals(k).kcal>0});}
+  const logged=days.filter(x=>x.logged);
+  if(logged.length>=1){
+   const cum=logged.reduce((a,x)=>a+x.net,0);
+   const fatKg=cum/7700;
+   const maxAbs=Math.max(300,...days.map(x=>Math.abs(x.net)));
+   const W=320,H=130,pad=16,mid=H/2,gap=(W-2*pad)/14,bw=gap*0.6;
+   let bars='';days.forEach((x,i)=>{const cx=pad+gap*i+gap/2;if(!x.logged){bars+=`<circle cx="${cx.toFixed(1)}" cy="${mid}" r="2" fill="${cv('--line')}"/>`;return;}const h=(mid-pad)*Math.min(1,Math.abs(x.net)/maxAbs);const def=x.net<0;const y=def?mid:mid-h;const col=def?cv('--lime'):cv('--orange');bars+=`<rect x="${(cx-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1,h).toFixed(1)}" rx="2" fill="${col}"/>`;});
+   const lbls=days.map((x,i)=>{if(i%2)return'';const cx=pad+gap*i+gap/2;return `<text x="${cx.toFixed(1)}" y="${H-2}" fill="${cv('--muted2')}" font-size="7.5" text-anchor="middle">${x.d.getDate()}</text>`;}).join('');
+   body.appendChild($(`<div class="card"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">${t('eb_cumTitle')}</div><div style="display:flex;gap:18px;margin-bottom:10px"><div><div class="num" style="font-size:22px;color:${cum<0?cv('--lime'):cv('--orange')}">${cum<0?'−':'+'}${Math.abs(Math.round(cum)).toLocaleString()}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_cumKcal')} (kcal)</div></div><div><div class="num" style="font-size:22px;color:${fatKg<0?cv('--lime'):cv('--orange')}">${fatKg<0?'−':'+'}${Math.abs(fatKg).toFixed(2)}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_fat')}</div></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto"><line x1="${pad}" y1="${mid}" x2="${W-pad}" y2="${mid}" stroke="${cv('--line')}" stroke-width="1"/>${bars}${lbls}</svg><div style="font-size:10px;color:var(--muted2);text-align:center;margin-top:4px">${t('eb_fatNote')}</div></div>`));
+   // predicted vs actual weight
+   const sw=+S.startWeight||START_WEIGHT_DEFAULT;const actLoss=sw-w;
+   body.appendChild($(`<div class="card"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">${t('eb_wpredict')}</div><div style="display:flex;gap:18px"><div style="flex:1"><div class="num" style="font-size:20px;color:var(--lav)">${fatKg<0?(Math.abs(fatKg)).toFixed(2):'0.00'}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_wpred')} (14d)</div></div><div style="flex:1"><div class="num" style="font-size:20px;color:${actLoss>0?cv('--lime'):cv('--orange')}">${actLoss>0?'−':'+'}${Math.abs(actLoss).toFixed(1)}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_wact')} (รวม)</div></div></div></div>`));
+  }else{body.appendChild($(`<div class="card" style="text-align:center;color:var(--muted2);font-size:12.5px;padding:20px">${t('eb_nodata')}</div>`));}
  }
  else if(cur==="guide"){
   const s=todaySess();const et=energyType(s.t);const e=ENERGY[s.t]||ENERGY.Easy;
@@ -986,11 +1045,19 @@ function Log(v){
 }
 function doExport(){const blob=new Blob([JSON.stringify(S)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rtc70_backup_'+todayStr()+'.json';a.click();S.lastBackup=Date.now();save();}
 function openFoodAdd(ds){
- let cat="meal",query="";
+ const hasRecent=recentFoods().length>0;
+ let cat=hasRecent?"recent":"meal",query="";
  const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:12px">${t('foodSheetTitle')}</div></div>`);
- const sb=$(`<input class="in" placeholder="${t('foodSearch')}" style="margin-bottom:11px">`);sb.oninput=e=>{query=e.target.value.toLowerCase();drawList();};sheet.appendChild(sb);
+ const sbWrap=$('<div style="position:relative;margin-bottom:11px"></div>');
+ const sb=$(`<input class="in" placeholder="${t('foodSearch')}" style="padding-left:40px;padding-right:36px;height:48px;font-size:15px">`);
+ sbWrap.appendChild($(`<div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none;display:flex">${ic('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>',cv('--muted'),18)}</div>`));
+ const clr=$(`<button class="tap" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);border:none;background:var(--card2);width:26px;height:26px;border-radius:50%;color:var(--muted);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:15px;line-height:1">×</button>`);
+ sb.oninput=e=>{query=e.target.value.toLowerCase();clr.style.display=query?'flex':'none';drawList();};
+ clr.onclick=()=>{sb.value='';query='';clr.style.display='none';drawList();sb.focus();};
+ sbWrap.appendChild(sb);sbWrap.appendChild(clr);sheet.appendChild(sbWrap);
  const catRow=$('<div class="seg" style="margin-bottom:12px;flex-wrap:wrap">');
- [["meal","cat_meal"],["protein","cat_protein"],["snack","cat_snack"],["fuel","cat_fuel"],["drink","cat_drink"],["custom","cat_custom"]].forEach(([k,lk])=>{const b=$(`<button class="${cat===k?'on':''}" style="flex:none;padding:7px 11px">${t(lk)}</button>`);b.onclick=()=>{cat=k;catRow.querySelectorAll('button').forEach(x=>x.className='');b.className='on';drawList();};catRow.appendChild(b);});
+ const cats=hasRecent?[["recent","cat_recent"],["meal","cat_meal"],["protein","cat_protein"],["snack","cat_snack"],["fuel","cat_fuel"],["drink","cat_drink"],["custom","cat_custom"]]:[["meal","cat_meal"],["protein","cat_protein"],["snack","cat_snack"],["fuel","cat_fuel"],["drink","cat_drink"],["custom","cat_custom"]];
+ cats.forEach(([k,lk])=>{const b=$(`<button class="${cat===k?'on':''}" style="flex:none;padding:7px 11px">${t(lk)}</button>`);b.onclick=()=>{cat=k;catRow.querySelectorAll('button').forEach(x=>x.className='');b.className='on';drawList();};catRow.appendChild(b);});
  sheet.appendChild(catRow);
  const list=$('<div style="display:flex;flex-direction:column;gap:7px"></div>');sheet.appendChild(list);
  function addItem(item){if(!S.food)S.food={};if(!S.food[ds])S.food[ds]=[];S.food[ds].push(item);save();closeSheet();render();}
@@ -1012,6 +1079,11 @@ function openFoodAdd(ds){
   (window._sheet||document.body).appendChild(ov);upd();
  }
  function drawList(){list.innerHTML="";
+  if(cat==="recent"&&!query){
+   const rf=recentFoods();
+   if(!rf.length){list.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:18px">${t('recent_empty')}</div>`));return;}
+   rf.forEach(r=>{const it=r.base;const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:9px"><div class="tap" style="flex:1;cursor:pointer"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}${r.count>1?` <span style="color:var(--lav);font-size:10px;font-weight:800">×${r.count}</span>`:''}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} ${t('perServe')}</div></div></div>`);row.querySelector('.tap').onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});const addb=$(`<button class="tap" style="border:none;background:var(--lime);width:30px;height:30px;border-radius:9px;color:#10131F;cursor:pointer;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center">+</button>`);addb.onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});row.appendChild(addb);list.appendChild(row);});return;
+  }
   if(cat==="custom"){
    let ncat="meal";
    const f=$('<div class="card"></div>');
