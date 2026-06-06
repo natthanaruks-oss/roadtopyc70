@@ -154,7 +154,9 @@ const UI={
  af_sed:{th:"นั่งทำงาน",en:"Desk job"},af_light:{th:"ขยับบ้าง",en:"Light"},af_mod:{th:"ขยับเยอะ",en:"Active"},af_high:{th:"ใช้แรงมาก",en:"Very active"},
  afHint:{th:"แคลการซ้อมถูกบวกแยกอยู่แล้ว เลือกเฉพาะกิจกรรมตอนไม่ซ้อม (นั่งทำงาน = ค่าเริ่มต้น)",en:"Training calories are added separately — pick only your non-training lifestyle (desk job = default)"},
  eb_deficit:{th:"ขาดดุล",en:"Deficit"},eb_surplus:{th:"เกินดุล",en:"Surplus"},
- eb_cumTitle:{th:"ขาดดุลสะสม (14 วัน)",en:"Cumulative balance (14 days)"},
+ eb_cumTitle:{th:"ขาดดุลสะสม",en:"Cumulative balance"},
+ eb_ndays:{th:"จาก {n} วันที่บันทึกครบ",en:"from {n} fully-logged days"},
+ eb_fewdays:{th:"ยังมีวันบันทึกครบน้อย — ตัวเลขจะแม่นขึ้นเมื่อบันทึกครบหลายวัน",en:"Few complete days yet — accuracy improves as you log full days"},
  eb_cumKcal:{th:"ขาดดุลรวม",en:"Total deficit"},eb_fat:{th:"≈ ไขมันที่ลด",en:"≈ fat lost"},
  eb_fatNote:{th:"อิง 7,700 kcal ≈ ไขมัน 1 kg · ประเมินคร่าวๆ",en:"7,700 kcal ≈ 1 kg fat · rough estimate"},
  eb_wpredict:{th:"คาดการณ์ vs จริง",en:"Predicted vs actual"},
@@ -224,6 +226,9 @@ const UI={
  ld_low:{th:"โหลดน้อยไป (เสี่ยง detrain)",en:"Load too low (detraining risk)"},
  ld_reduce:{th:"ควรลดโหลด — ฟื้นตัวก่อน",en:"Reduce load — recover first"},
  ld_r_ok:{th:"ความสม่ำเสมอและการเพิ่มโหลดอยู่ในเกณฑ์ปลอดภัย ซ้อมตามแผนต่อได้เลย",en:"Consistency and load progression are in the safe zone — keep following the plan"},
+ ld_r_behind_ok:{th:"ยังไล่ทันแบบปลอดภัย — เล็ง long run แตะ ~{p}K ก่อน taper",en:"Still catchable safely — aiming long run to ~{p}K before taper"},
+ ld_r_behind_tight:{th:"เวลาเริ่มตึง — ปลอดภัยสุดจะถึง ~{p}K (แผนตั้ง {n}K) เน้น time-on-feet + เป้าวิ่งให้จบ",en:"Timeline tight — safely reach ~{p}K (plan wants {n}K). Focus time-on-feet + finish goal"},
+ ld_r_tight_note:{th:"· หมายเหตุ: long run จริงยังห่างเป้า — ดูแผนเล็งวันแข่งด้านล่าง",en:"· note: actual long run still short of target — see race projection below"},
  ld_r_behind:{th:"3 สัปดาห์ล่าสุดทำได้ {c}% ของแผน — ผมเกลี่ยส่วนที่ขาดไปสัปดาห์ถัดไป เพิ่มทีละ ≤10% ห้ามอัดรวดเดียว",en:"Last 3 weeks you hit {c}% of plan — I've spread the shortfall into coming weeks, ≤10% each, no big jumps"},
  ld_r_caution:{th:"ACWR {a} — เพิ่มโหลดเร็วกว่าที่ร่างกายปรับตัวทัน เสี่ยงบาดเจ็บ คงโหลดไว้อย่าเพิ่งเพิ่ม",en:"ACWR {a} — load rising faster than you adapt, injury risk. Hold steady, don't add more"},
  ld_r_low:{th:"ACWR {a} — โหลดต่ำกว่าฐานเดิม ระวังถดถอย ค่อยๆ สร้างกลับ",en:"ACWR {a} — load below your base, detraining risk. Build back gradually"},
@@ -240,6 +245,13 @@ const UI={
  ld_how:{th:"คำนวณยังไง",en:"How it works"},
  ld_howText:{th:"• <b>ACWR</b> = โหลด 7 วันล่าสุด ÷ เฉลี่ย 28 วัน (โหลด = กม. + ไต่ระดับ×0.1) บอกว่าเพิ่มเร็วไปไหม<br>• <b>Compliance</b> = ทำได้จริง ÷ แผน ใน 3 สัปดาห์<br>• ปรับโหลดยึด <b>กฎ 10%</b> และไม่แตะ taper/วันแข่ง เพื่อกันบาดเจ็บและรักษา periodization",en:"• <b>ACWR</b> = last-7-day load ÷ 28-day average (load = km + vert×0.1), flags ramping too fast<br>• <b>Compliance</b> = actual ÷ planned over 3 weeks<br>• Adjustments follow the <b>10% rule</b> and never touch taper/race week — protecting you from injury and preserving periodization"},
  adaptApply:{th:"ลดโหลดวันนี้",en:"Ease today"},
+ rp_title:{th:"แผนเล็งวันแข่ง",en:"Race readiness"},
+ rp_ready:{th:"พร้อม",en:"Ready"},rp_ontrack:{th:"ตามแผน",en:"On track"},rp_tight:{th:"เวลาตึง",en:"Tight"},
+ rp_curlong:{th:"long ทำได้จริง",en:"Current long"},rp_proj:{th:"คาดว่าถึง",en:"Projected"},rp_need:{th:"เป้าแผน",en:"Plan peak"},
+ rp_meta:{th:"เหลือ {w} สัปดาห์ถึงวันแข่ง · สร้างได้จริง {b} สัปดาห์ · taper {t} สัปดาห์",en:"{w} weeks to race · {b} build weeks · {t} taper weeks"},
+ rp_adv_ready:{th:"long run ทำได้ถึงเป้าแล้ว 💪 จากนี้รักษาความสม่ำเสมอ + ซ้อมไต่/ลงเขาจริง และ B2B วันเสาร์-อาทิตย์ เพื่อความทนต่อระยะและ −3,600m",en:"Long run already at target 💪 Now hold consistency + real up/downhill and weekend back-to-backs to build durability for the −3,600m descent"},
+ rp_adv_ontrack:{th:"เพิ่ม long run ทีละ ~{g}K/สัปดาห์ (กฎ ≤10%) สลับสัปดาห์เบาทุก 4 สัปดาห์ จะถึงเป้าพอดีก่อน taper เน้นไต่ระดับ + ลงเขาจริง ไม่ใช่แค่ระยะ",en:"Add ~{g}K/week to your long run (≤10% rule), with a cutback every 4th week — you'll hit target before taper. Prioritise real vert + downhill, not just distance"},
+ rp_adv_tight:{th:"ตามเวลาจริง long run ปลอดภัยสุดจะถึง ~{p}K (แผนตั้ง {n}K) อย่าฝืนอัดระยะ — เสี่ยงบาดเจ็บมากกว่าได้ผล โค้ชแนะ: (1) เป้า B = วิ่งให้จบในคัตออฟ ไม่เน้นเวลา (2) เพิ่ม time-on-feet (ชม.) แทนระยะ เดิน-วิ่งสลับบนเขา (3) ใส่ B2B เสาร์-อาทิตย์ (เช่น {p}K + ครึ่ง) ได้ความทนใกล้เคียงระยะยาวเดี่ยว เสี่ยงน้อยกว่า",en:"On the real timeline your long run safely reaches ~{p}K (plan wants {n}K). Don't cram distance — injury risk outweighs gains. Coach's call: (1) B-goal = finish within cutoff, not time (2) build time-on-feet (hrs) over distance, hike-run on hills (3) use Sat-Sun back-to-backs (e.g. {p}K + half) for similar durability at lower risk"},
  adaptApplied:{th:"ลดโหลดแล้ว ✓ กดเพื่อคืนค่า",en:"Eased ✓ tap to undo"},
  adaptEasedTag:{th:"ลดโหลด",en:"eased"},
  adaptDismiss:{th:"รับทราบ",en:"Got it"},
@@ -868,7 +880,7 @@ function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,
 function currentWeight(){for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;}
 function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.2));}
 function exerciseKcal(s,w){if(!s)return 0;if(s.km>0)return Math.round(w*(s.km+s.vert*0.01));if(s.t==='Strength')return 250;if(s.t==='Rehab')return 150;return 0;}
-function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si]||{km:0,t:'Rest'};const a=(S.actual&&s.id&&S.actual[s.id])||{};const done=S.done&&s.id&&S.done[s.id];const logged=inK>=maintenanceKcal()*0.5;
+function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si]||{km:0,t:'Rest'};const a=(S.actual&&s.id&&S.actual[s.id])||{};const done=S.done&&s.id&&S.done[s.id];const logged=inK>=maintenanceKcal()*0.65;
  // exercise: prefer actual logged distance/vert; else planned only if marked done
  let ex=0;
  if(s.km>0){const km=parseFloat(a.km),vt=parseFloat(a.v);
@@ -1055,6 +1067,10 @@ function openLoadDetail(){
  const acC=lp.acwr==null?'--muted':(lp.acwr>1.5||lp.acwr<0.8?'--bad':(lp.acwr>1.3?'--warn':'--lime'));
  const coC=lp.comp==null?'--muted':(lp.comp<0.8?'--z3':'--lime');
  sheet.appendChild($(`<div class="card" style="margin-bottom:12px;display:flex;gap:14px"><div style="flex:1;text-align:center"><div class="num" style="font-size:24px;color:${cv(acC)}">${lp.acwr!=null?lp.acwr:'—'}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700;margin-top:2px">ACWR</div><div style="font-size:9px;color:var(--muted2);margin-top:2px">${t('ld_acwrSafe')}</div></div><div style="width:1px;background:var(--line)"></div><div style="flex:1;text-align:center"><div class="num" style="font-size:24px;color:${cv(coC)}">${lp.comp!=null?Math.round(lp.comp*100)+'%':'—'}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700;margin-top:2px">${t('ld_compL')}</div><div style="font-size:9px;color:var(--muted2);margin-top:2px">${t('ld_comp3w')}</div></div></div>`));
+ // Race readiness projection (back-calculated from race day, real capacity)
+ const rp=lp.rp;const vCol=rp.verdict==='ready'?'--lime':(rp.verdict==='ontrack'?'--lime':'--z3');const vTxt=rp.verdict==='ready'?t('rp_ready'):(rp.verdict==='ontrack'?t('rp_ontrack'):t('rp_tight'));
+ const adv=rp.verdict==='ready'?t('rp_adv_ready'):(rp.verdict==='ontrack'?t('rp_adv_ontrack').replace('{g}',rp.safeGain):t('rp_adv_tight').replace('{p}',rp.projectedPeak).replace('{n}',rp.peakLong));
+ sheet.appendChild($(`<div class="card" style="margin-bottom:12px;border-left:3px solid ${cv(vCol)}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div class="dsp" style="font-size:14px">🎯 ${t('rp_title')}</div><div style="font-size:10px;font-weight:800;color:${cv(vCol)};text-transform:uppercase">${vTxt}</div></div><div style="display:flex;gap:10px;margin-bottom:10px"><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px">${rp.curLong}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_curlong')}</div></div><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px;color:${cv(vCol)}">${rp.projectedPeak}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_proj')}</div></div><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px;color:var(--muted)">${rp.peakLong}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_need')}</div></div></div><div style="font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:6px">${t('rp_meta').replace('{w}',rp.weeksToRace).replace('{b}',rp.buildWeeks).replace('{t}',rp.taperWeeks)}</div><div style="font-size:12px;color:var(--ink);line-height:1.55;background:var(--bg2);border-radius:12px;padding:10px">💡 ${adv}</div></div>`));
  if(lp.rows.length){const applied=hasLoadAdj();sheet.appendChild($(`<div class="card" style="margin-bottom:12px"><div class="dsp" style="font-size:14px;margin-bottom:8px">${t('ld_plan3w')}</div>${lp.rows.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><div><div style="font-size:13px;font-weight:700">${r.label}</div><div style="font-size:10.5px;color:var(--muted)">${r.factor>1?'+':''}${Math.round((r.factor-1)*100)}%</div></div><div class="num" style="font-size:14px">${r.baseKm} → <b style="color:${c}">${r.newKm} km</b></div></div>`).join('')}<div style="font-size:11px;color:var(--muted2);margin-top:9px;line-height:1.5">${t('ld_rule')}</div></div>`));
   const applied2=hasLoadAdj();const applyBtn=$(`<button class="btn ${applied2?'btn-ghost':'btn-lime'} tap" style="margin-bottom:8px">${applied2?t('ld_applied'):t('ld_apply')}</button>`);applyBtn.onclick=()=>{if(hasLoadAdj())resetLoadPlan();else applyLoadPlan();closeSheet();render();};sheet.appendChild(applyBtn);
  }
@@ -1281,7 +1297,7 @@ function Today(v){
  if(r){const vd=readinessVerdict(r.tot);const b=$(`<div class="card tap" style="border-color:${cv(vd.c)}55;background:${cv(vd.c)}12;display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:${cv(vd.c)}22;display:flex;align-items:center;justify-content:center;font-size:20px">${vd.e}</div><div style="flex:1"><div class="dsp" style="font-size:15px;color:${cv(vd.c)}">${vd.t}</div><div style="font-size:12px;color:var(--muted)">${vd.d}</div></div></div>`);b.onclick=openReadiness;wrap.appendChild(b);}else{const b=$(`<div class="card tap glow" style="display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:var(--lime)22;display:flex;align-items:center;justify-content:center">${ic('<path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/>',cv('--lime'),20)}</div><div style="flex:1"><div class="dsp" style="font-size:15px">${t('readyCheck')}</div><div style="font-size:12px;color:var(--muted)">${t('readySub')}</div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted'),18)}</div>`);b.onclick=openReadiness;wrap.appendChild(b);}
  const s=todaySess();const L=LIB[s.t]||LIB.Easy;const col=cv(L.col);const dn=S.done[s.id];
  const sIdx=SESS.findIndex(x=>x.id===s.id);const tIdx=todayIndex();
- const laf=loadAdjFactor(s.wid);const akm0=Math.round(s.km*laf),avert0=Math.round(s.vert*laf);const eased=isEased(s.id)&&s.km>0;const ekm=eased?Math.round(akm0*0.7):akm0;const evert=eased?Math.round(avert0*0.6):avert0;
+ const eased=isEased(s.id)&&s.km>0;const _aj=adjustedLoad(s);const ekm=_aj.km,evert=_aj.vert;
  const easedTag=eased?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('adaptEasedTag')}</span>`:'';
  const wasW=t('planDay')==='Planned'?'was':'จาก';
  const dayTag=sIdx===tIdx?`<span class="pill" style="background:var(--lime);color:#10131F">${t('tagToday')}</span>`:(sIdx<tIdx?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('tagBehind')}</span>`:`<span class="pill" style="background:var(--z1)22;color:var(--z1)">${t('tagAhead')}</span>`);
@@ -1404,13 +1420,13 @@ function Fuel(v){
   const days=[];for(let i=13;i>=0;i--){const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-i);const k=ymd(d);const e=dayEnergy(k);days.push({d,k,net:e.net,logged:e.logged});}
   const logged=days.filter(x=>x.logged);
   if(logged.length>=1){
-   const cum=logged.reduce((a,x)=>a+x.net,0);
-   const fatKg=cum/7700;
+   const cum=logged.reduce((a,x)=>a+Math.max(-2500,Math.min(2500,x.net)),0);
+   const fatKg=cum/7700;const nLog=logged.length;
    const maxAbs=Math.max(300,...days.map(x=>Math.abs(x.net)));
    const W=320,H=130,pad=16,mid=H/2,gap=(W-2*pad)/14,bw=gap*0.6;
    let bars='';days.forEach((x,i)=>{const cx=pad+gap*i+gap/2;if(!x.logged){bars+=`<circle cx="${cx.toFixed(1)}" cy="${mid}" r="2" fill="${cv('--line')}"/>`;return;}const h=(mid-pad)*Math.min(1,Math.abs(x.net)/maxAbs);const def=x.net<0;const y=def?mid:mid-h;const col=def?cv('--lime'):cv('--orange');bars+=`<rect x="${(cx-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1,h).toFixed(1)}" rx="2" fill="${col}"/>`;});
    const lbls=days.map((x,i)=>{if(i%2)return'';const cx=pad+gap*i+gap/2;return `<text x="${cx.toFixed(1)}" y="${H-2}" fill="${cv('--muted2')}" font-size="7.5" text-anchor="middle">${x.d.getDate()}</text>`;}).join('');
-   body.appendChild($(`<div class="card"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">${t('eb_cumTitle')}</div><div style="display:flex;gap:18px;margin-bottom:10px"><div><div class="num" style="font-size:22px;color:${cum<0?cv('--lime'):cv('--orange')}">${cum<0?'−':'+'}${Math.abs(Math.round(cum)).toLocaleString()}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_cumKcal')} (kcal)</div></div><div><div class="num" style="font-size:22px;color:${fatKg<0?cv('--lime'):cv('--orange')}">${fatKg<0?'−':'+'}${Math.abs(fatKg).toFixed(2)}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_fat')}</div></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto"><line x1="${pad}" y1="${mid}" x2="${W-pad}" y2="${mid}" stroke="${cv('--line')}" stroke-width="1"/>${bars}${lbls}</svg><div style="font-size:10px;color:var(--muted2);text-align:center;margin-top:4px">${t('eb_fatNote')}</div></div>`));
+   body.appendChild($(`<div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">${t('eb_cumTitle')}</div><div style="font-size:10px;color:var(--muted2)">${t('eb_ndays').replace('{n}',nLog)}</div></div><div style="display:flex;gap:18px;margin-bottom:10px"><div><div class="num" style="font-size:22px;color:${cum<0?cv('--lime'):cv('--orange')}">${cum<0?'−':'+'}${Math.abs(Math.round(cum)).toLocaleString()}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_cumKcal')} (kcal)</div></div><div><div class="num" style="font-size:22px;color:${fatKg<0?cv('--lime'):cv('--orange')}">${fatKg<0?'−':'+'}${Math.abs(fatKg).toFixed(2)}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_fat')}</div></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto"><line x1="${pad}" y1="${mid}" x2="${W-pad}" y2="${mid}" stroke="${cv('--line')}" stroke-width="1"/>${bars}${lbls}</svg><div style="font-size:10px;color:var(--muted2);text-align:center;margin-top:4px">${nLog<3?t('eb_fewdays'):t('eb_fatNote')}</div></div>`));
    // predicted vs actual weight
    const sw=+S.startWeight||START_WEIGHT_DEFAULT;const actLoss=sw-w;
    body.appendChild($(`<div class="card"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">${t('eb_wpredict')}</div><div style="display:flex;gap:18px"><div style="flex:1"><div class="num" style="font-size:20px;color:var(--lav)">${fatKg<0?(Math.abs(fatKg)).toFixed(2):'0.00'}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_wpred')} (14d)</div></div><div style="flex:1"><div class="num" style="font-size:20px;color:${actLoss>0?cv('--lime'):cv('--orange')}">${actLoss>0?'−':'+'}${Math.abs(actLoss).toFixed(1)}<span style="font-size:11px;color:var(--muted)"> kg</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('eb_wact')} (รวม)</div></div></div></div>`));
@@ -1583,22 +1599,41 @@ function compliance3w(){const ti=todayIndex();const start=Math.max(0,ti-20);let 
 function progIndexOf(wid){return PROG.findIndex(w=>w.id===wid);}
 function weekPlannedKm(wid){return SESS.filter(s=>s.wid===wid).reduce((a,s)=>a+(s.km||0),0);}
 function loadAdjFactor(wid){return (S.loadAdj&&S.loadAdj[wid])||1;}
-function adjustedLoad(s){if(!s||!s.km)return{km:s?s.km||0:0,vert:s?s.vert||0:0};let f=loadAdjFactor(s.wid),km=s.km*f,vert=s.vert*f;if(isEased(s.id)){km*=0.7;vert*=0.6;}return{km:Math.round(km),vert:Math.round(vert)};}
+function adjustedLoad(s){if(!s||!s.km)return{km:s?s.km||0:0,vert:s?s.vert||0:0};let f=loadAdjFactor(s.wid);if(isEased(s.id))f=Math.min(f,0.65);return{km:Math.round(s.km*f),vert:Math.round(s.vert*f)};}
+// ===== Race-aware coach brain: back-calculate from race day using REAL capacity =====
+function racePlan(){
+ const longs=SESS.filter(s=>(s.t==='Long'||s.t==='B2B')&&s.km>0).map(s=>s.km);
+ const peakLong=longs.length?Math.max(...longs):34;
+ let curLong=+S.baselineLong||25;
+ for(let i=0;i<28;i++){const d=new Date();d.setDate(d.getDate()-i);const idx=Math.round((d-new Date(S.startDate+'T00:00:00'))/864e5);if(idx<0||idx>=SESS.length)continue;const s=SESS[idx];if(!s)continue;const a=(S.actual&&S.actual[s.id])||{};const lk=parseFloat(a.km);if((s.t==='Long'||s.t==='B2B')&&!isNaN(lk)&&lk>curLong)curLong=lk;}
+ const curWid=(SESS[todayIndex()]||{}).wid;const ci=progIndexOf(curWid);
+ const raceWi=PROG.findIndex(wk=>SESS.some(s=>s.wid===wk.id&&s.t==='Race'));
+ const weeksToRace=Math.max(0,raceWi-ci);
+ let taperWeeks=0;for(let k=ci+1;k<raceWi&&k<PROG.length;k++){if((PROG[k]||{}).phase==='P4')taperWeeks++;}
+ const buildWeeks=Math.max(1,weeksToRace-taperWeeks-1);
+ const gap=Math.max(0,peakLong-curLong);
+ const reqGain=gap/buildWeeks;
+ const safeGain=Math.max(2,curLong*0.10);
+ const feasible=reqGain<=safeGain+0.5;
+ const projectedPeak=Math.round(Math.min(peakLong,curLong+safeGain*buildWeeks));
+ let verdict;if(curLong>=peakLong)verdict='ready';else if(feasible)verdict='ontrack';else verdict='tight';
+ return{peakLong:Math.round(peakLong),curLong:Math.round(curLong),weeksToRace,buildWeeks,taperWeeks,reqGain:+reqGain.toFixed(1),safeGain:+safeGain.toFixed(1),feasible,projectedPeak,verdict};
+}
 function isTaperOrRace(wk){return !wk||wk.phase==='P4'||SESS.some(s=>s.wid===wk.id&&s.t==='Race');}
 function loadPlan(){
  const a=acwr(),comp=compliance3w(),lowR=recentLowReadiness(),weeksElapsed=Math.floor(todayIndex()/7);
  const curWid=(SESS[todayIndex()]||{}).wid;const ci=progIndexOf(curWid);
  const next=[];for(let k=1;k<=5&&next.length<3;k++){const wk=PROG[ci+k];if(!wk)break;if(isTaperOrRace(wk))continue;next.push(wk);}
  let status,recs=[],reason='';
- const niggle=niggleAlerts().length;
+ const niggle=niggleAlerts().length;const rp=racePlan();
  const reduce=lowR>=2||(a!=null&&a>1.5)||niggle;
  if(reduce){status={code:'reduce',col:'--bad',emoji:'🟣',title:t('ld_reduce')};reason=niggle?t('ld_r_niggle'):(a!=null&&a>1.5?t('ld_r_acwr').replace('{a}',a):t('ld_r_ready'));const c=PROG[ci],n1=PROG[ci+1];if(c&&!isTaperOrRace(c))recs.push({wid:c.id,factor:0.7});if(n1&&!isTaperOrRace(n1))recs.push({wid:n1.id,factor:0.85});}
- else if(comp!=null&&comp<0.8&&weeksElapsed>=1){status={code:'behind',col:'--z3',emoji:'🔴',title:t('ld_behind')};reason=t('ld_r_behind').replace('{c}',Math.round(comp*100));const bump=1+Math.min(0.10,0.88-comp);next.forEach(wk=>recs.push({wid:wk.id,factor:+bump.toFixed(2)}));}
+ else if(comp!=null&&comp<0.8&&weeksElapsed>=1){status={code:'behind',col:'--z3',emoji:'🔴',title:t('ld_behind')};reason=t('ld_r_behind').replace('{c}',Math.round(comp*100))+' '+(rp.feasible?t('ld_r_behind_ok').replace('{p}',rp.projectedPeak):t('ld_r_behind_tight').replace('{p}',rp.projectedPeak).replace('{n}',rp.peakLong));const bump=1+Math.min(0.10,0.88-comp);next.forEach(wk=>recs.push({wid:wk.id,factor:+bump.toFixed(2)}));}
  else if(a!=null&&a>1.3){status={code:'caution',col:'--warn',emoji:'🟡',title:t('ld_caution')};reason=t('ld_r_caution').replace('{a}',a);}
  else if(a!=null&&a<0.8&&weeksElapsed>=2){status={code:'low',col:'--z3',emoji:'🟡',title:t('ld_low')};reason=t('ld_r_low').replace('{a}',a);}
- else{status={code:'ok',col:'--lime',emoji:'🟢',title:t('ld_ok')};reason=t('ld_r_ok');}
+ else{status={code:'ok',col:'--lime',emoji:'🟢',title:t('ld_ok')};reason=t('ld_r_ok')+(rp.verdict==='tight'?' '+t('ld_r_tight_note').replace('{p}',rp.projectedPeak).replace('{n}',rp.peakLong):'');}
  const rows=recs.map(r=>{const pi=progIndexOf(r.wid);const baseKm=Math.round(weekPlannedKm(r.wid));return{wid:r.wid,label:tx((PROG[pi]||{}).label||{th:r.wid,en:r.wid}),baseKm,newKm:Math.round(baseKm*r.factor),factor:r.factor};});
- return{acwr:a,comp,lowR,weeksElapsed,status,reason,recs,rows};
+ return{acwr:a,comp,lowR,weeksElapsed,status,reason,recs,rows,rp};
 }
 function applyLoadPlan(){const lp=loadPlan();if(!S.loadAdj)S.loadAdj={};lp.recs.forEach(r=>{S.loadAdj[r.wid]=r.factor;});save();}
 function resetLoadPlan(){S.loadAdj={};save();}
