@@ -163,7 +163,7 @@ const UI={
  eb_hint_eat:{th:"⚠️ วันซ้อมหนักไม่ควรขาดดุลมาก — เติมให้พอ",en:"⚠️ Don't under-eat on hard days — fuel up"},
  foodToday:{th:"วันนี้",en:"Today"},
  kcalLeft:{th:"เหลือได้อีก",en:"left"},kcalOver:{th:"เกิน",en:"over"},
- protein:{th:"โปรตีน",en:"Protein"},carbsL:{th:"คาร์บ",en:"Carbs"},
+ protein:{th:"โปรตีน",en:"Protein"},carbsL:{th:"คาร์บ",en:"Carbs"},fatL:{th:"ไขมัน",en:"Fat"},
  addFood:{th:"+ เพิ่มอาหาร",en:"+ Add food"},
  noFood:{th:"ยังไม่ได้บันทึกวันนี้ — กดเพิ่มอาหารด้านบน",en:"Nothing logged today — tap add food above"},
  foodSheetTitle:{th:"เพิ่มอาหาร",en:"Add food"},
@@ -228,7 +228,48 @@ const UI={
  rrs_longRun:{th:"ระยะยาวสุด",en:"Longest run"},
  rrs_health:{th:"สุขภาพ / อาการเจ็บ",en:"Health / niggles"},
  rrs_readinessC:{th:"Readiness ล่าสุด",en:"Recent readiness"},
+ rrs_sleep:{th:"การนอน",en:"Sleep"},
  rrs_body:{th:"น้ำหนักตามเป้า",en:"Weight goal"},
+ sleepTitle:{th:"การนอน",en:"Sleep"},
+ sleepLogBtn:{th:"บันทึก",en:"Log"},
+ sleepAvg:{th:"เฉลี่ย 7 วัน",en:"7-day avg"},
+ sleepTonight:{th:"คืนนี้ควรนอน",en:"Tonight aim"},
+ sleepEmpty:{th:"ยังไม่มีข้อมูล — คืนนี้ตั้งเป้านอน",en:"No data yet — tonight aim for"},
+ sleepSheetSub:{th:"นอนเมื่อคืนกี่ชั่วโมง + คุณภาพ",en:"How long & how well did you sleep last night?"},
+ sleepHours:{th:"ชั่วโมงที่นอน",en:"Hours slept"},
+ sleepQuality:{th:"คุณภาพการนอน",en:"Sleep quality"},
+ sleepQ1:{th:"แย่มาก ตื่นบ่อย",en:"Very poor, restless"},sleepQ2:{th:"ไม่ค่อยดี",en:"Poor"},sleepQ3:{th:"พอใช้",en:"OK"},sleepQ4:{th:"ดี",en:"Good"},sleepQ5:{th:"ดีมาก สดชื่น",en:"Great, refreshed"},
+ sleepClear:{th:"ลบของเมื่อคืน",en:"Clear last night"},
+ sleepImport:{th:"นำเข้าจาก Health (.xml / .csv)",en:"Import from Health (.xml / .csv)"},
+ sleepImportHint:{th:"Apple Health → โปรไฟล์ → Export All Health Data → เลือกไฟล์ export.xml (ดึงการนอน + ชีพจรพัก) · หรือ CSV: วันที่,ชั่วโมง,คุณภาพ",en:"Apple Health → Profile → Export All Health Data → pick export.xml (pulls sleep + resting HR) · or CSV: date,hours,quality"},
+ sleepImpOk:{th:"นำเข้าแล้ว: นอน {ns} คืน · RHR {nr} วัน",en:"Imported: {ns} nights of sleep · {nr} days RHR"},
+ sleepImpErr:{th:"อ่านไฟล์ไม่สำเร็จ หรือไม่พบข้อมูลการนอน/RHR ในไฟล์",en:"Couldn't read the file, or no sleep/RHR data found"},
+ rhrAvg:{th:"ชีพจรพักเฉลี่ย 7 วัน",en:"Resting HR 7-day avg"},
+ adapt_sleep:{th:"นอนน้อย {n} คืนติด — โฟกัสฟื้นตัว ลดความหนักลงหน่อย",en:"{n} nights of short sleep — prioritize recovery, ease off"},
+ adapt_rhr:{th:"ชีพจรพักสูงผิดปกติ {n} วันติด — สัญญาณฟื้นตัวไม่ทัน ควรลดโหลด",en:"Resting HR elevated {n} days — under-recovery signal, reduce load"},
+ co_sleeplow:{th:" · เมื่อคืนนอนน้อย ระวังอย่าฝืนหนัก",en:" · short sleep last night — don't push too hard"},
+ co_rhrhigh:{th:" · ชีพจรพักสูงกว่าปกติ ฟังร่างกายวันนี้",en:" · resting HR above normal — listen to your body today"},
+ rhrTitle:{th:"ชีพจรพัก (ฟื้นตัว)",en:"Resting HR (recovery)"},
+ rhrVsBase:{th:"จาก baseline",en:"vs base"},
+ rhrAlert:{th:"สูงกว่าปกติ — อาจฟื้นตัวไม่ทัน/เริ่มป่วย พิจารณาซ้อมเบาลง",en:"Above normal — possible under-recovery/illness, consider easing"},
+ rhrOk:{th:"ปกติดี (baseline {b} bpm) — ฟื้นตัวพร้อมซ้อม",en:"Normal (baseline {b} bpm) — recovered & ready"},
+ rhrSheetSub:{th:"วัดตอนตื่นนอนก่อนลุก — ดัชนีฟื้นตัวที่ดีที่สุด",en:"Measure right after waking, before getting up — best recovery signal"},
+ rhrLastL:{th:"ล่าสุด",en:"Latest"},rhrBaseL:{th:"Baseline 21 วัน",en:"21-day base"},rhrDiffL:{th:"ต่าง",en:"Diff"},
+ rhrAlertLong:{th:"ชีพจรพักสูงกว่า baseline — มักหมายถึงฟื้นตัวไม่ทัน เครียด นอนน้อย หรือกำลังจะป่วย แนะนำลดความหนักหรือพักเพิ่ม",en:"Resting HR above baseline — often means under-recovery, stress, poor sleep, or oncoming illness. Ease training or add rest."},
+ rhrOkLong:{th:"ชีพจรพักอยู่ในเกณฑ์ปกติ ร่างกายฟื้นตัวดี ซ้อมตามแผนได้",en:"Resting HR in normal range — well recovered, train as planned"},
+ rhrEntryL:{th:"บันทึกชีพจรพักเช้านี้",en:"Log this morning's resting HR"},
+ rhrTip:{th:"💡 Huawei watch แสดงค่านี้ในแอป Health — หรือนำเข้าไฟล์ด้านล่าง",en:"💡 Your Huawei watch shows this in Health — or import a file below"},
+ raceModeTitle:{th:"โหมดวันแข่ง",en:"Race-day Mode"},
+ raceModeSub:{th:"เช็กลิสต์ · pacing · เติมพลัง",en:"Checklist · pacing · fueling"},
+ daysLeft:{th:"วันถึงแข่ง",en:"days to race"},
+ rmPacing:{th:"⏱️ แผน Pacing (เวลาที่ควรถึง)",en:"⏱️ Pacing plan (target clock time)"},
+ rmPacingSub:{th:"เวลานาฬิกาที่ควรถึงแต่ละจุด (ออกตัว 16:00) · เผื่อช้าลงช่วงท้าย",en:"Clock time you should reach each point (start 16:00) · accounts for late slowdown"},
+ rmCutoff:{th:"Cut-off รวม 15 ชม. = ต้องจบก่อน 07:00 เช้าวันถัดไป · เป้า B เผื่อ buffer 30 นาที",en:"15 h cut-off = finish before 07:00 next morning · Goal B keeps 30 min buffer"},
+ rmGear:{th:"🎒 เช็กลิสต์อุปกรณ์",en:"🎒 Gear checklist"},
+ rmMust:{th:"จำเป็น (mandatory)",en:"Mandatory"},rmRec:{th:"แนะนำ",en:"Recommended"},
+ rmFuel:{th:"🍌 ไทม์ไลน์เติมพลัง",en:"🍌 Fueling timeline"},
+ rmReminders:{th:"เตือนความจำวันแข่ง",en:"Race-day reminders"},
+ rmRemindList:{th:"• ออกตัวช้า คุม Z2 — เดินขึ้นเขาตั้งแต่ต้น<br>• คาร์บ 60-80 ก./ชม. + เกลือแร่ทุกชั่วโมง<br>• พกเสบียงให้พอระหว่าง aid (มีแค่ 3 จุด)<br>• กลางคืนหนาว — ใส่ชั้นอุ่น กินของอุ่นที่ aid<br>• 50-70K ระวัง quads — เดินสลับวิ่ง โคล่าแฟลต/คาเฟอีน<br>• เจ็บ ITB/รองช้ำ — ยืดสั้นๆ ที่ aid อย่าฝืน",en:"• Start slow in Z2 — hike climbs from the start<br>• 60-80 g carbs/h + salt every hour<br>• Carry enough between aids (only 3)<br>• Cold night — wear warm layer, eat warm food at aid<br>• 50-70K watch quads — run-walk, flat cola/caffeine<br>• ITB/plantar flare — short stretch at aid, don't force it"},
  rrsv_a:{th:"พร้อมมาก — มาถูกทางสำหรับ 72K",en:"Excellent — on track for a strong 72K"},
  rrsv_b:{th:"ไปได้ดี — สะสมต่อเนื่อง",en:"Solid — keep building"},
  rrsv_c:{th:"ตามแผนบางส่วน — เน้นจุดอ่อนด้านล่าง",en:"Partly on track — focus the gaps below"},
@@ -399,6 +440,30 @@ const RACEFUEL=[
 ];
 const PACING=[[{th:"A · ~13 ชม.",en:"A · ~13 h"},{th:"มี buffer ก่อน cut-off · เป้าหมายในฝัน",en:"Buffer before cut-off · dream goal"}],[{th:"B · <15 ชม.",en:"B · <15 h"},{th:"จบก่อน cut-off · เป้าหลัก",en:"Finish before cut-off · main goal"}],[{th:"C · จบให้ได้",en:"C · just finish"},{th:"ไปให้ไกลสุด · สนุกกับมัน",en:"Go as far as you can · enjoy it"}]];
 const NIGGLE_AREAS=[{th:"ITB (ข้างเข่า)",en:"ITB (knee side)"},{th:"เอ็นร้อยหวาย",en:"Achilles"},{th:"รองช้ำ (ฝ่าเท้า)",en:"Plantar (sole)"},{th:"เข่า",en:"Knee"},{th:"อื่นๆ",en:"Other"}];
+const RACEKIT=[
+ {grp:"must",items:[
+  {th:"ไฟหน้า (headlamp) + ถ่านสำรอง",en:"Headlamp + spare batteries"},
+  {th:"เสื้อกันฝน/กันลม มีฮู้ด",en:"Waterproof/windproof jacket w/ hood"},
+  {th:"ผ้าห่มฉุกเฉิน (space blanket)",en:"Emergency space blanket"},
+  {th:"นกหวีด",en:"Whistle"},
+  {th:"โทรศัพท์ชาร์จเต็ม + power bank",en:"Phone fully charged + power bank"},
+  {th:"น้ำ ≥ 1 ลิตร (flask/soft)",en:"Water ≥ 1 L (flask/soft)"},
+  {th:"เกลือแร่ / salt tabs",en:"Electrolyte / salt tabs"},
+  {th:"เจล + อาหารพกระหว่าง aid",en:"Gels + food to carry between aids"},
+  {th:"ถ้วยส่วนตัว (reusable cup)",en:"Personal reusable cup"},
+  {th:"บิบ/เบอร์ + บัตรประชาชน",en:"Race bib + ID card"},
+ ]},
+ {grp:"rec",items:[
+  {th:"ไม้เท้าวิ่ง (poles) — ช่วย +3,586 ม.",en:"Trekking poles — help +3,586 m"},
+  {th:"ถุงมือ + buff/หมวก (กลางคืนหนาว)",en:"Gloves + buff/beanie (cold night)"},
+  {th:"เสื้อแขนยาว/ชั้นอุ่นสำรอง",en:"Long sleeve / spare warm layer"},
+  {th:"ครีมกันเสียดสี (anti-chafe)",en:"Anti-chafe cream"},
+  {th:"พลาสเตอร์/ชุดแผลพอง (blister kit)",en:"Plasters / blister kit"},
+  {th:"GPS watch ชาร์จเต็ม",en:"GPS watch fully charged"},
+  {th:"แว่น + หมวกกันแดด (ช่วงกลางวัน)",en:"Sunglasses + cap (daytime)"},
+  {th:"เงินสด/มือถือสำรองแบต",en:"Cash / backup battery"},
+ ]},
+];
 const QUOTES=[
  [{th:"วินัยคือสะพานเชื่อมระหว่างเป้าหมายกับความสำเร็จ",en:"Discipline is the bridge between goals and accomplishment."},"Jim Rohn"],
  [{th:"เราไม่ได้ลุกขึ้นมาทำตามแรงบันดาลใจ เราลุกขึ้นมาทำเพราะวินัย",en:"We don't rise to motivation, we rise to discipline."},"—"],
@@ -635,6 +700,124 @@ const FOODDB=[
  {cat:"snack",n:{th:"ขนมเปี๊ยะ 1 ชิ้น",en:"Chinese pastry 1 pc"},kcal:200,p:3,c:30},
  {cat:"drink",n:{th:"ชาจีน/อูหลง",en:"Chinese tea / oolong"},kcal:2,p:0,c:0},
  {cat:"drink",n:{th:"น้ำเก๊กฮวย",en:"Chrysanthemum drink"},kcal:90,p:0,c:22},
+ // ===== Thai street / Isan / Northern =====
+ {cat:"meal",n:{th:"ส้มตำไทย",en:"Som tam (papaya salad)"},kcal:120,p:4,c:22,f:2},
+ {cat:"meal",n:{th:"ส้มตำปูปลาร้า",en:"Som tam pla ra"},kcal:140,p:6,c:20,f:3},
+ {cat:"meal",n:{th:"ลาบหมู",en:"Larb moo"},kcal:280,p:24,c:8,f:17},
+ {cat:"meal",n:{th:"น้ำตกหมู",en:"Nam tok moo"},kcal:290,p:25,c:8,f:18},
+ {cat:"meal",n:{th:"ไก่ย่าง 1/4 ตัว",en:"Grilled chicken 1/4"},kcal:300,p:30,c:2,f:19},
+ {cat:"meal",n:{th:"ข้าวเหนียว 1 ก้อน (100g)",en:"Sticky rice 100g"},kcal:170,p:3,c:37,f:0.3},
+ {cat:"meal",n:{th:"ข้าวซอยไก่",en:"Khao soi chicken"},kcal:600,p:26,c:60,f:28},
+ {cat:"meal",n:{th:"ขนมจีนน้ำเงี้ยว",en:"Khanom jeen nam ngiao"},kcal:430,p:18,c:62,f:12},
+ {cat:"meal",n:{th:"ขนมจีนน้ำยา",en:"Khanom jeen nam ya"},kcal:450,p:16,c:65,f:14},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวเรือ",en:"Boat noodles"},kcal:380,p:20,c:45,f:13},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวต้มยำ",en:"Tom yum noodles"},kcal:420,p:22,c:52,f:13},
+ {cat:"meal",n:{th:"เย็นตาโฟ",en:"Yen ta fo"},kcal:400,p:22,c:55,f:9},
+ {cat:"meal",n:{th:"ก๋วยจั๊บน้ำข้น",en:"Kuay jab"},kcal:450,p:18,c:48,f:20},
+ {cat:"meal",n:{th:"ข้าวคลุกกะปิ",en:"Khao kluk kapi"},kcal:550,p:18,c:78,f:18},
+ {cat:"meal",n:{th:"ข้าวซอยไส้อั่ว",en:"Northern sausage rice"},kcal:560,p:22,c:60,f:26},
+ {cat:"meal",n:{th:"ผัดไทยกุ้งสด",en:"Pad thai w/ shrimp"},kcal:550,p:22,c:75,f:18},
+ {cat:"meal",n:{th:"ผัดกะเพราหมูสับ+ไข่ดาว",en:"Pad kaprao + fried egg"},kcal:620,p:28,c:68,f:26},
+ {cat:"meal",n:{th:"ข้าวคะน้าหมูกรอบ",en:"Crispy pork & kale rice"},kcal:650,p:24,c:70,f:30},
+ {cat:"meal",n:{th:"ข้าวผัดอเมริกัน",en:"American fried rice"},kcal:780,p:26,c:85,f:36},
+ {cat:"meal",n:{th:"ต้มยำกุ้งน้ำข้น (ถ้วย)",en:"Tom yum goong (bowl)"},kcal:300,p:24,c:14,f:16},
+ {cat:"meal",n:{th:"แกงเขียวหวานไก่+ข้าว",en:"Green curry chicken + rice"},kcal:620,p:24,c:72,f:26},
+ {cat:"meal",n:{th:"มัสมั่นไก่+ข้าว",en:"Massaman chicken + rice"},kcal:680,p:26,c:74,f:30},
+ {cat:"meal",n:{th:"ข้าวหมูทอดกระเทียม",en:"Garlic fried pork rice"},kcal:640,p:28,c:72,f:26},
+ {cat:"meal",n:{th:"ข้าวไข่เจียวหมูสับ",en:"Pork omelette rice"},kcal:600,p:22,c:70,f:26},
+ {cat:"meal",n:{th:"ข้าวต้มกุ้ง",en:"Shrimp rice soup"},kcal:280,p:18,c:42,f:4},
+ {cat:"meal",n:{th:"สุกี้น้ำรวมมิตร",en:"Suki soup (mixed)"},kcal:350,p:28,c:30,f:12},
+ {cat:"meal",n:{th:"หมูกระทะ (1 มื้อ)",en:"Moo kratha BBQ (meal)"},kcal:900,p:55,c:30,f:60},
+ // ===== Western / Intl =====
+ {cat:"meal",n:{th:"เบอร์เกอร์เนื้อ",en:"Beef burger"},kcal:540,p:28,c:42,f:28},
+ {cat:"meal",n:{th:"พิซซ่า 1 ชิ้น",en:"Pizza slice"},kcal:285,p:12,c:36,f:10},
+ {cat:"meal",n:{th:"สปาเกตตีคาโบนาร่า",en:"Spaghetti carbonara"},kcal:650,p:24,c:70,f:30},
+ {cat:"meal",n:{th:"สปาเกตตีมีตซอส",en:"Spaghetti bolognese"},kcal:560,p:26,c:72,f:18},
+ {cat:"meal",n:{th:"อกไก่ย่าง 150g",en:"Grilled chicken breast 150g"},kcal:248,p:46,c:0,f:5},
+ {cat:"meal",n:{th:"สเต๊กเนื้อ 200g",en:"Beef steak 200g"},kcal:430,p:52,c:0,f:24},
+ {cat:"meal",n:{th:"แซลมอนย่าง 150g",en:"Grilled salmon 150g"},kcal:310,p:34,c:0,f:19},
+ {cat:"meal",n:{th:"สลัดอกไก่",en:"Chicken salad bowl"},kcal:350,p:35,c:18,f:15},
+ {cat:"meal",n:{th:"ข้าวกล่องอกไก่+ข้าวกล้อง",en:"Chicken & brown rice box"},kcal:480,p:40,c:55,f:10},
+ {cat:"meal",n:{th:"แซนด์วิชทูน่า",en:"Tuna sandwich"},kcal:380,p:22,c:40,f:14},
+ {cat:"meal",n:{th:"แซนด์วิชไข่",en:"Egg sandwich"},kcal:340,p:14,c:38,f:15},
+ {cat:"meal",n:{th:"ซีซาร์สลัด",en:"Caesar salad"},kcal:360,p:12,c:18,f:27},
+ // ===== Japanese =====
+ {cat:"meal",n:{th:"ข้าวหน้าเนื้อ (กิวด้ง)",en:"Gyudon (beef bowl)"},kcal:620,p:24,c:88,f:18},
+ {cat:"meal",n:{th:"ราเมนหมูชาชู",en:"Tonkotsu ramen"},kcal:550,p:26,c:65,f:20},
+ {cat:"meal",n:{th:"ซูชิ 6 คำ",en:"Sushi 6 pcs"},kcal:350,p:14,c:60,f:5},
+ {cat:"meal",n:{th:"ข้าวแกงกะหรี่หมูทอด",en:"Katsu curry rice"},kcal:780,p:28,c:95,f:32},
+ {cat:"meal",n:{th:"ข้าวปั้น (โอนิกิริ) 1 ลูก",en:"Onigiri 1 pc"},kcal:180,p:4,c:36,f:1.5},
+ {cat:"meal",n:{th:"เกี๊ยวซ่า 5 ชิ้น",en:"Gyoza 5 pcs"},kcal:240,p:10,c:24,f:11},
+ {cat:"meal",n:{th:"อุด้งน้ำ",en:"Udon soup"},kcal:380,p:14,c:70,f:5},
+ // ===== Protein =====
+ {cat:"protein",n:{th:"ไข่ต้ม 1 ฟอง",en:"Boiled egg 1"},kcal:78,p:6,c:0.5,f:5},
+ {cat:"protein",n:{th:"ไข่ดาว 1 ฟอง",en:"Fried egg 1"},kcal:90,p:6,c:0.5,f:7},
+ {cat:"protein",n:{th:"อกไก่ต้ม 100g",en:"Boiled chicken breast 100g"},kcal:165,p:31,c:0,f:3.6},
+ {cat:"protein",n:{th:"ทูน่ากระป๋องในน้ำ 1 กระป๋อง",en:"Canned tuna in water 1 can"},kcal:110,p:25,c:0,f:1},
+ {cat:"protein",n:{th:"อกไก่ทอด 100g",en:"Fried chicken breast 100g"},kcal:250,p:28,c:8,f:12},
+ {cat:"protein",n:{th:"เต้าหู้ไข่ 100g",en:"Egg tofu 100g"},kcal:80,p:7,c:3,f:4.5},
+ {cat:"protein",n:{th:"นมถั่วเหลือง 1 กล่อง",en:"Soy milk 1 box"},kcal:120,p:7,c:15,f:4},
+ {cat:"protein",n:{th:"กรีกโยเกิร์ต 1 ถ้วย",en:"Greek yogurt 1 cup"},kcal:130,p:17,c:8,f:4},
+ {cat:"protein",n:{th:"เวย์โปรตีน 1 สกู๊ป",en:"Whey protein 1 scoop"},kcal:120,p:24,c:3,f:1.5},
+ {cat:"protein",n:{th:"กุ้งต้ม 100g",en:"Boiled shrimp 100g"},kcal:99,p:24,c:0,f:0.3},
+ {cat:"protein",n:{th:"หมูสับลวก 100g",en:"Lean minced pork 100g"},kcal:200,p:22,c:0,f:12},
+ // ===== Thai fruits =====
+ {cat:"snack",n:{th:"กล้วยหอม 1 ลูก",en:"Banana 1"},kcal:105,p:1,c:27,f:0.4},
+ {cat:"snack",n:{th:"มะม่วงสุก 1 ลูก",en:"Ripe mango 1"},kcal:200,p:2,c:50,f:1},
+ {cat:"snack",n:{th:"มะละกอ 1 ถ้วย",en:"Papaya 1 cup"},kcal:60,p:1,c:15,f:0.2},
+ {cat:"snack",n:{th:"แตงโม 1 ถ้วย",en:"Watermelon 1 cup"},kcal:46,p:1,c:12,f:0.2},
+ {cat:"snack",n:{th:"สับปะรด 1 ถ้วย",en:"Pineapple 1 cup"},kcal:82,p:1,c:22,f:0.2},
+ {cat:"snack",n:{th:"ส้ม 1 ลูก",en:"Orange 1"},kcal:62,p:1,c:15,f:0.2},
+ {cat:"snack",n:{th:"แอปเปิล 1 ลูก",en:"Apple 1"},kcal:95,p:0.5,c:25,f:0.3},
+ {cat:"snack",n:{th:"ฝรั่ง 1 ลูก",en:"Guava 1"},kcal:112,p:4,c:24,f:1.6},
+ {cat:"snack",n:{th:"ทุเรียน 2 เม็ด",en:"Durian 2 seeds"},kcal:300,p:3,c:55,f:11},
+ {cat:"snack",n:{th:"มังคุด 3 ลูก",en:"Mangosteen 3"},kcal:110,p:1,c:28,f:0.6},
+ {cat:"snack",n:{th:"องุ่น 1 ถ้วย",en:"Grapes 1 cup"},kcal:104,p:1,c:27,f:0.2},
+ // ===== Snacks / desserts =====
+ {cat:"snack",n:{th:"ข้าวเหนียวมะม่วง",en:"Mango sticky rice"},kcal:380,p:5,c:70,f:9},
+ {cat:"snack",n:{th:"กล้วยทอด 3 ชิ้น",en:"Fried banana 3 pcs"},kcal:280,p:2,c:38,f:14},
+ {cat:"snack",n:{th:"ขนมปังสังขยา",en:"Custard toast"},kcal:250,p:6,c:38,f:9},
+ {cat:"snack",n:{th:"โรตีกล้วยไข่",en:"Roti banana & egg"},kcal:450,p:8,c:55,f:22},
+ {cat:"snack",n:{th:"ลูกชิ้นปิ้ง 5 ไม้",en:"Grilled meatballs 5"},kcal:250,p:14,c:20,f:12},
+ {cat:"snack",n:{th:"หมูปิ้ง 3 ไม้",en:"Moo ping 3 sticks"},kcal:240,p:18,c:8,f:15},
+ {cat:"snack",n:{th:"ไส้กรอกอีสาน 2 ไม้",en:"Isan sausage 2"},kcal:260,p:12,c:14,f:18},
+ {cat:"snack",n:{th:"มันฝรั่งทอด 1 ถุงเล็ก",en:"Potato chips small bag"},kcal:150,p:2,c:15,f:10},
+ {cat:"snack",n:{th:"ถั่วลิสงคั่ว 1 กำมือ",en:"Roasted peanuts handful"},kcal:170,p:7,c:6,f:14},
+ {cat:"snack",n:{th:"ดาร์กช็อกโกแลต 2 ชิ้น",en:"Dark chocolate 2 sq"},kcal:120,p:2,c:12,f:8},
+ {cat:"snack",n:{th:"คุกกี้ 2 ชิ้น",en:"Cookies 2"},kcal:160,p:2,c:22,f:7},
+ {cat:"snack",n:{th:"ขนมปังโฮลวีต 2 แผ่น",en:"Whole wheat bread 2 sl"},kcal:160,p:8,c:28,f:2},
+ {cat:"snack",n:{th:"กราโนล่าบาร์",en:"Granola bar"},kcal:140,p:3,c:24,f:4},
+ {cat:"snack",n:{th:"ข้าวโพดต้ม 1 ฝัก",en:"Boiled corn 1"},kcal:130,p:4,c:29,f:1.5},
+ // ===== Endurance fuel =====
+ {cat:"fuel",n:{th:"เจลพลังงาน 1 ซอง",en:"Energy gel 1"},kcal:100,p:0,c:25,f:0},
+ {cat:"fuel",n:{th:"เจลคาเฟอีน 1 ซอง",en:"Caffeine gel 1"},kcal:100,p:0,c:24,f:0},
+ {cat:"fuel",n:{th:"เครื่องดื่มเกลือแร่ 500ml",en:"Sports drink 500ml"},kcal:130,p:0,c:32,f:0},
+ {cat:"fuel",n:{th:"เอนเนอร์จี้บาร์",en:"Energy bar"},kcal:230,p:6,c:40,f:6},
+ {cat:"fuel",n:{th:"กล้วยตาก 3 ชิ้น",en:"Dried banana 3"},kcal:130,p:1,c:33,f:0.3},
+ {cat:"fuel",n:{th:"เจลลี่บีน 1 ซอง (chews)",en:"Energy chews 1 pack"},kcal:160,p:0,c:39,f:0},
+ {cat:"fuel",n:{th:"โคล่าแฟลต 1 แก้ว",en:"Flat cola 1 cup"},kcal:140,p:0,c:35,f:0},
+ {cat:"fuel",n:{th:"หมูแดดเดียว 50g",en:"Thai dried pork 50g"},kcal:150,p:18,c:5,f:6},
+ {cat:"fuel",n:{th:"มาม่าถ้วย (ระหว่างเรซ)",en:"Cup noodles (race aid)"},kcal:300,p:7,c:42,f:12},
+ // ===== Coffee shop / drinks =====
+ {cat:"drink",n:{th:"ลาเต้ร้อน (นมสด)",en:"Latte (whole milk)"},kcal:150,p:8,c:12,f:8},
+ {cat:"drink",n:{th:"คาปูชิโน",en:"Cappuccino"},kcal:120,p:7,c:10,f:6},
+ {cat:"drink",n:{th:"อเมริกาโน (ไม่หวาน)",en:"Americano (no sugar)"},kcal:10,p:0,c:2,f:0},
+ {cat:"drink",n:{th:"ชาเย็น (ชาไทย)",en:"Thai iced tea"},kcal:230,p:3,c:38,f:8},
+ {cat:"drink",n:{th:"กาแฟเย็น (โอเลี้ยง)",en:"Thai iced coffee"},kcal:180,p:1,c:36,f:4},
+ {cat:"drink",n:{th:"ชาเขียวนม",en:"Green tea latte"},kcal:220,p:6,c:34,f:7},
+ {cat:"drink",n:{th:"นมสด 1 แก้ว",en:"Milk 1 glass"},kcal:150,p:8,c:12,f:8},
+ {cat:"drink",n:{th:"นมช็อกโกแลต 1 กล่อง",en:"Chocolate milk 1 box"},kcal:200,p:8,c:30,f:5},
+ {cat:"drink",n:{th:"น้ำส้มคั้น 1 แก้ว",en:"Orange juice 1 glass"},kcal:110,p:2,c:26,f:0.5},
+ {cat:"drink",n:{th:"สมูทตี้ผลไม้รวม",en:"Mixed fruit smoothie"},kcal:200,p:3,c:45,f:1},
+ {cat:"drink",n:{th:"น้ำมะพร้าว 1 ลูก",en:"Coconut water 1"},kcal:60,p:2,c:14,f:0.5},
+ {cat:"drink",n:{th:"โค้ก 1 กระป๋อง",en:"Coke 1 can"},kcal:140,p:0,c:39,f:0},
+ {cat:"drink",n:{th:"เบียร์ 1 กระป๋อง",en:"Beer 1 can"},kcal:150,p:1,c:13,f:0},
+ // ===== Convenience (7-11 style) =====
+ {cat:"meal",n:{th:"ข้าวกล่องอุ่น (กะเพรา)",en:"Microwave rice box (kaprao)"},kcal:480,p:18,c:62,f:18},
+ {cat:"meal",n:{th:"แซนด์วิชแฮมชีส",en:"Ham cheese sandwich"},kcal:300,p:13,c:32,f:13},
+ {cat:"snack",n:{th:"ซาลาเปาไส้หมูสับ",en:"Pork bun 1"},kcal:240,p:9,c:36,f:7},
+ {cat:"snack",n:{th:"นมเปรี้ยวขวดเล็ก",en:"Yogurt drink small"},kcal:90,p:2,c:18,f:1},
+ {cat:"snack",n:{th:"ไข่ต้มชาร้านสะดวกซื้อ 1 ฟอง",en:"Tea egg 1"},kcal:80,p:6,c:1,f:5},
 ];
 function dateIndex(ds){const t2=new Date(ds+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
 FOODDB.forEach((f,i)=>{f.id='b'+i;});
@@ -654,7 +837,8 @@ function recentFoods(){
 }
 function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;return{lo:e[0],hi:e[1],mode:e[2],type:energyType(s.t),sess:s};}
 function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
-function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0)}),{kcal:0,p:0,c:0});}
+function fatOf(o){if(o&&o.f!=null&&o.f!=='')return +o.f;return Math.max(0,Math.round(((+o.kcal||0)-4*(+o.p||0)-4*(+o.c||0))/9));}
+function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0),f:a.f+fatOf(f)}),{kcal:0,p:0,c:0,f:0});}
 function currentWeight(){for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;}
 function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.2));}
 function exerciseKcal(s,w){if(!s)return 0;if(s.km>0)return Math.round(w*(s.km+s.vert*0.01));if(s.t==='Strength')return 250;if(s.t==='Rehab')return 150;return 0;}
@@ -682,6 +866,21 @@ if(S.planAnchor!=='planC-20260601'){S.startDate='2026-06-01';S.raceDate='2026-10
 LANG=S.lang||"th";
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const todayKey=()=>todayStr();
+// ---- Sleep tracking ----
+function sleepLog(){return S.sleep||(S.sleep={});}
+function sleepLast(){return sleepLog()[todayStr()]||null;}
+function sleepNights(n){const out=[];for(let i=0;i<n;i++){const d=new Date();d.setDate(d.getDate()-i);const k=ymd(d);out.push({k,d,s:sleepLog()[k]||null});}return out;}
+function sleepAvg(n){const got=sleepNights(n).filter(x=>x.s&&x.s.h>0);if(!got.length)return null;return +(got.reduce((a,x)=>a+x.s.h,0)/got.length).toFixed(1);}
+function sleepScore(){ // 0-1 for RRS; uses last 7 nights, fallback .7
+ const got=sleepNights(7).filter(x=>x.s&&x.s.h>0);if(!got.length)return null;
+ const sc=got.map(x=>{const h=Math.min(1,x.s.h/8);const q=(x.s.q||3)/5;return 0.6*h+0.4*q;});
+ return sc.reduce((a,b)=>a+b,0)/sc.length;}
+function sleepTargetTonight(){ // recommend hours based on TOMORROW's session
+ const ti=todayIndex();const s=SESS[Math.min(SESS.length-1,ti+1)]||{t:'Rest'};
+ if(s.t==='Long'||s.t==='B2B'||s.t==='Race')return 8.5;
+ if(s.t==='Tempo'||s.t==='Hill'||s.t==='Intervals'||s.t==='Downhill')return 8;
+ return 7.5;}
+function recentPoorSleep(){let streak=0;for(let i=0;i<5;i++){const d=new Date();d.setDate(d.getDate()-i);const s=sleepLog()[ymd(d)];if(s&&s.h>0&&s.h<6)streak++;else if(i===0&&!s)continue;else break;}return streak;}
 
 let tab="today";
 const $=h=>{const t=document.createElement("template");t.innerHTML=h.trim();return t.content.firstChild;};
@@ -706,9 +905,10 @@ function raceReadiness(){
  const health=Math.max(0,1-0.34*niggleAlerts().length);
  let rs=[];for(let i=0;i<12&&rs.length<7;i++){const d=new Date();d.setDate(d.getDate()-i);const r=S.readiness[ymd(d)];if(r)rs.push(r.tot/6);}
  const readinessC=rs.length?rs.reduce((a,b)=>a+b,0)/rs.length:0.7;
+ const slpRaw=sleepScore();const sleep=slpRaw==null?0.7:slpRaw;
  const sw=+S.startWeight||START_WEIGHT_DEFAULT,tw=+S.targetWeight||TARGET_WEIGHT_DEFAULT;let now=sw;for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v)){now=v;break;}}
  const body=sw>tw?Math.max(0,Math.min(1,(sw-now)/(sw-tw))):0.8;
- const comps=[{key:'consistency',pct:consistency,w:0.25,col:'--lime'},{key:'volume',pct:volume,w:0.18,col:'--z1'},{key:'vert',pct:vert,w:0.18,col:'--orange'},{key:'longRun',pct:longRun,w:0.14,col:'--z3'},{key:'health',pct:health,w:0.13,col:'--good'},{key:'readinessC',pct:readinessC,w:0.07,col:'--lav'},{key:'body',pct:body,w:0.05,col:'--z2'}];
+ const comps=[{key:'consistency',pct:consistency,w:0.24,col:'--lime'},{key:'volume',pct:volume,w:0.17,col:'--z1'},{key:'vert',pct:vert,w:0.17,col:'--orange'},{key:'longRun',pct:longRun,w:0.14,col:'--z3'},{key:'health',pct:health,w:0.10,col:'--good'},{key:'sleep',pct:sleep,w:0.08,col:'--lav'},{key:'readinessC',pct:readinessC,w:0.06,col:'--z2'},{key:'body',pct:body,w:0.04,col:'--z2'}];
  const score=Math.round(comps.reduce((a,c)=>a+c.pct*c.w,0)*100);
  return{score,comps};
 }
@@ -757,6 +957,119 @@ function countUp(el,to,dur,suffix){to=Math.round(to);let st=null;suffix=suffix||
 
 function readinessToday(){return S.readiness[todayKey()];}
 function readinessVerdict(tot){if(tot>=5)return{c:"--good",t:t('ready_g'),d:t('ready_gd'),e:'🟢'};if(tot>=3)return{c:"--warn",t:t('ready_y'),d:t('ready_yd'),e:'🟡'};return{c:"--bad",t:t('ready_r'),d:t('ready_rd'),e:'🔴'};}
+function _hpEpoch(s){const m=s.match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);if(!m)return null;return Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]);}
+function _hpDay(s){const m=s.match(/(\d{4}-\d{2}-\d{2})/);return m?m[1]:null;}
+function parseHealthXML(text){
+ const sleep={},rhr={};const rhrAcc={};
+ // sleep: merge asleep intervals per wake-date
+ const nights={};
+ const re=/<Record\b[^>]*type="HKCategoryTypeIdentifierSleepAnalysis"[^>]*?>/g;let m;
+ while((m=re.exec(text))){const tag=m[0];if(!/value="[^"]*Asleep/i.test(tag))continue;const sd=(tag.match(/startDate="([^"]+)"/)||[])[1],ed=(tag.match(/endDate="([^"]+)"/)||[])[1];if(!sd||!ed)continue;const s=_hpEpoch(sd),e=_hpEpoch(ed);if(s==null||e==null||e<=s)continue;const key=_hpDay(ed);if(!key)continue;(nights[key]=nights[key]||[]).push([s,e]);}
+ Object.keys(nights).forEach(k=>{const iv=nights[k].sort((a,b)=>a[0]-b[0]);let merged=[],cur=null;iv.forEach(([s,e])=>{if(!cur){cur=[s,e];}else if(s<=cur[1]){cur[1]=Math.max(cur[1],e);}else{merged.push(cur);cur=[s,e];}});if(cur)merged.push(cur);const ms=merged.reduce((a,[s,e])=>a+(e-s),0);const h=+(ms/3600000).toFixed(1);if(h>0&&h<=14){const q=h>=8?5:h>=7?4:h>=6?3:h>=5?2:1;sleep[k]={h,q};}});
+ // resting HR: average per day
+ const rr=/<Record\b[^>]*type="HKQuantityTypeIdentifierRestingHeartRate"[^>]*?>/g;
+ while((m=rr.exec(text))){const tag=m[0];const v=parseFloat((tag.match(/value="([^"]+)"/)||[])[1]);const d=_hpDay((tag.match(/startDate="([^"]+)"/)||[])[1]||'');if(!d||isNaN(v))continue;(rhrAcc[d]=rhrAcc[d]||[]).push(v);}
+ Object.keys(rhrAcc).forEach(d=>{rhr[d]=Math.round(rhrAcc[d].reduce((a,b)=>a+b,0)/rhrAcc[d].length);});
+ return{sleep,rhr};
+}
+function parseHealthCSV(text){
+ const sleep={},rhr={};text.split(/\r?\n/).forEach(line=>{const c=line.split(',').map(x=>x.trim());if(c.length<2)return;const d=(c[0].match(/\d{4}-\d{2}-\d{2}/)||[])[0];if(!d)return;const a=parseFloat(c[1]);if(isNaN(a))return;if(/rhr|hr|bpm/i.test(line)&&a>30){rhr[d]=Math.round(a);return;}if(a>0&&a<=14){const q=c[2]&&!isNaN(+c[2])?Math.max(1,Math.min(5,+c[2])):(a>=8?5:a>=7?4:a>=6?3:a>=5?2:1);sleep[d]={h:+a.toFixed(1),q};}else if(a>30){rhr[d]=Math.round(a);}});
+ return{sleep,rhr};
+}
+function importHealth(file){
+ const rd=new FileReader();const isCsv=/\.csv$/i.test(file.name);
+ rd.onload=()=>{let res;try{res=isCsv?parseHealthCSV(String(rd.result)):parseHealthXML(String(rd.result));}catch(e){res=null;}
+  if(!res||(!Object.keys(res.sleep).length&&!Object.keys(res.rhr).length)){window._sleepMsg={err:1};closeSheet();openSleep();return;}
+  if(!S.sleep)S.sleep={};Object.assign(S.sleep,res.sleep);
+  if(!S.rhr)S.rhr={};Object.assign(S.rhr,res.rhr);
+  window._sleepMsg={ns:Object.keys(res.sleep).length,nr:Object.keys(res.rhr).length};save();closeSheet();openSleep();render();};
+ rd.readAsText(file);
+}
+function rhrAvg(n){const out=[];for(let i=0;i<n;i++){const d=new Date();d.setDate(d.getDate()-i);const v=(S.rhr||{})[ymd(d)];if(v)out.push(v);}return out.length?Math.round(out.reduce((a,b)=>a+b,0)/out.length):null;}
+function rhrLog(){return S.rhr||(S.rhr={});}
+function rhrLast(){const l=rhrLog();for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);const v=l[ymd(d)];if(v)return{v,d:ymd(d),ago:i};}return null;}
+function rhrDays(n){const out=[];for(let i=0;i<n;i++){const d=new Date();d.setDate(d.getDate()-i);out.push({k:ymd(d),d,v:rhrLog()[ymd(d)]||null});}return out;}
+function rhrBaseline(){const got=[];for(let i=1;i<=21;i++){const d=new Date();d.setDate(d.getDate()-i);const v=rhrLog()[ymd(d)];if(v)got.push(v);}if(got.length<3)return null;return Math.round(got.reduce((a,b)=>a+b,0)/got.length);}
+function rhrStatus(){const last=rhrLast(),base=rhrBaseline();if(!last||base==null)return null;const diff=last.v-base;return{v:last.v,base,diff,elevated:diff>=5||last.v>=base*1.07,ago:last.ago};}
+function recentElevatedRHR(){const base=rhrBaseline();if(base==null)return 0;let streak=0;for(let i=0;i<4;i++){const d=new Date();d.setDate(d.getDate()-i);const v=rhrLog()[ymd(d)];if(v&&(v-base>=5||v>=base*1.07))streak++;else if(i===0&&!v)continue;else break;}return streak;}
+function openSleep(){
+ const cur=sleepLast()||{h:sleepTargetTonight(),q:3};
+ let h=cur.h,q=cur.q||3;
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:4px">😴 ${t('sleepTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:16px">${t('sleepSheetSub')}</div></div>`);
+ const msg=window._sleepMsg;window._sleepMsg=null;
+ if(msg){if(msg.err)sheet.appendChild($(`<div class="card" style="border-color:var(--bad);background:var(--bad)14;font-size:12px;color:var(--bad);margin-bottom:12px;padding:11px 13px">${t('sleepImpErr')}</div>`));else sheet.appendChild($(`<div class="card" style="border-color:var(--good);background:var(--good)14;font-size:12.5px;margin-bottom:12px;padding:11px 13px">✅ ${t('sleepImpOk').replace('{ns}',msg.ns).replace('{nr}',msg.nr)}</div>`));}
+ sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('sleepHours')}</div>`));
+ const hrow=$('<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"></div>');
+ const hval=$(`<div class="num" style="font-size:34px;color:var(--lav);flex:1;text-align:center">${h.toFixed(1)}<span style="font-size:14px;color:var(--muted)">h</span></div>`);
+ const mk=(lbl,fn)=>{const b=$(`<button class="tap" style="border:none;background:var(--card2);width:52px;height:52px;border-radius:14px;color:var(--lav);font-size:24px;font-weight:300;cursor:pointer">${lbl}</button>`);b.onclick=()=>{fn();hval.innerHTML=h.toFixed(1)+'<span style="font-size:14px;color:var(--muted)">h</span>';};return b;};
+ hrow.appendChild(mk('−',()=>{h=Math.max(0,+(h-0.5).toFixed(1));}));hrow.appendChild(hval);hrow.appendChild(mk('+',()=>{h=Math.min(14,+(h+0.5).toFixed(1));}));
+ sheet.appendChild(hrow);
+ sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('sleepQuality')}</div>`));
+ const qseg=$('<div class="seg" style="margin-bottom:8px"></div>');
+ const qlabels=[t('sleepQ1'),t('sleepQ2'),t('sleepQ3'),t('sleepQ4'),t('sleepQ5')];
+ const ql=$(`<div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:18px">${qlabels[q-1]}</div>`);
+ function drawQ(){qseg.innerHTML='';[1,2,3,4,5].forEach(i=>{const b=$(`<button class="${q===i?'on':''}" style="flex:1;padding:9px 0">${i}</button>`);b.onclick=()=>{q=i;drawQ();ql.textContent=qlabels[q-1];};qseg.appendChild(b);});}
+ drawQ();sheet.appendChild(qseg);sheet.appendChild(ql);
+ const sv=$(`<button class="btn btn-lime tap" style="margin-bottom:9px">${t('saveToday')}</button>`);
+ sv.onclick=()=>{sleepLog()[todayStr()]={h,q};save();closeSheet();render();};sheet.appendChild(sv);
+ // Health import
+ const ra=rhrAvg(7);
+ sheet.appendChild($(`<div style="height:1px;background:var(--line);margin:6px 0 13px"></div>`));
+ const fi=$(`<input type="file" accept=".xml,.csv,text/xml,text/csv" style="display:none">`);fi.onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)importHealth(f);};
+ const ib=$(`<button class="btn btn-ghost tap" style="margin-bottom:7px">📥 ${t('sleepImport')}</button>`);ib.onclick=()=>fi.click();
+ sheet.appendChild(ib);sheet.appendChild(fi);
+ sheet.appendChild($(`<div style="font-size:10.5px;color:var(--muted2);line-height:1.55;margin-bottom:10px">${t('sleepImportHint')}${ra?`<br>❤️ ${t('rhrAvg')}: <b style="color:var(--lav)">${ra} bpm</b>`:''}</div>`));
+ if(sleepLast()){const del=$(`<button class="btn btn-ghost tap" style="color:var(--bad)">${t('sleepClear')}</button>`);del.onclick=()=>{delete sleepLog()[todayStr()];save();closeSheet();render();};sheet.appendChild(del);}
+ showSheet(sheet);
+}
+function openRHR(){
+ const st=rhrStatus();const today=rhrLog()[todayStr()];let val=today||(rhrLast()?rhrLast().v:52);
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:4px">❤️ ${t('rhrTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:16px">${t('rhrSheetSub')}</div></div>`);
+ if(st){const flag=st.elevated;sheet.appendChild($(`<div class="card" style="margin-bottom:14px;border-color:${flag?cv('--bad'):cv('--good')}"><div style="display:flex;gap:18px"><div style="flex:1"><div class="num" style="font-size:26px;color:${flag?cv('--bad'):cv('--lav')}">${st.v}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('rhrLastL')}</div></div><div style="flex:1"><div class="num" style="font-size:26px;color:var(--muted2)">${st.base}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('rhrBaseL')}</div></div><div style="flex:1"><div class="num" style="font-size:26px;color:${st.diff>0?cv('--bad'):cv('--good')}">${st.diff>0?'+':''}${st.diff}</div><div style="font-size:9.5px;color:var(--muted);font-weight:700">${t('rhrDiffL')}</div></div></div><div style="font-size:11.5px;color:${flag?cv('--bad'):cv('--good')};margin-top:11px;line-height:1.5">${flag?'⚠️ '+t('rhrAlertLong'):'✅ '+t('rhrOkLong')}</div></div>`));}
+ // manual entry
+ sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('rhrEntryL')}</div>`));
+ const row=$('<div style="display:flex;align-items:center;gap:14px;margin-bottom:8px"></div>');
+ const dv=$(`<div class="num" style="font-size:34px;color:var(--lav);flex:1;text-align:center">${val}<span style="font-size:14px;color:var(--muted)"> bpm</span></div>`);
+ const mk=(l,fn)=>{const b=$(`<button class="tap" style="border:none;background:var(--card2);width:52px;height:52px;border-radius:14px;color:var(--lav);font-size:24px;font-weight:300;cursor:pointer">${l}</button>`);b.onclick=()=>{fn();dv.innerHTML=val+'<span style="font-size:14px;color:var(--muted)"> bpm</span>';};return b;};
+ row.appendChild(mk('−',()=>{val=Math.max(30,val-1);}));row.appendChild(dv);row.appendChild(mk('+',()=>{val=Math.min(120,val+1);}));
+ sheet.appendChild(row);
+ sheet.appendChild($(`<div style="font-size:10.5px;color:var(--muted2);margin-bottom:14px;line-height:1.5">${t('rhrTip')}</div>`));
+ const sv=$(`<button class="btn btn-lime tap" style="margin-bottom:9px">${t('saveToday')}</button>`);sv.onclick=()=>{rhrLog()[todayStr()]=val;save();closeSheet();render();};sheet.appendChild(sv);
+ const fi=$(`<input type="file" accept=".xml,.csv,text/xml,text/csv" style="display:none">`);fi.onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)importHealth(f);};
+ const ib=$(`<button class="btn btn-ghost tap">📥 ${t('sleepImport')}</button>`);ib.onclick=()=>fi.click();sheet.appendChild(ib);sheet.appendChild(fi);
+ showSheet(sheet);
+}
+function openRaceMode(){
+ const dtr=Math.max(0,Math.round((new Date(S.raceDate+'T00:00:00')-new Date(todayStr()+'T00:00:00'))/864e5));
+ const sheet=$(`<div class="sheet" style="max-height:88vh"><div class="grab"></div><div class="dsp" style="font-size:20px;margin-bottom:2px">🏁 ${t('raceModeTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:14px">RTC 70 · ${dtr} ${t('daysLeft')}</div></div>`);
+ // facts
+ const facts=[['📏','72.59 km'],['⛰️','+3,586 / −3,598 m'],['⏱️',(LANG==='th'?'Cut-off 15 ชม.':'Cut-off 15 h')],['🌙',(LANG==='th'?'ออกตัว 16:00':'Start 16:00')],['🚰',(LANG==='th'?'3 จุด aid':'3 aid stations')]];
+ const fc=$(`<div class="card" style="margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px 14px">${facts.map(f=>`<div style="font-size:12px"><span style="opacity:.7">${f[0]}</span> ${f[1]}</div>`).join('')}</div>`);sheet.appendChild(fc);
+ // pacing table (A 13h / B 14.5h), fatigue curve tf=d^1.12
+ const goals=[['A',13,'--lime'],['B',14.5,'--orange']];const cps=[10,20,30,40,50,60,72.59];
+ const startMin=16*60;const fmtClock=m=>{const x=((startMin+m)%1440+1440)%1440;const hh=Math.floor(x/60),mm=Math.round(x%60);return (hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;};
+ const tfMax=Math.pow(1,1.12);
+ let prows=cps.map(km=>{const d=km/72.59;const tf=Math.pow(d,1.12)/tfMax;const cells=goals.map(g=>fmtClock(g[1]*60*tf));return {km,cells};});
+ let ptbl=`<div class="card" style="margin-bottom:12px"><div class="dsp" style="font-size:15px;margin-bottom:4px">${t('rmPacing')}</div><div style="font-size:10.5px;color:var(--muted);margin-bottom:10px">${t('rmPacingSub')}</div><div style="display:flex;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding-bottom:6px;border-bottom:1px solid var(--line)"><span style="flex:1">KM</span><span style="width:78px;text-align:center;color:${cv('--lime')}">A · 13h</span><span style="width:78px;text-align:center;color:${cv('--orange')}">B · 14.5h</span></div>`;
+ prows.forEach(r=>{ptbl+=`<div style="display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px"><span style="flex:1;font-weight:700">${r.km===72.59?'🏁 72.6':r.km}</span><span class="num" style="width:78px;text-align:center;color:${cv('--lime')}">${r.cells[0]}</span><span class="num" style="width:78px;text-align:center;color:${cv('--orange')}">${r.cells[1]}</span></div>`;});
+ ptbl+=`<div style="font-size:10.5px;color:var(--muted2);margin-top:8px;line-height:1.5">${t('rmCutoff')}</div></div>`;
+ sheet.appendChild($(ptbl));
+ // gear checklist
+ if(!S.raceGear)S.raceGear={};
+ const gc=$(`<div class="card" style="margin-bottom:12px"></div>`);
+ const doneCount=()=>RACEKIT.reduce((a,g)=>a+g.items.filter((it,i)=>S.raceGear[g.grp+i]).length,0);
+ const totalCount=RACEKIT.reduce((a,g)=>a+g.items.length,0);
+ const hdr=$(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div class="dsp" style="font-size:15px">${t('rmGear')}</div><div class="num" style="font-size:13px;color:var(--lime)"><span id="gearN">${doneCount()}</span>/${totalCount}</div></div>`);gc.appendChild(hdr);
+ RACEKIT.forEach(g=>{gc.appendChild($(`<div style="font-size:10.5px;font-weight:800;color:${g.grp==='must'?cv('--bad'):cv('--muted')};text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px">${g.grp==='must'?t('rmMust'):t('rmRec')}</div>`));g.items.forEach((it,i)=>{const key=g.grp+i;const rowEl=$(`<div class="tap" style="display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer"></div>`);const box=$(`<div style="width:22px;height:22px;border-radius:7px;border:2px solid ${S.raceGear[key]?cv('--lime'):cv('--line')};background:${S.raceGear[key]?cv('--lime'):'transparent'};flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#10131F;font-size:13px;font-weight:800">${S.raceGear[key]?'✓':''}</div>`);const lbl=$(`<div style="font-size:12.5px;${S.raceGear[key]?'color:var(--muted);text-decoration:line-through':''}">${tx(it)}</div>`);rowEl.appendChild(box);rowEl.appendChild(lbl);rowEl.onclick=()=>{S.raceGear[key]=!S.raceGear[key];save();box.style.borderColor=S.raceGear[key]?cv('--lime'):cv('--line');box.style.background=S.raceGear[key]?cv('--lime'):'transparent';box.textContent=S.raceGear[key]?'✓':'';lbl.style.color=S.raceGear[key]?'var(--muted)':'';lbl.style.textDecoration=S.raceGear[key]?'line-through':'';document.getElementById('gearN').textContent=doneCount();};gc.appendChild(rowEl);});});
+ sheet.appendChild(gc);
+ // fuel timeline (reuse RACEFUEL)
+ const tl=$(`<div class="card" style="margin-bottom:12px"><div class="dsp" style="font-size:15px;margin-bottom:10px">${t('rmFuel')}</div></div>`);
+ RACEFUEL.forEach((r,j)=>tl.appendChild($(`<div style="display:flex;gap:12px;padding:7px 0;${j<RACEFUEL.length-1?'border-bottom:1px solid var(--line)':''}"><span style="font-weight:800;font-size:11.5px;color:var(--lime);flex-shrink:0;width:84px">${tx(r[0])}</span><span style="font-size:12px;opacity:.92;line-height:1.45">${tx(r[1])}</span></div>`)));
+ sheet.appendChild(tl);
+ // key reminders
+ sheet.appendChild($(`<div class="card glow"><div class="dsp" style="font-size:15px;margin-bottom:8px">💡 ${t('rmReminders')}</div><div style="font-size:12.5px;line-height:1.7">${t('rmRemindList')}</div></div>`));
+ showSheet(sheet);
+}
 function openReadiness(){
  const qs=[{q:t('rq1'),o:[[t('ro_fresh'),2],[t('ro_ok'),1],[t('ro_tired'),0]]},{q:t('rq2'),o:[[t('ro_good'),2],[t('ro_fair'),1],[t('ro_bad'),0]]},{q:t('rq3'),o:[[t('ro_no'),2],[t('ro_slight'),1],[t('ro_pain'),0]]}];
  let ans=[null,null,null];
@@ -863,7 +1176,7 @@ function Today(v){
  rrc.onclick=openRRS;wrap.appendChild(rrc);
  // nutrition summary
  const fds=todayStr();const ftg=foodTarget(fds);const ftot=foodTotals(fds);const pT=proteinTarget();const kpct=Math.min(1,ftot.kcal/ftg.hi);const kovr=ftot.kcal>ftg.hi;
- const nutc=$(`<div class="card tap" style="margin-top:10px;display:flex;align-items:center;gap:16px"><div style="position:relative;width:78px;height:78px;flex-shrink:0">${ring(kpct,78,8,kovr?cv('--bad'):cv('--lime'))}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:17px;color:${kovr?cv('--bad'):cv('--lime')}">${Math.round(ftot.kcal)}</div><div style="font-size:8px;color:var(--muted);font-weight:700">kcal</div></div></div><div style="flex:1"><div class="dsp" style="font-size:14px;margin-bottom:2px">${t('nutToday')}</div><div style="font-size:11px;color:var(--muted);margin-bottom:9px">${t('nutTap')}</div><div style="display:flex;gap:14px"><div><div class="num" style="font-size:15px;color:var(--good)">${Math.round(ftot.p)}<span style="font-size:10px;color:var(--muted)">/${pT}g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('protein')}</div></div><div><div class="num" style="font-size:15px">${Math.round(ftot.c)}<span style="font-size:10px;color:var(--muted)">g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('carbsL')}</div></div><div><div class="num" style="font-size:14px;color:var(--muted)">${ftg.lo}–${ftg.hi}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('targetKcal')}</div></div></div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted2'),16)}</div>`);
+ const nutc=$(`<div class="card tap" style="margin-top:10px;display:flex;align-items:center;gap:16px"><div style="position:relative;width:78px;height:78px;flex-shrink:0">${ring(kpct,78,8,kovr?cv('--bad'):cv('--lime'))}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="num" style="font-size:17px;color:${kovr?cv('--bad'):cv('--lime')}">${Math.round(ftot.kcal)}</div><div style="font-size:8px;color:var(--muted);font-weight:700">kcal</div></div></div><div style="flex:1"><div class="dsp" style="font-size:14px;margin-bottom:2px">${t('nutToday')}</div><div style="font-size:11px;color:var(--muted);margin-bottom:9px">${t('nutTap')}</div><div style="display:flex;gap:14px"><div><div class="num" style="font-size:15px;color:var(--good)">${Math.round(ftot.p)}<span style="font-size:10px;color:var(--muted)">/${pT}g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('protein')}</div></div><div><div class="num" style="font-size:15px">${Math.round(ftot.c)}<span style="font-size:10px;color:var(--muted)">g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('carbsL')}</div></div><div><div class="num" style="font-size:15px;color:var(--z3)">${Math.round(ftot.f)}<span style="font-size:10px;color:var(--muted)">g</span></div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('fatL')}</div></div></div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted2'),16)}</div>`);
  nutc.onclick=()=>{tab='fuel';window._fuelTab='food';foodPtr=null;render();};wrap.appendChild(nutc);
  // smart coach insight
  const ci=coachInsight();const cic=cv(ci.col);
@@ -877,6 +1190,35 @@ function Today(v){
  const wminus=$(`<button class="btn btn-ghost tap" style="flex:1;padding:10px">−250</button>`);wminus.onclick=()=>setWater(waterToday()-250);
  const wplus=$(`<button class="btn btn-lime tap" style="flex:2;padding:10px">${t('waterAdd')}</button>`);wplus.onclick=()=>setWater(waterToday()+250);
  wrow.appendChild(wminus);wrow.appendChild(wplus);wc.appendChild(wrow);wrap.appendChild(wc);
+ // sleep tracker
+ const sl=sleepLast();const sAvg=sleepAvg(7);const sTgt=sleepTargetTonight();
+ const nights=sleepNights(7).reverse();const maxH=Math.max(9,...nights.map(x=>x.s?x.s.h:0));
+ const SW=300,SH=64,sgap=SW/7,sbw=sgap*0.5;
+ let sbars='';nights.forEach((x,i)=>{const cx=sgap*i+sgap/2;if(!x.s||!x.s.h){sbars+=`<circle cx="${cx.toFixed(1)}" cy="${SH-8}" r="2" fill="${cv('--line')}"/>`;return;}const h=(SH-16)*Math.min(1,x.s.h/maxH);const good=x.s.h>=7;const col=x.s.h>=7?cv('--lav'):x.s.h>=6?cv('--z3'):cv('--bad');sbars+=`<rect x="${(cx-sbw/2).toFixed(1)}" y="${(SH-8-h).toFixed(1)}" width="${sbw.toFixed(1)}" height="${Math.max(2,h).toFixed(1)}" rx="2" fill="${col}"/><text x="${cx.toFixed(1)}" y="${SH-8-h-3}" fill="${cv('--muted2')}" font-size="7.5" text-anchor="middle">${x.s.h}</text>`;});
+ const slbl=nights.map((x,i)=>{const cx=sgap*i+sgap/2;return `<text x="${cx.toFixed(1)}" y="${SH-1}" fill="${cv('--muted2')}" font-size="7.5" font-family="-apple-system,system-ui,sans-serif" text-anchor="middle">${(LANG==='th'?days_th:days_en)[x.d.getDay()]}</text>`;}).join('');
+ const qdots=q=>[1,2,3,4,5].map(i=>`<span style="color:${i<=q?cv('--lav'):cv('--line')};font-size:13px">●</span>`).join('');
+ const sc=$(`<div class="card tap" style="margin-top:10px"></div>`);
+ sc.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">😴</span><span class="dsp" style="font-size:14px">${t('sleepTitle')}</span></div>${sl?`<div style="text-align:right"><div class="num" style="font-size:16px;color:var(--lav)">${sl.h}<span style="font-size:10px;color:var(--muted)">h</span></div><div style="margin-top:1px">${qdots(sl.q||3)}</div></div>`:`<div style="font-size:11.5px;color:var(--lime);font-weight:700">${t('sleepLogBtn')} →</div>`}</div>${sAvg?`<svg viewBox="0 0 ${SW} ${SH}" style="width:100%;height:auto;margin-bottom:6px">${sbars}${slbl}</svg><div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)"><span>${t('sleepAvg')}: <b style="color:var(--lav)">${sAvg}h</b></span><span>${t('sleepTonight')}: <b style="color:var(--lime)">${sTgt}h</b></span></div>`:`<div style="font-size:12px;color:var(--muted);line-height:1.5">${t('sleepEmpty')} <b style="color:var(--lime)">${sTgt}h</b></div>`}`;
+ sc.onclick=openSleep;wrap.appendChild(sc);
+ // RHR recovery card (only if data exists)
+ const rst=rhrStatus();const rlast=rhrLast();
+ if(rlast){
+  const rdays=rhrDays(14).reverse();const vals=rdays.filter(x=>x.v).map(x=>x.v);const rmin=Math.min(...vals)-2,rmax=Math.max(...vals)+2;
+  const RW=300,RH=54,rgap=RW/14;
+  let rpts=[];rdays.forEach((x,i)=>{if(!x.v)return;const cx=rgap*i+rgap/2;const cy=RH-6-((RH-12)*(x.v-rmin)/Math.max(1,rmax-rmin));rpts.push([cx,cy,x.v]);});
+  let rpath=rpts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const baseY=rst?RH-6-((RH-12)*(rst.base-rmin)/Math.max(1,rmax-rmin)):null;
+  const rc=$(`<div class="card tap" style="margin-top:10px"></div>`);
+  const flag=rst&&rst.elevated;
+  rc.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">❤️</span><span class="dsp" style="font-size:14px">${t('rhrTitle')}</span></div><div style="text-align:right"><div class="num" style="font-size:17px;color:${flag?cv('--bad'):cv('--lav')}">${rlast.v}<span style="font-size:10px;color:var(--muted)"> bpm</span></div>${rst?`<div style="font-size:9.5px;color:${flag?cv('--bad'):cv('--muted')}">${rst.diff>0?'+':''}${rst.diff} ${t('rhrVsBase')}</div>`:''}</div></div><svg viewBox="0 0 ${RW} ${RH}" style="width:100%;height:auto">${baseY!=null?`<line x1="0" y1="${baseY.toFixed(1)}" x2="${RW}" y2="${baseY.toFixed(1)}" stroke="${cv('--line')}" stroke-width="1" stroke-dasharray="3 3"/>`:''}<path d="${rpath}" fill="none" stroke="${cv('--lav')}" stroke-width="2" stroke-linejoin="round"/>${rpts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" fill="${cv('--lav')}"/>`).join('')}</svg>${flag?`<div style="font-size:11px;color:${cv('--bad')};margin-top:7px;line-height:1.45">⚠️ ${t('rhrAlert')}</div>`:`<div style="font-size:10.5px;color:var(--muted);margin-top:7px">${t('rhrOk').replace('{b}',rst?rst.base:'-')}</div>`}`;
+  rc.onclick=openRHR;wrap.appendChild(rc);
+ }
+ // Race mode card
+ const dtr=Math.max(0,Math.round((new Date(S.raceDate+'T00:00:00')-new Date(todayStr()+'T00:00:00'))/864e5));
+ const near=dtr<=21;
+ const rmc=$(`<div class="card tap ${near?'glow':''}" style="margin-top:10px"></div>`);
+ rmc.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:9px"><span style="font-size:18px">🏁</span><div><div class="dsp" style="font-size:14px">${t('raceModeTitle')}</div><div style="font-size:11px;color:var(--muted)">${t('raceModeSub')}</div></div></div><div style="text-align:right"><div class="num" style="font-size:20px;color:var(--orange)">${dtr}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('daysLeft')}</div></div></div>`;
+ rmc.onclick=openRaceMode;wrap.appendChild(rmc);
  // adaptive plan suggestion
  const adp=adaptiveSuggestion();const adc=cv(adp.col);const tSess=SESS[todayIndex()];
  if(adp.key!=='ok'){
@@ -976,7 +1318,7 @@ function Fuel(v){
   // entries
   const arr=(S.food&&S.food[ds])||[];
   if(!arr.length)body.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:18px">${t('noFood')}</div>`));
-  arr.forEach((f,fi)=>{const nm=f.n?tx(f.n):(f.name||'');const qtag=(f.qty&&f.qty!==1)?` <span style="color:var(--lime);font-weight:800">×${f.qty}</span>`:'';const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:11px"><div style="flex:1"><div style="font-weight:700;font-size:13.5px">${nm}${qtag}</div><div style="font-size:11px;color:var(--muted)">${Math.round(f.kcal)} kcal · P ${Math.round(f.p||0)} · C ${Math.round(f.c||0)}</div></div></div>`);const del=$(`<button class="tap" style="border:none;background:var(--bg2);width:30px;height:30px;border-radius:9px;color:var(--muted);cursor:pointer;font-size:16px">×</button>`);del.onclick=()=>{S.food[ds].splice(fi,1);save();render();};row.appendChild(del);body.appendChild(row);});
+  arr.forEach((f,fi)=>{const nm=f.n?tx(f.n):(f.name||'');const qtag=(f.qty&&f.qty!==1)?` <span style="color:var(--lime);font-weight:800">×${f.qty}</span>`:'';const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:11px"><div style="flex:1"><div style="font-weight:700;font-size:13.5px">${nm}${qtag}</div><div style="font-size:11px;color:var(--muted)">${Math.round(f.kcal)} kcal · P ${Math.round(f.p||0)} · C ${Math.round(f.c||0)} · F ${fatOf(f)}</div></div></div>`);const del=$(`<button class="tap" style="border:none;background:var(--bg2);width:30px;height:30px;border-radius:9px;color:var(--muted);cursor:pointer;font-size:16px">×</button>`);del.onclick=()=>{S.food[ds].splice(fi,1);save();render();};row.appendChild(del);body.appendChild(row);});
   body.appendChild($(`<div style="font-size:11px;color:var(--muted2);text-align:center;margin-top:6px;line-height:1.5;padding:0 8px">${t('energyNote')}</div>`));
   // weekly nutrition summary (last 7 days ending on ds)
   const week=[];for(let i=6;i>=0;i--){const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-i);const k=ymd(d);const tt=foodTotals(k);week.push({d,k,kcal:tt.kcal,p:tt.p});}
@@ -1112,11 +1454,11 @@ function openFoodAdd(ds){
   const sub=$(`<div style="font-size:12px;color:var(--muted);margin-bottom:14px"></div>`);card.appendChild(sub);
   card.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('servings')}</div>`));
   const segq=$('<div class="seg" style="margin-bottom:14px">');
-  function upd(){sub.textContent=`${Math.round(base.kcal*q)} kcal · P ${+(base.p*q).toFixed(1)} · C ${+(base.c*q).toFixed(1)}`;segq.querySelectorAll('button').forEach((b,i)=>b.className=([0.5,1,1.5,2,3][i]===q)?'on':'');}
+  function upd(){sub.textContent=`${Math.round(base.kcal*q)} kcal · P ${+(base.p*q).toFixed(1)} · C ${+(base.c*q).toFixed(1)} · F ${+(fatOf(base)*q).toFixed(1)}`;segq.querySelectorAll('button').forEach((b,i)=>b.className=([0.5,1,1.5,2,3][i]===q)?'on':'');}
   [0.5,1,1.5,2,3].forEach(mult=>{const b=$(`<button>×${mult}</button>`);b.onclick=()=>{q=mult;upd();};segq.appendChild(b);});
   card.appendChild(segq);
   const ab=$(`<button class="btn btn-lime tap">${t('addBtn')}</button>`);
-  ab.onclick=()=>{const it={kcal:Math.round(base.kcal*q),p:+(base.p*q).toFixed(1),c:+(base.c*q).toFixed(1),qty:q};if(base.n)it.n=base.n;else it.name=base.name;ov.remove();addItem(it);};
+  ab.onclick=()=>{const it={kcal:Math.round(base.kcal*q),p:+(base.p*q).toFixed(1),c:+(base.c*q).toFixed(1),f:+(fatOf(base)*q).toFixed(1),qty:q};if(base.n)it.n=base.n;else it.name=base.name;ov.remove();addItem(it);};
   card.appendChild(ab);ov.appendChild(card);ov.onclick=e=>{if(e.target===ov)ov.remove();};
   (window._sheet||document.body).appendChild(ov);upd();
  }
@@ -1124,7 +1466,7 @@ function openFoodAdd(ds){
   if(cat==="recent"&&!query){
    const rf=recentFoods();
    if(!rf.length){list.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:18px">${t('recent_empty')}</div>`));return;}
-   rf.forEach(r=>{const it=r.base;const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:9px"><div class="tap" style="flex:1;cursor:pointer"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}${r.count>1?` <span style="color:var(--lav);font-size:10px;font-weight:800">×${r.count}</span>`:''}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} ${t('perServe')}</div></div></div>`);row.querySelector('.tap').onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});const addb=$(`<button class="tap" style="border:none;background:var(--lime);width:30px;height:30px;border-radius:9px;color:#10131F;cursor:pointer;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center">+</button>`);addb.onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});row.appendChild(addb);list.appendChild(row);});return;
+   rf.forEach(r=>{const it=r.base;const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:9px"><div class="tap" style="flex:1;cursor:pointer"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}${r.count>1?` <span style="color:var(--lav);font-size:10px;font-weight:800">×${r.count}</span>`:''}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} · F ${fatOf(it)} ${t('perServe')}</div></div></div>`);row.querySelector('.tap').onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c,f:fatOf(it)});const addb=$(`<button class="tap" style="border:none;background:var(--lime);width:30px;height:30px;border-radius:9px;color:#10131F;cursor:pointer;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center">+</button>`);addb.onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c,f:fatOf(it)});row.appendChild(addb);list.appendChild(row);});return;
   }
   if(cat==="custom"){
    let ncat="meal";
@@ -1143,7 +1485,7 @@ function openFoodAdd(ds){
   }
   let items=allFoods().filter(x=>x.cat===cat);
   if(query)items=allFoods().filter(x=>tx(x.n).toLowerCase().includes(query)||x.n.th.includes(query)||x.n.en.toLowerCase().includes(query));
-  items.forEach(it=>{const isCustom=it.id&&it.id[0]==='c';const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:9px"><div class="tap" style="flex:1;cursor:pointer"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}${isCustom?' <span style="color:var(--lav);font-size:10px;font-weight:800">●</span>':''}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} ${t('perServe')}</div></div></div>`);row.querySelector('.tap').onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});const eb=$(`<button class="tap" style="border:none;background:var(--bg2);width:30px;height:30px;border-radius:9px;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center">${ic('<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4z"/>',cv('--muted'),15)}</button>`);eb.onclick=()=>openFoodEdit(it);const addb=$(`<button class="tap" style="border:none;background:var(--lime);width:30px;height:30px;border-radius:9px;color:#10131F;cursor:pointer;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center">+</button>`);addb.onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c});row.appendChild(eb);row.appendChild(addb);list.appendChild(row);});
+  items.forEach(it=>{const isCustom=it.id&&it.id[0]==='c';const row=$(`<div class="card" style="padding:11px 13px;display:flex;align-items:center;gap:9px"><div class="tap" style="flex:1;cursor:pointer"><div style="font-weight:700;font-size:13.5px">${tx(it.n)}${isCustom?' <span style="color:var(--lav);font-size:10px;font-weight:800">●</span>':''}</div><div style="font-size:11px;color:var(--muted)">${it.kcal} kcal · P ${it.p} · C ${it.c} · F ${fatOf(it)} ${t('perServe')}</div></div></div>`);row.querySelector('.tap').onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c,f:fatOf(it)});const eb=$(`<button class="tap" style="border:none;background:var(--bg2);width:30px;height:30px;border-radius:9px;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center">${ic('<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4z"/>',cv('--muted'),15)}</button>`);eb.onclick=()=>openFoodEdit(it);const addb=$(`<button class="tap" style="border:none;background:var(--lime);width:30px;height:30px;border-radius:9px;color:#10131F;cursor:pointer;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center">+</button>`);addb.onclick=()=>pickServings({n:it.n,kcal:it.kcal,p:it.p,c:it.c,f:fatOf(it)});row.appendChild(eb);row.appendChild(addb);list.appendChild(row);});
   if(!items.length)list.appendChild($(`<div style="text-align:center;color:var(--muted2);font-size:13px;padding:16px">— ${t('cat_custom')} —</div>`));
  }
  drawList();showSheet(sheet);
@@ -1176,6 +1518,8 @@ function missedSessions(){
 function adaptiveSuggestion(){
  if(niggleAlerts().length)return{key:'niggle',col:'--bad',emoji:'🩹',msg:t('adapt_niggle'),canEase:true};
  const lr=recentLowReadiness();if(lr>=2)return{key:'readiness',col:'--warn',emoji:'😴',msg:t('adapt_readiness').replace('{n}',lr),canEase:true};
+ const ps=recentPoorSleep();if(ps>=2)return{key:'sleep',col:'--warn',emoji:'😴',msg:t('adapt_sleep').replace('{n}',ps),canEase:true};
+ const er=recentElevatedRHR();if(er>=2)return{key:'rhr',col:'--bad',emoji:'❤️',msg:t('adapt_rhr').replace('{n}',er),canEase:true};
  const ms=missedSessions();if(ms>=3)return{key:'missed',col:'--z3',emoji:'⏭',msg:t('adapt_missed').replace('{n}',ms),canEase:false};
  return{key:'ok',col:'--lime',emoji:'✅',msg:t('adapt_ok'),canEase:false};
 }
@@ -1198,6 +1542,9 @@ function coachInsight(){
  // fuel nudge
  const ftot=foodTotals(todayStr()),ftg=foodTarget(todayStr());
  if(ftot.kcal>0&&ftot.kcal<ftg.lo*0.6&&s.t!=='Rest')base.msg+=t('co_fuellow');
+ // sleep nudge
+ const sl=sleepLast();if(sl&&sl.h>0&&sl.h<6&&isInput(s.t))base.msg+=t('co_sleeplow');
+ const rs2=rhrStatus();if(rs2&&rs2.elevated&&isInput(s.t))base.msg+=t('co_rhrhigh');
  return base;
 }
 function waterToday(){return (S.water&&S.water[todayStr()])||0;}
