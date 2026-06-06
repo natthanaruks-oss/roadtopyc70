@@ -859,7 +859,9 @@ function recentFoods(){
  });});
  return Object.values(map).sort((a,b)=>a.last<b.last?1:a.last>b.last?-1:b.count-a.count).slice(0,15);
 }
-function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;return{lo:e[0],hi:e[1],mode:e[2],type:energyType(s.t),sess:s};}
+function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;let lo=e[0],hi=e[1];
+ if(s.km>0){const w=currentWeight();const aj=adjustedLoad(s);const base=w*(s.km+s.vert*0.01);const now=w*(aj.km+aj.vert*0.01);const delta=Math.round(now-base);if(delta!==0){const floor=maintenanceKcal()-150;lo=Math.max(floor,lo+delta);hi=Math.max(lo+250,hi+delta);}}
+ return{lo,hi,mode:e[2],type:energyType(s.t),sess:s,adjusted:s.km>0&&(loadAdjFactor(s.wid)!==1||isEased(s.id))};}
 function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
 function fatOf(o){if(o&&o.f!=null&&o.f!=='')return +o.f;return Math.max(0,Math.round(((+o.kcal||0)-4*(+o.p||0)-4*(+o.c||0))/9));}
 function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0),f:a.f+fatOf(f)}),{kcal:0,p:0,c:0,f:0});}
@@ -871,7 +873,7 @@ function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();con
  let ex=0;
  if(s.km>0){const km=parseFloat(a.km),vt=parseFloat(a.v);
    if(!isNaN(km))ex=Math.round(w*(km+(isNaN(vt)?0:vt)*0.01));
-   else if(done)ex=Math.round(w*(s.km+s.vert*0.01));
+   else if(done){const aj=adjustedLoad(s);ex=Math.round(w*(aj.km+aj.vert*0.01));}
  }else if(done){ex=exerciseKcal(s,w);}
  const maint=maintenanceKcal();const out=maint+ex;return{inK,out,maint,ex,net:inK-out,logged};}
 </script>
@@ -1581,6 +1583,7 @@ function compliance3w(){const ti=todayIndex();const start=Math.max(0,ti-20);let 
 function progIndexOf(wid){return PROG.findIndex(w=>w.id===wid);}
 function weekPlannedKm(wid){return SESS.filter(s=>s.wid===wid).reduce((a,s)=>a+(s.km||0),0);}
 function loadAdjFactor(wid){return (S.loadAdj&&S.loadAdj[wid])||1;}
+function adjustedLoad(s){if(!s||!s.km)return{km:s?s.km||0:0,vert:s?s.vert||0:0};let f=loadAdjFactor(s.wid),km=s.km*f,vert=s.vert*f;if(isEased(s.id)){km*=0.7;vert*=0.6;}return{km:Math.round(km),vert:Math.round(vert)};}
 function isTaperOrRace(wk){return !wk||wk.phase==='P4'||SESS.some(s=>s.wid===wk.id&&s.t==='Race');}
 function loadPlan(){
  const a=acwr(),comp=compliance3w(),lowR=recentLowReadiness(),weeksElapsed=Math.floor(todayIndex()/7);
