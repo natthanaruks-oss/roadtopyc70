@@ -880,14 +880,17 @@ function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,
 function currentWeight(){for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;}
 function maintenanceKcal(){const bmr=+S.bmr||INBODY.bmr;return Math.round(bmr*(+S.activityFactor||1.2));}
 function exerciseKcal(s,w){if(!s)return 0;if(s.km>0)return Math.round(w*(s.km+s.vert*0.01));if(s.t==='Strength')return 250;if(s.t==='Rehab')return 150;return 0;}
-function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si]||{km:0,t:'Rest'};const a=(S.actual&&s.id&&S.actual[s.id])||{};const done=S.done&&s.id&&S.done[s.id];const logged=inK>=maintenanceKcal()*0.65;
+function dayEnergy(ds){const inK=foodTotals(ds).kcal;const w=currentWeight();const si=dateIndex(ds);const s=SESS[si]||{km:0,t:'Rest'};const a=(S.actual&&s.id&&S.actual[s.id])||{};const done=S.done&&s.id&&S.done[s.id];
  // exercise: prefer actual logged distance/vert; else planned only if marked done
  let ex=0;
  if(s.km>0){const km=parseFloat(a.km),vt=parseFloat(a.v);
    if(!isNaN(km))ex=Math.round(w*(km+(isNaN(vt)?0:vt)*0.01));
    else if(done){const aj=adjustedLoad(s);ex=Math.round(w*(aj.km+aj.vert*0.01));}
  }else if(done){ex=exerciseKcal(s,w);}
- const maint=maintenanceKcal();const out=maint+ex;return{inK,out,maint,ex,net:inK-out,logged};}
+ const maint=maintenanceKcal();const out=maint+ex;
+ // a day counts as "fully logged" only if intake is plausibly complete vs that day's TOTAL burn
+ const logged=inK>=Math.max(maint*0.65,out*0.6);
+ return{inK,out,maint,ex,net:inK-out,logged};}
 </script>
 <script>
 /* ============ STATE ============ */
@@ -1716,7 +1719,7 @@ function openNiggle(){
  const nt=$(`<textarea class="in" rows="2" placeholder="${t('niggleNotePh')}" style="resize:none;margin-bottom:14px"></textarea>`);nt.oninput=e=>note=e.target.value;sheet.appendChild(nt);
  const sv=$(`<button class="btn btn-lime tap">${t('save')}</button>`);sv.onclick=()=>{S.niggles.push({date:todayKey(),area:area.th,sev,note});save();closeSheet();render();};sheet.appendChild(sv);showSheet(sheet);
 }
-if('serviceWorker' in navigator){try{const swCode="const C='rtc70-v2';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.open(C).then(c=>c.match(e.request).then(r=>{const f=fetch(e.request).then(res=>{if(res&&res.status===200)c.put(e.request,res.clone());return res}).catch(()=>r);return r||f})))});";const blob=new Blob([swCode],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});}catch(e){}}
+if('serviceWorker' in navigator){try{const swCode="const C='rtc70-v3';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k))))])));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(res=>{if(res&&res.status===200){const cp=res.clone();caches.open(C).then(c=>c.put(e.request,cp));}return res}).catch(()=>caches.open(C).then(c=>c.match(e.request))))});";const blob=new Blob([swCode],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});}catch(e){}}
 render();
 </script>
 </body>
