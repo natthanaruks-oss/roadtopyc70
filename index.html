@@ -241,11 +241,21 @@ const UI={
  ld_plan3w:{th:"📋 แผนปรับ 3 สัปดาห์ถัดไป",en:"📋 Adjusted next 3 weeks"},
  ld_rule:{th:"ยึดกฎเพิ่มไม่เกิน 10%/สัปดาห์ · ไม่แตะสัปดาห์ taper/วันแข่ง · เก็บแผนเดิมไว้ ย้อนได้",en:"Caps at +10%/week · won't touch taper/race week · base plan kept, reversible"},
  ld_apply:{th:"ใช้แผนที่ปรับ",en:"Apply adjusted plan"},
+ ld_active:{th:"แผนปรับที่ใช้อยู่",en:"Active adjustments"},
+ ld_liveRec:{th:"คำแนะนำตอนนี้",en:"Current recommendation"},
+ ld_update:{th:"อัปเดตเป็นคำแนะนำล่าสุด",en:"Update to latest"},
+ ld_changed:{th:"สถานการณ์เปลี่ยนไปจากตอนกดใช้ — กดอัปเดตเพื่อใช้คำแนะนำล่าสุด หรือคงแผนเดิมไว้ก็ได้",en:"Conditions changed since you applied — update for the latest, or keep what you have"},
  ld_applied:{th:"✓ ใช้แผนปรับอยู่ — แตะเพื่อยกเลิก",en:"✓ Adjusted plan active — tap to undo"},
  ld_reset:{th:"กลับไปใช้แผนเดิม",en:"Revert to base plan"},
  ld_how:{th:"คำนวณยังไง",en:"How it works"},
  ld_howText:{th:"• <b>ACWR</b> = โหลด 7 วันล่าสุด ÷ เฉลี่ย 28 วัน (โหลด = กม. + ไต่ระดับ×0.1) บอกว่าเพิ่มเร็วไปไหม<br>• <b>Compliance</b> = ทำได้จริง ÷ แผน ใน 3 สัปดาห์<br>• ปรับโหลดยึด <b>กฎ 10%</b> และไม่แตะ taper/วันแข่ง เพื่อกันบาดเจ็บและรักษา periodization",en:"• <b>ACWR</b> = last-7-day load ÷ 28-day average (load = km + vert×0.1), flags ramping too fast<br>• <b>Compliance</b> = actual ÷ planned over 3 weeks<br>• Adjustments follow the <b>10% rule</b> and never touch taper/race week — protecting you from injury and preserving periodization"},
  adaptApply:{th:"ลดโหลดวันนี้",en:"Ease today"},
+ skipBtn:{th:"ซ้อมไม่ได้วันนี้",en:"Can't train today"},
+ skipBadge:{th:"ข้ามแล้ว",en:"Skipped"},
+ skipUndo:{th:"กลับมาทำ",en:"Undo"},
+ skipDone:{th:"ข้ามเซสชันนี้แล้ว ✓",en:"Session skipped ✓"},
+ skipMinor:{th:"พักได้ ไม่กระทบแผนเลย — หนึ่งวันที่ข้ามช่วยให้ร่างกายฟื้น เป้าแคลวันนี้ปรับเป็นวันพักให้แล้ว ระบบจะดูแลสมดุลโหลดให้เอง",en:"No problem — one skipped day helps recovery. Today's calorie target is set to a rest day, and the engine keeps your load balanced"},
+ skipKey:{th:"นี่คือคีย์เซสชันของสัปดาห์ ถ้าพอมีเวลาวันอื่นในสัปดาห์นี้ ลองขยับไปทำแทนจะดีกว่าข้ามเลย · ถ้าไม่ได้จริงๆ ไม่เป็นไร — ระบบจะลดความ compliance แล้วเกลี่ยโหลดให้สัปดาห์ถัดไปอัตโนมัติ (ดูการ์ดโค้ชโหลดหน้าแรก)",en:"This is a key session. If any other day this week is free, moving it there beats skipping · If not, no worries — the engine drops compliance and auto-redistributes load into next week (see the Load coach card on Today)"},
  rp_title:{th:"แผนเล็งวันแข่ง",en:"Race readiness"},
  rp_ready:{th:"พร้อม",en:"Ready"},rp_ontrack:{th:"ตามแผน",en:"On track"},rp_tight:{th:"เวลาตึง",en:"Tight"},
  rp_curlong:{th:"long ทำได้จริง",en:"Current long"},rp_proj:{th:"คาดว่าถึง",en:"Projected"},rp_need:{th:"เป้าแผน",en:"Plan peak"},
@@ -936,7 +946,7 @@ function recentFoods(){
 }
 function foodTarget(ds){const s=SESS[dateIndex(ds)];const e=ENERGY[s.t]||ENERGY.Easy;let lo=e[0],hi=e[1];
  if(s.km>0){const w=currentWeight();const aj=adjustedLoad(s);const base=w*(s.km+s.vert*0.01);const now=w*(aj.km+aj.vert*0.01);const delta=Math.round(now-base);if(delta!==0){const floor=maintenanceKcal()-150;lo=Math.max(floor,lo+delta);hi=Math.max(lo+250,hi+delta);}}
- return{lo,hi,mode:e[2],type:energyType(s.t),sess:s,adjusted:s.km>0&&(loadAdjFactor(s.wid)!==1||isEased(s.id))};}
+ return{lo,hi,mode:e[2],type:energyType(s.t),sess:s,adjusted:s.km>0&&(loadAdjFactor(s.wid)!==1||isEased(s.id)||isSkipped(s.id))};}
 function proteinTarget(){const w=(()=>{for(let i=12;i>=1;i--){const v=parseFloat(S.weights[i]);if(!isNaN(v))return v;}return +S.startWeight||START_WEIGHT_DEFAULT;})();return Math.round(w*1.8);}
 function fatOf(o){if(o&&o.f!=null&&o.f!=='')return +o.f;return Math.max(0,Math.round(((+o.kcal||0)-4*(+o.p||0)-4*(+o.c||0))/9));}
 function foodTotals(ds){const arr=(S.food&&S.food[ds])||[];return arr.reduce((a,f)=>({kcal:a.kcal+(+f.kcal||0),p:a.p+(+f.p||0),c:a.c+(+f.c||0),f:a.f+fatOf(f)}),{kcal:0,p:0,c:0,f:0});}
@@ -1137,8 +1147,12 @@ function openLoadDetail(){
  const rp=lp.rp;const vCol=rp.verdict==='ready'?'--lime':(rp.verdict==='ontrack'?'--lime':'--z3');const vTxt=rp.verdict==='ready'?t('rp_ready'):(rp.verdict==='ontrack'?t('rp_ontrack'):t('rp_tight'));
  const adv=rp.verdict==='ready'?t('rp_adv_ready'):(rp.verdict==='ontrack'?t('rp_adv_ontrack').replace('{g}',rp.safeGain):t('rp_adv_tight').replace('{p}',rp.projectedPeak).replace('{n}',rp.peakLong));
  sheet.appendChild($(`<div class="card" style="margin-bottom:12px;border-left:3px solid ${cv(vCol)}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div class="dsp" style="font-size:14px">🎯 ${t('rp_title')}</div><div style="font-size:10px;font-weight:800;color:${cv(vCol)};text-transform:uppercase">${vTxt}</div></div><div style="display:flex;gap:10px;margin-bottom:10px"><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px">${rp.curLong}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_curlong')}</div></div><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px;color:${cv(vCol)}">${rp.projectedPeak}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_proj')}</div></div><div style="flex:1;text-align:center;background:var(--bg2);border-radius:12px;padding:9px 4px"><div class="num" style="font-size:19px;color:var(--muted)">${rp.peakLong}<span style="font-size:10px;color:var(--muted)">K</span></div><div style="font-size:9px;color:var(--muted);margin-top:1px">${t('rp_need')}</div></div></div><div style="font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:6px">${t('rp_meta').replace('{w}',rp.weeksToRace).replace('{b}',rp.buildWeeks).replace('{t}',rp.taperWeeks)}</div><div style="font-size:12px;color:var(--ink);line-height:1.55;background:var(--bg2);border-radius:12px;padding:10px">💡 ${adv}</div></div>`));
- if(lp.rows.length){const applied=hasLoadAdj();sheet.appendChild($(`<div class="card" style="margin-bottom:12px"><div class="dsp" style="font-size:14px;margin-bottom:8px">${t('ld_plan3w')}</div>${lp.rows.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><div><div style="font-size:13px;font-weight:700">${r.label}</div><div style="font-size:10.5px;color:var(--muted)">${r.factor>1?'+':''}${Math.round((r.factor-1)*100)}%</div></div><div class="num" style="font-size:14px">${r.baseKm} → <b style="color:${c}">${r.newKm} km</b></div></div>`).join('')}<div style="font-size:11px;color:var(--muted2);margin-top:9px;line-height:1.5">${t('ld_rule')}</div></div>`));
-  const applied2=hasLoadAdj();const applyBtn=$(`<button class="btn ${applied2?'btn-ghost':'btn-lime'} tap" style="margin-bottom:8px">${applied2?t('ld_applied'):t('ld_apply')}</button>`);applyBtn.onclick=()=>{if(hasLoadAdj())resetLoadPlan();else applyLoadPlan();closeSheet();render();};sheet.appendChild(applyBtn);
+ if(lp.rows.length||hasLoadAdj()){const applied=hasLoadAdj();const inSync=applied?recInSync(lp):true;const act=activeAdjRows();
+  if(applied){sheet.appendChild($(`<div class="card" style="margin-bottom:12px"><div style="font-size:11px;font-weight:800;color:${cv('--lime')};margin-bottom:8px">✓ ${t('ld_active')}</div>${act.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);${r.past?'opacity:.45':''}"><div><div style="font-size:13px;font-weight:700">${r.label}</div><div style="font-size:10.5px;color:var(--muted)">${r.factor>1?'+':''}${Math.round((r.factor-1)*100)}%</div></div><div class="num" style="font-size:14px">${r.baseKm} → <b style="color:${cv('--lime')}">${r.newKm} km</b></div></div>`).join('')}<div style="font-size:11px;color:var(--muted2);margin-top:9px;line-height:1.5">${t('ld_rule')}</div></div>`));
+   if(!inSync&&lp.rows.length){sheet.appendChild($(`<div class="card" style="margin-bottom:8px;border-color:${cv('--z3')}55;background:${cv('--z3')}10;font-size:12px;color:${cv('--z3')};line-height:1.5">⟳ ${t('ld_changed')}</div>`));const ub=$(`<button class="btn btn-lime tap" style="margin-bottom:8px">${t('ld_update')}</button>`);ub.onclick=()=>{applyLoadPlan();closeSheet();render();};sheet.appendChild(ub);}
+   const rb=$(`<button class="btn btn-ghost tap">${t('ld_reset')}</button>`);rb.onclick=()=>{resetLoadPlan();closeSheet();render();};sheet.appendChild(rb);
+  } else {sheet.appendChild($(`<div class="card" style="margin-bottom:12px"><div class="dsp" style="font-size:14px;margin-bottom:8px">${t('ld_plan3w')}</div>${lp.rows.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><div><div style="font-size:13px;font-weight:700">${r.label}</div><div style="font-size:10.5px;color:var(--muted)">${r.factor>1?'+':''}${Math.round((r.factor-1)*100)}%</div></div><div class="num" style="font-size:14px">${r.baseKm} → <b style="color:${c}">${r.newKm} km</b></div></div>`).join('')}<div style="font-size:11px;color:var(--muted2);margin-top:9px;line-height:1.5">${t('ld_rule')}</div></div>`));
+   const apb=$(`<button class="btn btn-lime tap">${t('ld_apply')}</button>`);apb.onclick=()=>{applyLoadPlan();closeSheet();render();};sheet.appendChild(apb);}
  }
  sheet.appendChild($(`<div class="card" style="margin-top:4px;background:transparent"><div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('ld_how')}</div><div style="font-size:11.5px;color:var(--muted);line-height:1.65">${t('ld_howText')}</div></div>`));
  showSheet(sheet);
@@ -1258,7 +1272,13 @@ function openSession(s){
  if(L.cue)sheet.appendChild(info(t('cueLabel'),tx(L.cue)));
  if(s.t==="Strength"||s.t==="Rehab")sheet.appendChild($(`<div style="margin-top:14px"><button class="linkbtn" onclick="tab='str';closeSheet();render()" style="border:none;cursor:pointer">${t('seeAllStr')}</button></div>`));
  sheet.appendChild($('<div class="divline"></div>'));
- if(isInput(s.t)){const dbtn=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap">${dn?t('doneToggle'):t('completeBtn')}</button>`);dbtn.onclick=()=>{S.done[s.id]=!dn;save();closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};sheet.appendChild(dbtn);
+ if(isInput(s.t)){const sk=isSkipped(s.id);const dbtn=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap" ${sk?'style="opacity:.4"':''}>${dn?t('doneToggle'):t('completeBtn')}</button>`);dbtn.onclick=()=>{S.done[s.id]=!dn;if(!dn){if(S.skipped)delete S.skipped[s.id];}save();closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};sheet.appendChild(dbtn);
+  // can't-train-today
+  {const quality=['Long','B2B','Hill','Tempo','Interval','VO2','Threshold','Race'];const wkMax=Math.max(...SESS.filter(x=>x.wid===s.wid&&x.km>0).map(x=>x.km),0);const isKey=s.km>0&&(quality.includes(s.t)||s.km>=wkMax);
+   if(!sk){const skb=$(`<button class="btn btn-ghost tap" style="margin-top:9px;color:var(--muted)">⤼ ${t('skipBtn')}</button>`);skb.onclick=()=>{if(!S.skipped)S.skipped={};S.skipped[s.id]=true;S.done[s.id]=false;save();closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};sheet.appendChild(skb);}
+   else{const c=cv(isKey?'--z3':'--lime');sheet.appendChild($(`<div class="card" style="margin-top:9px;border-left:3px solid ${c}"><div style="display:flex;gap:10px"><div style="font-size:20px">${isKey?'🗓️':'😌'}</div><div style="flex:1"><div class="dsp" style="font-size:14px;color:${c};margin-bottom:3px">${t('skipDone')}</div><div style="font-size:12.5px;color:var(--muted);line-height:1.55">${isKey?t('skipKey'):t('skipMinor')}</div></div></div></div>`));
+    const un=$(`<button class="btn btn-ghost tap" style="margin-top:9px">${t('skipUndo')}</button>`);un.onclick=()=>{if(S.skipped)delete S.skipped[s.id];save();closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};sheet.appendChild(un);}
+  }
   if(s.km>0){const fi=$(`<input type="file" accept=".gpx,.tcx,application/gpx+xml,application/xml" style="display:none">`);const ib=$(`<button class="btn btn-ghost tap" style="margin-top:9px">${t('importBtn')}</button>`);ib.onclick=()=>fi.click();
    fi.onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const r=parseActivity(String(rd.result));if(!r){window._importMsg={err:1};}else{S.done[s.id]=true;const cur=S.actual[s.id]||{};S.actual[s.id]=Object.assign({},cur,{km:r.km,v:r.vert,hra:r.hrAvg!=null?r.hrAvg:cur.hra,hrm:r.hrMax!=null?r.hrMax:cur.hrm});window._importMsg={r};save();}closeSheet();openSession(SESS.find(x=>x.id===s.id));render();};rd.readAsText(f);};
    sheet.appendChild(ib);sheet.appendChild(fi);sheet.appendChild($(`<div style="font-size:10.5px;color:var(--muted2);text-align:center;margin-top:5px;line-height:1.4">${t('importHint')}</div>`));
@@ -1342,17 +1362,25 @@ function Today(v){
  rmc.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:9px"><span style="font-size:18px">🏁</span><div><div class="dsp" style="font-size:14px">${t('raceModeTitle')}</div><div style="font-size:11px;color:var(--muted)">${t('raceModeSub')}</div></div></div><div style="text-align:right"><div class="num" style="font-size:20px;color:var(--orange)">${dtr}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${t('daysLeft')}</div></div></div>`;
  rmc.onclick=openRaceMode;wrap.appendChild(rmc);
  }
- // Coach load engine card
- const lp=loadPlan();const lpc=cv(lp.status.col);
+ // Coach load engine card — single authority for load/recovery
+ const lp=loadPlan();const lpc=cv(lp.status.col);const applied=hasLoadAdj();const inSync=applied?recInSync(lp):true;const actRows=activeAdjRows();
  const lc=$(`<div class="card tap" style="margin-top:10px;border-left:3px solid ${lpc}"></div>`);
  let lpHtml=`<div style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:22px;line-height:1.1">${lp.status.emoji}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:10px;font-weight:800;color:${lpc};text-transform:uppercase;letter-spacing:.07em">${t('coachLoad')}</div><div style="font-size:10px;color:var(--muted)">${lp.acwr!=null?'ACWR '+lp.acwr:''}${lp.comp!=null?' · '+Math.round(lp.comp*100)+'%':''}</div></div><div class="dsp" style="font-size:14px;margin:2px 0 3px">${lp.status.title}</div><div style="font-size:12.5px;color:var(--muted);line-height:1.45">${lp.reason}</div>`;
- if(lp.rows.length){lpHtml+=`<div style="margin-top:9px;border-top:1px solid var(--line);padding-top:8px">${lp.rows.map(r=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--muted)">${r.label}</span><span class="num">${r.baseKm}→<b style="color:${lpc}">${r.newKm} km</b></span></div>`).join('')}</div>`;}
+ if(applied){
+  lpHtml+=`<div style="margin-top:9px;border-top:1px solid var(--line);padding-top:8px"><div style="font-size:10px;font-weight:800;color:${cv('--lime')};margin-bottom:4px">✓ ${t('ld_active')}</div>${actRows.map(r=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;${r.past?'opacity:.45':''}"><span style="color:var(--muted)">${r.label}</span><span class="num">${r.baseKm}→<b style="color:${cv('--lime')}">${r.newKm} km</b></span></div>`).join('')}</div>`;
+  if(!inSync&&lp.rows.length)lpHtml+=`<div style="margin-top:8px;font-size:11.5px;color:${cv('--z3')};line-height:1.45">⟳ ${t('ld_changed')}</div>`;
+ } else if(lp.rows.length){
+  lpHtml+=`<div style="margin-top:9px;border-top:1px solid var(--line);padding-top:8px"><div style="font-size:10px;font-weight:800;color:var(--muted);margin-bottom:4px">${t('ld_liveRec')}</div>${lp.rows.map(r=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--muted)">${r.label}</span><span class="num">${r.baseKm}→<b style="color:${lpc}">${r.newKm} km</b></span></div>`).join('')}</div>`;
+ }
  lpHtml+=`</div></div>`;lc.innerHTML=lpHtml;
- if(lp.rows.length){const applied=hasLoadAdj();const ab=$(`<button class="btn ${applied?'btn-ghost':'btn-lime'} tap" style="margin-top:11px">${applied?t('ld_applied'):t('ld_apply')}</button>`);ab.onclick=e=>{e.stopPropagation();if(applied)resetLoadPlan();else applyLoadPlan();render();};lc.appendChild(ab);}
+ if(!applied&&lp.rows.length){const ab=$(`<button class="btn btn-lime tap" style="margin-top:11px">${t('ld_apply')}</button>`);ab.onclick=e=>{e.stopPropagation();applyLoadPlan();render();};lc.appendChild(ab);}
+ if(applied){if(!inSync&&lp.rows.length){const ub=$(`<button class="btn btn-lime tap" style="margin-top:11px">${t('ld_update')}</button>`);ub.onclick=e=>{e.stopPropagation();applyLoadPlan();render();};lc.appendChild(ub);}const rb=$(`<button class="btn btn-ghost tap" style="margin-top:8px;color:var(--muted)">${t('ld_reset')}</button>`);rb.onclick=e=>{e.stopPropagation();resetLoadPlan();render();};lc.appendChild(rb);}
+ const tSess0=SESS[todayIndex()];
+ if(lp.status.code==='reduce'&&isInput(tSess0.t)&&tSess0.km>0&&!S.done[tSess0.id]&&!isSkipped(tSess0.id)){const eb=$(`<button class="btn btn-ghost tap" style="margin-top:8px;color:${cv('--warn')}">${isEased(tSess0.id)?t('adaptApplied'):'😌 '+t('adaptApply')}</button>`);eb.onclick=e=>{e.stopPropagation();if(!S.eased)S.eased={};if(isEased(tSess0.id))delete S.eased[tSess0.id];else S.eased[tSess0.id]=1;save();render();};lc.appendChild(eb);}
  lc.onclick=openLoadDetail;wrap.appendChild(lc);
- // adaptive plan suggestion
+ // tactical nudge — only for reasons NOT covered by Coach Load reduce (sleep/rhr/missed), avoid duplicate
  const adp=adaptiveSuggestion();const adc=cv(adp.col);const tSess=SESS[todayIndex()];
- if(adp.key!=='ok'){
+ if(adp.key!=='ok'&&lp.status.code!=='reduce'){
   const ac=$(`<div class="card glow" style="margin-top:10px;border-left:3px solid ${adc};background:${adc}10"><div style="display:flex;gap:13px;align-items:flex-start"><div style="font-size:24px;line-height:1.1">${adp.emoji}</div><div style="flex:1"><div style="font-size:10px;font-weight:800;color:${adc};text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">${t('adaptTitle')}</div><div style="font-size:13.5px;line-height:1.45">${adp.msg}</div></div></div></div>`);
   if(adp.canEase&&isInput(tSess.t)&&tSess.km>0){const eb=$(`<button class="btn ${isEased(tSess.id)?'btn-ghost':'btn-lime'} tap" style="margin-top:11px">${isEased(tSess.id)?t('adaptApplied'):t('adaptApply')}</button>`);eb.onclick=()=>{if(!S.eased)S.eased={};if(isEased(tSess.id))delete S.eased[tSess.id];else S.eased[tSess.id]=1;save();render();};ac.appendChild(eb);}
   wrap.appendChild(ac);
@@ -1363,16 +1391,17 @@ function Today(v){
  if(r){const vd=readinessVerdict(r.tot);const b=$(`<div class="card tap" style="border-color:${cv(vd.c)}55;background:${cv(vd.c)}12;display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:${cv(vd.c)}22;display:flex;align-items:center;justify-content:center;font-size:20px">${vd.e}</div><div style="flex:1"><div class="dsp" style="font-size:15px;color:${cv(vd.c)}">${vd.t}</div><div style="font-size:12px;color:var(--muted)">${vd.d}</div></div></div>`);b.onclick=openReadiness;wrap.appendChild(b);}else{const b=$(`<div class="card tap glow" style="display:flex;align-items:center;gap:13px;margin-top:6px"><div style="width:42px;height:42px;border-radius:12px;background:var(--lime)22;display:flex;align-items:center;justify-content:center">${ic('<path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/>',cv('--lime'),20)}</div><div style="flex:1"><div class="dsp" style="font-size:15px">${t('readyCheck')}</div><div style="font-size:12px;color:var(--muted)">${t('readySub')}</div></div>${ic('<path d="M9 6l6 6-6 6"/>',cv('--muted'),18)}</div>`);b.onclick=openReadiness;wrap.appendChild(b);}
  const s=todaySess();const L=LIB[s.t]||LIB.Easy;const col=cv(L.col);const dn=S.done[s.id];
  const sIdx=SESS.findIndex(x=>x.id===s.id);const tIdx=todayIndex();
- const eased=isEased(s.id)&&s.km>0;const _aj=adjustedLoad(s);const ekm=_aj.km,evert=_aj.vert;
- const easedTag=eased?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('adaptEasedTag')}</span>`:'';
+ const eased=isEased(s.id)&&s.km>0;const skd=isSkipped(s.id);const _aj=adjustedLoad(s);const ekm=_aj.km,evert=_aj.vert;
+ const easedTag=skd?`<span class="pill" style="background:var(--z3)22;color:var(--z3)">⤼ ${t('skipBadge')}</span>`:(eased?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('adaptEasedTag')}</span>`:'');
  const wasW=t('planDay')==='Planned'?'was':'จาก';
  const dayTag=sIdx===tIdx?`<span class="pill" style="background:var(--lime);color:#10131F">${t('tagToday')}</span>`:(sIdx<tIdx?`<span class="pill" style="background:var(--warn)22;color:var(--warn)">${t('tagBehind')}</span>`:`<span class="pill" style="background:var(--z1)22;color:var(--z1)">${t('tagAhead')}</span>`);
  wrap.appendChild($(`<div class="h-sec" style="margin-top:22px;display:flex;justify-content:space-between;align-items:center"><span>${prePlan()?t('baseLeadPreview'):(sIdx===tIdx?t('todayDo'):t('planDay'))}</span><span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted2)">${tx(s.wlabel)} · ${sessDateStr(sIdx)}</span></div>`));
  const big=$(`<div class="card tap" style="position:relative;overflow:hidden;border-color:${col}44"><div class="topo"></div><div style="position:relative"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">${dayTag}${easedTag}${zb(L.zone)}<span style="font-size:11px;font-weight:800;letter-spacing:.06em;color:${col}">${tx(PHASES[s.phase].name).toUpperCase()}</span></div><div class="dsp" style="font-size:23px;line-height:1.15">${tx(s.title)}${tx(s.note)?' <span style="color:'+col+'">'+tx(s.note)+'</span>':''}</div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:3px">${tx(L.label)}</div>${s.km>0?`<div style="display:flex;gap:20px;margin-top:14px"><div><div class="num" style="font-size:26px">${ekm}<span style="font-size:13px;color:var(--muted)"> km</span></div>${eased?`<div style="font-size:9px;color:var(--muted2)">${wasW} ${s.km}</div>`:''}</div><div><div class="num" style="font-size:26px;color:${cv('--orange')}">+${evert}<span style="font-size:13px;color:var(--muted)"> m</span></div>${eased?`<div style="font-size:9px;color:var(--muted2)">${wasW} +${s.vert}</div>`:''}</div></div>`:`<div style="margin-top:10px;color:var(--muted);font-size:13.5px">${tx(L.cue)||tx(L.purpose)||''}</div>`}</div></div>`);
  big.onclick=()=>openSession(s);wrap.appendChild(big);
  const row=$('<div style="display:flex;gap:9px;margin-top:10px"></div>');
- if(isInput(s.t)){const d=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap" style="flex:2">${dn?t('done'):t('markDone')}</button>`);d.onclick=()=>{S.done[s.id]=!dn;save();render();};row.appendChild(d);}
+ if(isInput(s.t)){const d=$(`<button class="btn ${dn?'btn-ghost':'btn-lime'} tap" style="flex:2;${skd?'opacity:.4':''}">${dn?t('done'):t('markDone')}</button>`);d.onclick=()=>{S.done[s.id]=!dn;if(!dn&&S.skipped)delete S.skipped[s.id];save();render();};row.appendChild(d);}
  const det=$(`<button class="btn btn-ghost tap" style="flex:1">${t('detail')}</button>`);det.onclick=()=>openSession(s);row.appendChild(det);wrap.appendChild(row);
+ if(isInput(s.t)&&s.km>0&&!dn){const skrow=$('<div style="margin-top:9px"></div>');if(!skd){const skb=$(`<button class="btn btn-ghost tap" style="width:100%;color:var(--muted);font-size:13px">⤼ ${t('skipBtn')}</button>`);skb.onclick=()=>{if(!S.skipped)S.skipped={};S.skipped[s.id]=true;save();render();};skrow.appendChild(skb);}else{const un=$(`<button class="btn btn-ghost tap" style="width:100%;color:var(--z3);font-size:13px">${t('skipBadge')} · ${t('skipUndo')}</button>`);un.onclick=()=>{if(S.skipped)delete S.skipped[s.id];save();render();};skrow.appendChild(un);}wrap.appendChild(skrow);}
  const idx=sIdx;const stp=$('<div style="display:flex;gap:9px;margin-top:10px"></div>');
  const prev=$(`<button class="btn btn-ghost tap" style="flex:1;opacity:${idx>0?1:.35}">${t('prevDay')}</button>`);if(idx>0)prev.onclick=()=>{todayPtr=SESS[idx-1].id;render();};
  const tdyBtn=$(`<button class="btn btn-ghost tap" style="flex:1;${sIdx===tIdx?'opacity:.35':'color:var(--lime)'}">${t('jumpToday')}</button>`);if(sIdx!==tIdx)tdyBtn.onclick=()=>{todayPtr=null;render();};
@@ -1658,6 +1687,7 @@ function adaptiveSuggestion(){
  return{key:'ok',col:'--lime',emoji:'✅',msg:t('adapt_ok'),canEase:false};
 }
 function isEased(id){return !!(S.eased&&S.eased[id]);}
+function isSkipped(id){return !!(S.skipped&&S.skipped[id]);}
 // ===== Adaptive Load Engine =====
 function sessPlanLoad(s){return s?(s.km||0)+(s.vert||0)*0.1:0;}
 function sessActLoad(s){if(!s||!s.km)return 0;const a=(S.actual&&S.actual[s.id])||{};const km=parseFloat(a.km),vt=parseFloat(a.v);if(!isNaN(km))return km+(isNaN(vt)?0:vt)*0.1;if(S.done&&S.done[s.id])return s.km+s.vert*0.1;return 0;}
@@ -1667,7 +1697,7 @@ function compliance3w(){const ti=todayIndex();const start=Math.max(0,ti-20);let 
 function progIndexOf(wid){return PROG.findIndex(w=>w.id===wid);}
 function weekPlannedKm(wid){return SESS.filter(s=>s.wid===wid).reduce((a,s)=>a+(s.km||0),0);}
 function loadAdjFactor(wid){return (S.loadAdj&&S.loadAdj[wid])||1;}
-function adjustedLoad(s){if(!s||!s.km)return{km:s?s.km||0:0,vert:s?s.vert||0:0};let f=loadAdjFactor(s.wid);if(isEased(s.id))f=Math.min(f,0.65);return{km:Math.round(s.km*f),vert:Math.round(s.vert*f)};}
+function adjustedLoad(s){if(!s||!s.km)return{km:s?s.km||0:0,vert:s?s.vert||0:0};if(isSkipped(s.id))return{km:0,vert:0};let f=loadAdjFactor(s.wid);if(isEased(s.id))f=Math.min(f,0.65);return{km:Math.round(s.km*f),vert:Math.round(s.vert*f)};}
 // ===== Race-aware coach brain: back-calculate from race day using REAL capacity =====
 function racePlan(){
  const longs=SESS.filter(s=>(s.t==='Long'||s.t==='B2B')&&s.km>0).map(s=>s.km);
@@ -1706,6 +1736,8 @@ function loadPlan(){
 function applyLoadPlan(){const lp=loadPlan();if(!S.loadAdj)S.loadAdj={};lp.recs.forEach(r=>{S.loadAdj[r.wid]=r.factor;});save();}
 function resetLoadPlan(){S.loadAdj={};save();}
 function hasLoadAdj(){return S.loadAdj&&Object.keys(S.loadAdj).length>0;}
+function activeAdjRows(){if(!hasLoadAdj())return[];return Object.keys(S.loadAdj).map(wid=>{const pi=progIndexOf(wid);const baseKm=Math.round(weekPlannedKm(wid));const f=S.loadAdj[wid];return{wid,label:tx((PROG[pi]||{}).label||{th:wid,en:wid}),baseKm,newKm:Math.round(baseKm*f),factor:f,past:pi<progIndexOf((SESS[todayIndex()]||{}).wid)};});}
+function recInSync(lp){const recMap={};(lp||loadPlan()).recs.forEach(r=>recMap[r.wid]=r.factor);const cur=S.loadAdj||{};const rk=Object.keys(recMap),ck=Object.keys(cur);if(rk.length!==ck.length)return false;return rk.every(k=>Math.abs((recMap[k]||0)-(cur[k]||0))<0.001);}
 function coachInsight(){
  const s=SESS[todayIndex()];const r=readinessToday();
  let base;
