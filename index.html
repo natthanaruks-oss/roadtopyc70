@@ -289,6 +289,7 @@ const UI={
  sleepQuality:{th:"คุณภาพการนอน",en:"Sleep quality"},
  sleepQ1:{th:"แย่มาก ตื่นบ่อย",en:"Very poor, restless"},sleepQ2:{th:"ไม่ค่อยดี",en:"Poor"},sleepQ3:{th:"พอใช้",en:"OK"},sleepQ4:{th:"ดี",en:"Good"},sleepQ5:{th:"ดีมาก สดชื่น",en:"Great, refreshed"},
  sleepClear:{th:"ลบของเมื่อคืน",en:"Clear last night"},
+ sleepToday:{th:"เมื่อคืน (วันนี้)",en:"Last night (today)"},sleepSaveDay:{th:"บันทึกคืนนี้",en:"Save this night"},
  sleepImport:{th:"นำเข้าจาก Health (.xml / .csv)",en:"Import from Health (.xml / .csv)"},
  sleepImportHint:{th:"Apple Health → โปรไฟล์ → Export All Health Data → เลือกไฟล์ export.xml (ดึงการนอน + ชีพจรพัก) · หรือ CSV: วันที่,ชั่วโมง,คุณภาพ",en:"Apple Health → Profile → Export All Health Data → pick export.xml (pulls sleep + resting HR) · or CSV: date,hours,quality"},
  sleepImpOk:{th:"นำเข้าแล้ว: นอน {ns} คืน · RHR {nr} วัน",en:"Imported: {ns} nights of sleep · {nr} days RHR"},
@@ -928,6 +929,138 @@ const FOODDB=[
  {cat:"drink",n:{th:"นมเย็น 1 แก้ว",en:"Thai pink milk"},kcal:230,p:4,c:38,f:7},
  {cat:"drink",n:{th:"แดงมะนาว 1 แก้ว",en:"Red soda lime"},kcal:170,p:0,c:43,f:0},
  {cat:"drink",n:{th:"ชาดำเย็น 1 แก้ว",en:"Iced black tea"},kcal:120,p:0,c:30,f:0},
+
+ // --- expanded Thai food database (+130) ---
+ {cat:"meal",n:{th:"ข้าวหน้าไก่",en:"Chicken gravy rice"},kcal:560,p:26,c:78},
+ {cat:"meal",n:{th:"ข้าวผัดกะเพราหมูสับ",en:"Basil pork fried rice"},kcal:620,p:26,c:72},
+ {cat:"meal",n:{th:"ข้าวผัดกุ้ง",en:"Shrimp fried rice"},kcal:560,p:24,c:72},
+ {cat:"meal",n:{th:"ข้าวผัดน้ำพริกลงเรือ",en:"Nam prik long ruea rice"},kcal:600,p:18,c:78},
+ {cat:"meal",n:{th:"โจ๊กหมู",en:"Pork congee"},kcal:280,p:14,c:40},
+ {cat:"meal",n:{th:"โจ๊กหมูไข่",en:"Pork congee + egg"},kcal:350,p:18,c:42},
+ {cat:"meal",n:{th:"ข้าวเหนียวไก่ทอด",en:"Sticky rice + fried chicken"},kcal:520,p:24,c:60},
+ {cat:"meal",n:{th:"ข้าวเหนียวส้มตำไก่ย่าง",en:"Som tam + grilled chicken + sticky rice"},kcal:650,p:32,c:70},
+ {cat:"meal",n:{th:"ข้าวซอยเนื้อ",en:"Khao soi beef"},kcal:650,p:30,c:66},
+ {cat:"meal",n:{th:"ขนมจีนแกงเขียวหวาน",en:"Khanom jeen green curry"},kcal:520,p:18,c:70},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวเย็นตาโฟ",en:"Yen ta fo noodles"},kcal:450,p:18,c:58},
+ {cat:"meal",n:{th:"ราดหน้าหมู",en:"Rad na pork"},kcal:560,p:20,c:70},
+ {cat:"meal",n:{th:"สปาเก็ตตี้ผัดขี้เมา",en:"Drunken spaghetti"},kcal:560,p:20,c:72},
+ {cat:"meal",n:{th:"หอยทอด",en:"Oyster omelette"},kcal:520,p:18,c:48},
+ {cat:"meal",n:{th:"หมี่กรอบ",en:"Crispy mee krob"},kcal:480,p:12,c:72},
+ {cat:"meal",n:{th:"ข้าวแกงเขียวหวานเนื้อ",en:"Green curry beef + rice"},kcal:640,p:28,c:72},
+ {cat:"meal",n:{th:"ข้าวพะแนงหมู",en:"Panang pork + rice"},kcal:640,p:26,c:72},
+ {cat:"meal",n:{th:"ข้าวแกงไก่กระเทียม",en:"Garlic chicken + rice"},kcal:600,p:30,c:70},
+ {cat:"meal",n:{th:"ข้าวผัดกระเพราทะเล",en:"Seafood basil rice"},kcal:600,p:26,c:70},
+ {cat:"meal",n:{th:"ข้าวผัดพริกแกงไก่",en:"Curry-paste chicken rice"},kcal:600,p:26,c:70},
+ {cat:"meal",n:{th:"ข้าวหน้าหมูทอดกระเทียม",en:"Garlic pork rice"},kcal:640,p:26,c:74},
+ {cat:"meal",n:{th:"แซนวิชไข่",en:"Egg sandwich"},kcal:300,p:12,c:32},
+ {cat:"meal",n:{th:"แซนวิชทูน่า",en:"Tuna sandwich"},kcal:340,p:18,c:34},
+ {cat:"meal",n:{th:"ข้าวกล่องไก่ทอด KFC",en:"Fried chicken rice box"},kcal:700,p:30,c:70},
+ {cat:"meal",n:{th:"สเต็กไก่ + มันบด",en:"Chicken steak + mash"},kcal:550,p:38,c:40},
+ {cat:"meal",n:{th:"สเต็กหมู",en:"Pork steak"},kcal:520,p:36,c:30},
+ {cat:"meal",n:{th:"สลัดผักรวม",en:"Mixed green salad"},kcal:150,p:5,c:18},
+ {cat:"meal",n:{th:"สลัดทูน่า",en:"Tuna salad"},kcal:300,p:28,c:12},
+ {cat:"meal",n:{th:"ก๋วยเตี๋ยวลูกชิ้นปลา",en:"Fish ball noodle soup"},kcal:360,p:18,c:46},
+ {cat:"meal",n:{th:"สุกี้แห้งทะเล",en:"Dry seafood suki"},kcal:520,p:30,c:52},
+ {cat:"meal",n:{th:"ชาบูหมู 1 มื้อ",en:"Pork shabu meal"},kcal:600,p:40,c:30},
+ {cat:"meal",n:{th:"แกงเทโพหมู 1 ถ้วย",en:"Gaeng tepo pork bowl"},kcal:320,p:16,c:14},
+ {cat:"meal",n:{th:"แกงคั่วหอยขม 1 ถ้วย",en:"Curry snail bowl"},kcal:260,p:14,c:12},
+ {cat:"meal",n:{th:"แกงป่าไก่ 1 ถ้วย",en:"Jungle curry chicken bowl"},kcal:180,p:18,c:10},
+ {cat:"meal",n:{th:"แกงกะหรี่ไก่ 1 ถ้วย",en:"Yellow curry chicken bowl"},kcal:340,p:18,c:18},
+ {cat:"meal",n:{th:"พะแนงเนื้อ 1 ถ้วย",en:"Panang beef bowl"},kcal:360,p:20,c:14},
+ {cat:"meal",n:{th:"ฉู่ฉี่ปลา 1 ถ้วย",en:"Choo chee fish bowl"},kcal:320,p:22,c:12},
+ {cat:"meal",n:{th:"ต้มยำกุ้งน้ำข้น 1 ถ้วย",en:"Tom yum kung creamy bowl"},kcal:260,p:20,c:14},
+ {cat:"meal",n:{th:"ต้มยำกุ้งน้ำใส 1 ถ้วย",en:"Tom yum kung clear bowl"},kcal:160,p:20,c:10},
+ {cat:"meal",n:{th:"ต้มข่าไก่ 1 ถ้วย",en:"Tom kha gai bowl"},kcal:280,p:16,c:12},
+ {cat:"meal",n:{th:"ต้มแซ่บกระดูกอ่อน 1 ถ้วย",en:"Tom saap bowl"},kcal:200,p:18,c:8},
+ {cat:"meal",n:{th:"ผัดเผ็ดหมูป่า 1 จาน",en:"Spicy stir-fry pork"},kcal:320,p:22,c:12},
+ {cat:"meal",n:{th:"ผัดกระเพราหมูสับ 1 จาน",en:"Basil pork (no rice)"},kcal:300,p:22,c:8},
+ {cat:"meal",n:{th:"ผัดพริกหยวกหมูสับ 1 จาน",en:"Stir-fried pepper pork"},kcal:280,p:20,c:10},
+ {cat:"meal",n:{th:"ผัดผักบุ้งไฟแดง 1 จาน",en:"Stir-fried morning glory"},kcal:120,p:5,c:12},
+ {cat:"meal",n:{th:"ผัดผักรวม 1 จาน",en:"Stir-fried mixed veg"},kcal:140,p:6,c:14},
+ {cat:"meal",n:{th:"ผัดคะน้าหมูกรอบ 1 จาน",en:"Kale + crispy pork"},kcal:340,p:16,c:12},
+ {cat:"meal",n:{th:"ไข่เจียวหมูสับ",en:"Pork omelette"},kcal:320,p:18,c:4},
+ {cat:"meal",n:{th:"ไข่พะโล้ 1 ถ้วย",en:"Egg stew bowl"},kcal:300,p:16,c:14},
+ {cat:"meal",n:{th:"ไข่ลูกเขย",en:"Son-in-law eggs"},kcal:260,p:12,c:18},
+ {cat:"meal",n:{th:"หมูผัดน้ำมันหอย 1 จาน",en:"Pork oyster sauce"},kcal:300,p:22,c:12},
+ {cat:"meal",n:{th:"ปลาทอดราดพริก",en:"Fried fish chili sauce"},kcal:420,p:30,c:16},
+ {cat:"meal",n:{th:"ปลานึ่งมะนาว",en:"Steamed lime fish"},kcal:240,p:32,c:8},
+ {cat:"meal",n:{th:"กุ้งอบวุ้นเส้น",en:"Shrimp glass noodle pot"},kcal:420,p:24,c:40},
+ {cat:"meal",n:{th:"ปูผัดผงกะหรี่",en:"Crab curry stir-fry"},kcal:380,p:26,c:16},
+ {cat:"meal",n:{th:"ปอเปี๊ยะทอด 2 ชิ้น",en:"Fried spring rolls 2"},kcal:220,p:6,c:26},
+ {cat:"meal",n:{th:"ลาบหมู 1 จาน",en:"Larb moo"},kcal:260,p:24,c:10},
+ {cat:"meal",n:{th:"น้ำตกหมู 1 จาน",en:"Nam tok moo"},kcal:280,p:26,c:10},
+ {cat:"meal",n:{th:"ตำป่า",en:"Tam pa"},kcal:140,p:8,c:18},
+ {cat:"meal",n:{th:"ส้มตำไทยกุ้งสด",en:"Som tam thai shrimp"},kcal:200,p:12,c:24},
+ {cat:"meal",n:{th:"คอหมูย่าง 1 จาน",en:"Grilled pork neck"},kcal:380,p:28,c:4},
+ {cat:"meal",n:{th:"แหนมคลุก",en:"Naem salad"},kcal:280,p:14,c:18},
+ {cat:"meal",n:{th:"แกงอ่อมหมู 1 ถ้วย",en:"Aom curry bowl"},kcal:220,p:18,c:10},
+ {cat:"meal",n:{th:"แกงเห็ด 1 ถ้วย",en:"Mushroom curry bowl"},kcal:150,p:8,c:14},
+ {cat:"meal",n:{th:"น้ำพริกอ่อง + ผัก",en:"Nam prik ong + veg"},kcal:280,p:12,c:20},
+ {cat:"meal",n:{th:"น้ำพริกหนุ่ม + แคบหมู",en:"Nam prik num + pork rind"},kcal:260,p:8,c:14},
+ {cat:"meal",n:{th:"ไส้อั่ว 1 ท่อน",en:"Sai ua"},kcal:300,p:16,c:6},
+ {cat:"meal",n:{th:"แกงฮังเล 1 ถ้วย",en:"Hang lay curry bowl"},kcal:380,p:20,c:16},
+ {cat:"meal",n:{th:"ข้าวซอยเจ",en:"Vegetarian khao soi"},kcal:520,p:14,c:72},
+ {cat:"meal",n:{th:"แกงเหลืองปลา 1 ถ้วย",en:"Southern yellow fish curry"},kcal:200,p:20,c:10},
+ {cat:"meal",n:{th:"คั่วกลิ้งหมู 1 จาน",en:"Kua kling pork"},kcal:300,p:24,c:6},
+ {cat:"meal",n:{th:"ผัดสะตอกุ้ง 1 จาน",en:"Stink bean + shrimp"},kcal:320,p:18,c:16},
+ {cat:"protein",n:{th:"สะโพกไก่ย่าง 100g",en:"Chicken thigh 100g"},kcal:209,p:26,c:0},
+ {cat:"protein",n:{th:"เนื้อสันในย่าง 100g",en:"Beef tenderloin 100g"},kcal:200,p:28,c:0},
+ {cat:"protein",n:{th:"หมูสันนอกย่าง 100g",en:"Pork loin 100g"},kcal:180,p:27,c:0},
+ {cat:"protein",n:{th:"ปลาแซลมอนย่าง 100g",en:"Grilled salmon 100g"},kcal:208,p:20,c:0},
+ {cat:"protein",n:{th:"ปลานิลย่าง 1 ตัว",en:"Grilled tilapia"},kcal:180,p:30,c:0},
+ {cat:"protein",n:{th:"กุ้งลวก 100g",en:"Boiled shrimp 100g"},kcal:99,p:24,c:0},
+ {cat:"protein",n:{th:"ปลาหมึกย่าง 100g",en:"Grilled squid 100g"},kcal:92,p:16,c:3},
+ {cat:"protein",n:{th:"ไข่ตุ๋น",en:"Steamed egg"},kcal:120,p:9,c:3},
+ {cat:"protein",n:{th:"เต้าหู้ขาว 100g",en:"Tofu 100g"},kcal:76,p:8,c:2},
+ {cat:"protein",n:{th:"เต้าหู้ทอด 100g",en:"Fried tofu 100g"},kcal:180,p:12,c:6},
+ {cat:"protein",n:{th:"ถั่วเหลืองต้ม 100g",en:"Boiled soybeans 100g"},kcal:170,p:17,c:10},
+ {cat:"protein",n:{th:"อกไก่ฉีก 1 ถ้วย",en:"Shredded chicken cup"},kcal:180,p:34,c:0},
+ {cat:"protein",n:{th:"แฮม 2 แผ่น",en:"Ham 2 slices"},kcal:90,p:12,c:2},
+ {cat:"protein",n:{th:"เวย์ไอโซเลท 1 สกู๊ป",en:"Whey isolate scoop"},kcal:110,p:27,c:1},
+ {cat:"protein",n:{th:"ลูกชิ้นปลา 5 ลูก",en:"Fish balls x5"},kcal:90,p:8,c:8},
+ {cat:"protein",n:{th:"ลูกชิ้นหมู 5 ลูก",en:"Pork balls x5"},kcal:150,p:10,c:8},
+ {cat:"snack",n:{th:"แอปเปิ้ล 1 ลูก",en:"Apple"},kcal:95,p:0,c:25},
+ {cat:"snack",n:{th:"มะม่วงสุก 1/2 ลูก",en:"Ripe mango half"},kcal:100,p:1,c:25},
+ {cat:"snack",n:{th:"มะละกอสุก 1 ถ้วย",en:"Papaya cup"},kcal:62,p:1,c:16},
+ {cat:"snack",n:{th:"ขนมถ้วย 3 ชิ้น",en:"Khanom tuay x3"},kcal:180,p:2,c:30},
+ {cat:"snack",n:{th:"ทองหยิบทองหยอด 3 ชิ้น",en:"Thong yip/yod x3"},kcal:210,p:4,c:40},
+ {cat:"snack",n:{th:"ขนมชั้น 1 ชิ้น",en:"Layered dessert"},kcal:150,p:1,c:32},
+ {cat:"snack",n:{th:"ฟักทองแกงบวด 1 ถ้วย",en:"Pumpkin coconut dessert"},kcal:260,p:3,c:44},
+ {cat:"snack",n:{th:"ไอติมกะทิ 1 ลูก",en:"Coconut ice cream"},kcal:150,p:2,c:24},
+ {cat:"snack",n:{th:"เค้กช็อกโกแลต 1 ชิ้น",en:"Chocolate cake slice"},kcal:350,p:5,c:45},
+ {cat:"snack",n:{th:"โดนัท 1 ชิ้น",en:"Donut"},kcal:260,p:4,c:31},
+ {cat:"snack",n:{th:"ครัวซองต์ 1 ชิ้น",en:"Croissant"},kcal:270,p:5,c:31},
+ {cat:"snack",n:{th:"ถั่วรวม 1 กำมือ",en:"Mixed nuts handful"},kcal:180,p:6,c:7},
+ {cat:"snack",n:{th:"ลูกเกด 1 กำมือ",en:"Raisins handful"},kcal:130,p:1,c:31},
+ {cat:"snack",n:{th:"โปรตีนบาร์ 1 แท่ง",en:"Protein bar"},kcal:200,p:20,c:20},
+ {cat:"snack",n:{th:"กราโนล่าบาร์ 1 แท่ง",en:"Granola bar"},kcal:120,p:2,c:20},
+ {cat:"snack",n:{th:"ขนมปังโฮลวีท 1 แผ่น",en:"Whole wheat bread slice"},kcal:80,p:4,c:14},
+ {cat:"snack",n:{th:"ขนมจีบ 3 ลูก",en:"Steamed dumplings x3"},kcal:150,p:8,c:16},
+ {cat:"snack",n:{th:"ลูกชิ้นปิ้ง 3 ไม้",en:"Grilled meatballs x3"},kcal:180,p:10,c:14},
+ {cat:"snack",n:{th:"นักเก็ตไก่ 5 ชิ้น",en:"Chicken nuggets x5"},kcal:250,p:13,c:16},
+ {cat:"snack",n:{th:"เฟรนช์ฟรายส์ 1 ที่",en:"French fries serving"},kcal:320,p:4,c:42},
+ {cat:"drink",n:{th:"น้ำเปล่า 1 แก้ว",en:"Water glass"},kcal:0,p:0,c:0},
+ {cat:"drink",n:{th:"กาแฟดำไม่ใส่น้ำตาล",en:"Black coffee"},kcal:5,p:0,c:0},
+ {cat:"drink",n:{th:"อเมริกาโน่เย็น",en:"Iced americano"},kcal:10,p:0,c:1},
+ {cat:"drink",n:{th:"ลาเต้เย็น",en:"Iced latte"},kcal:150,p:8,c:14},
+ {cat:"drink",n:{th:"กาแฟเย็น",en:"Thai iced coffee"},kcal:230,p:3,c:38},
+ {cat:"drink",n:{th:"ชาเย็น",en:"Thai iced tea"},kcal:250,p:3,c:42},
+ {cat:"drink",n:{th:"ชาเขียวเย็น",en:"Iced green tea"},kcal:180,p:1,c:40},
+ {cat:"drink",n:{th:"โกโก้เย็น",en:"Iced cocoa"},kcal:260,p:6,c:42},
+ {cat:"drink",n:{th:"นมเย็น",en:"Pink milk"},kcal:220,p:6,c:38},
+ {cat:"drink",n:{th:"โอวัลติน",en:"Ovaltine"},kcal:200,p:7,c:34},
+ {cat:"drink",n:{th:"น้ำอัดลมไดเอท",en:"Diet soda"},kcal:0,p:0,c:0},
+ {cat:"drink",n:{th:"น้ำมะนาวโซดา",en:"Lime soda"},kcal:90,p:0,c:23},
+ {cat:"drink",n:{th:"น้ำสมูทตี้ผลไม้",en:"Fruit smoothie"},kcal:180,p:2,c:40},
+ {cat:"drink",n:{th:"เบียร์ 1 ขวดใหญ่",en:"Beer large bottle"},kcal:280,p:2,c:24},
+ {cat:"drink",n:{th:"วิสกี้ 1 เป๊ก",en:"Whisky shot"},kcal:97,p:0,c:0},
+ {cat:"drink",n:{th:"เครื่องดื่มชูกำลัง 1 ขวด",en:"Energy drink bottle"},kcal:120,p:0,c:30},
+ {cat:"drink",n:{th:"น้ำขิง",en:"Ginger drink"},kcal:80,p:0,c:20},
+ {cat:"fuel",n:{th:"เกลือเม็ด 1 เม็ด",en:"Salt tablet"},kcal:0,p:0,c:0},
+ {cat:"fuel",n:{th:"กล้วย + เกลือแร่",en:"Banana + electrolyte"},kcal:170,p:1,c:43},
+ {cat:"fuel",n:{th:"ข้าวเหนียว 1 ปั้น (ระหว่างวิ่ง)",en:"Sticky rice ball"},kcal:150,p:3,c:33},
+ {cat:"fuel",n:{th:"ขนมปัง + แยม",en:"Bread + jam"},kcal:180,p:4,c:34},
+ {cat:"fuel",n:{th:"ช็อตบล็อก 3 ชิ้น",en:"Energy chews x3"},kcal:90,p:0,c:23},
 ];
 function dateIndex(ds){const t2=new Date(ds+'T00:00:00');const st=new Date(S.startDate+'T00:00:00');const diff=Math.round((t2-st)/864e5);return Math.max(0,Math.min(SESS.length-1,diff));}
 FOODDB.forEach((f,i)=>{f.id='b'+i;});
@@ -1108,9 +1241,19 @@ function rhrBaseline(){const got=[];for(let i=1;i<=21;i++){const d=new Date();d.
 function rhrStatus(){const last=rhrLast(),base=rhrBaseline();if(!last||base==null)return null;const diff=last.v-base;return{v:last.v,base,diff,elevated:diff>=5||last.v>=base*1.07,ago:last.ago};}
 function recentElevatedRHR(){const base=rhrBaseline();if(base==null)return 0;let streak=0;for(let i=0;i<4;i++){const d=new Date();d.setDate(d.getDate()-i);const v=rhrLog()[ymd(d)];if(v&&(v-base>=5||v>=base*1.07))streak++;else if(i===0&&!v)continue;else break;}return streak;}
 function openSleep(){
- const cur=sleepLast()||{h:sleepTargetTonight(),q:3};
+ const sd=window._sleepDate||todayStr();const isToday=sd===todayStr();
+ const cur=(sleepLog()[sd])||{h:isToday?sleepTargetTonight():7.5,q:3};
  let h=cur.h,q=cur.q||3;
- const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:4px">😴 ${t('sleepTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:16px">${t('sleepSheetSub')}</div></div>`);
+ const sheet=$(`<div class="sheet"><div class="grab"></div><div class="dsp" style="font-size:19px;margin-bottom:4px">😴 ${t('sleepTitle')}</div><div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t('sleepSheetSub')}</div></div>`);
+ // date stepper (back-fill past nights)
+ const dd=new Date(sd+'T00:00:00');const dlab=(LANG==='th'?days_th:days_en)[dd.getDay()]+' '+dd.getDate()+'/'+(dd.getMonth()+1);
+ const drow=$('<div class="seg" style="margin-bottom:15px;align-items:center"></div>');
+ const prevB=$('<button style="flex:none;padding:8px 16px">◀</button>');
+ const nextB=$(`<button style="flex:none;padding:8px 16px;${isToday?'opacity:.25':''}">▶</button>`);
+ const lab=$(`<div style="flex:1;text-align:center;font-size:13px;font-weight:800;color:var(--lav)">${isToday?t('sleepToday'):dlab}</div>`);
+ prevB.onclick=()=>{const x=new Date(sd+'T00:00:00');x.setDate(x.getDate()-1);window._sleepDate=ymd(x);closeSheet();openSleep();};
+ nextB.onclick=()=>{if(isToday)return;const x=new Date(sd+'T00:00:00');x.setDate(x.getDate()+1);window._sleepDate=ymd(x);closeSheet();openSleep();};
+ drow.appendChild(prevB);drow.appendChild(lab);drow.appendChild(nextB);sheet.appendChild(drow);
  const msg=window._sleepMsg;window._sleepMsg=null;
  if(msg){if(msg.err)sheet.appendChild($(`<div class="card" style="border-color:var(--bad);background:var(--bad)14;font-size:12px;color:var(--bad);margin-bottom:12px;padding:11px 13px">${t('sleepImpErr')}</div>`));else sheet.appendChild($(`<div class="card" style="border-color:var(--good);background:var(--good)14;font-size:12.5px;margin-bottom:12px;padding:11px 13px">✅ ${t('sleepImpOk').replace('{ns}',msg.ns).replace('{nr}',msg.nr)}</div>`));}
  sheet.appendChild($(`<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${t('sleepHours')}</div>`));
@@ -1125,8 +1268,8 @@ function openSleep(){
  const ql=$(`<div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:18px">${qlabels[q-1]}</div>`);
  function drawQ(){qseg.innerHTML='';[1,2,3,4,5].forEach(i=>{const b=$(`<button class="${q===i?'on':''}" style="flex:1;padding:9px 0">${i}</button>`);b.onclick=()=>{q=i;drawQ();ql.textContent=qlabels[q-1];};qseg.appendChild(b);});}
  drawQ();sheet.appendChild(qseg);sheet.appendChild(ql);
- const sv=$(`<button class="btn btn-lime tap" style="margin-bottom:9px">${t('saveToday')}</button>`);
- sv.onclick=()=>{sleepLog()[todayStr()]={h,q};save();closeSheet();render();};sheet.appendChild(sv);
+ const sv=$(`<button class="btn btn-lime tap" style="margin-bottom:9px">${isToday?t('saveToday'):t('sleepSaveDay')}</button>`);
+ sv.onclick=()=>{sleepLog()[sd]={h,q};save();window._sleepDate=null;closeSheet();render();};sheet.appendChild(sv);
  // Health import
  const ra=rhrAvg(7);
  sheet.appendChild($(`<div style="height:1px;background:var(--line);margin:6px 0 13px"></div>`));
@@ -1134,7 +1277,7 @@ function openSleep(){
  const ib=$(`<button class="btn btn-ghost tap" style="margin-bottom:7px">📥 ${t('sleepImport')}</button>`);ib.onclick=()=>fi.click();
  sheet.appendChild(ib);sheet.appendChild(fi);
  sheet.appendChild($(`<div style="font-size:10.5px;color:var(--muted2);line-height:1.55;margin-bottom:10px">${t('sleepImportHint')}${ra?`<br>❤️ ${t('rhrAvg')}: <b style="color:var(--lav)">${ra} bpm</b>`:''}</div>`));
- if(sleepLast()){const del=$(`<button class="btn btn-ghost tap" style="color:var(--bad)">${t('sleepClear')}</button>`);del.onclick=()=>{delete sleepLog()[todayStr()];save();closeSheet();render();};sheet.appendChild(del);}
+ if(sleepLog()[sd]){const del=$(`<button class="btn btn-ghost tap" style="color:var(--bad)">${t('sleepClear')}</button>`);del.onclick=()=>{delete sleepLog()[sd];save();window._sleepDate=null;closeSheet();render();};sheet.appendChild(del);}
  showSheet(sheet);
 }
 function openLoadDetail(){
@@ -1341,7 +1484,7 @@ function Today(v){
  const qdots=q=>[1,2,3,4,5].map(i=>`<span style="color:${i<=q?cv('--lav'):cv('--line')};font-size:13px">●</span>`).join('');
  const sc=$(`<div class="card tap" style="margin-top:10px"></div>`);
  sc.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">😴</span><span class="dsp" style="font-size:14px">${t('sleepTitle')}</span></div>${sl?`<div style="text-align:right"><div class="num" style="font-size:16px;color:var(--lav)">${sl.h}<span style="font-size:10px;color:var(--muted)">h</span></div><div style="margin-top:1px">${qdots(sl.q||3)}</div></div>`:`<div style="font-size:11.5px;color:var(--lime);font-weight:700">${t('sleepLogBtn')} →</div>`}</div>${sAvg?`<svg viewBox="0 0 ${SW} ${SH}" style="width:100%;height:auto;margin-bottom:6px">${sbars}${slbl}</svg><div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)"><span>${t('sleepAvg')}: <b style="color:var(--lav)">${sAvg}h</b></span><span>${t('sleepTonight')}: <b style="color:var(--lime)">${sTgt}h</b></span></div>`:`<div style="font-size:12px;color:var(--muted);line-height:1.5">${t('sleepEmpty')} <b style="color:var(--lime)">${sTgt}h</b></div>`}`;
- sc.onclick=openSleep;wrap.appendChild(sc);
+ sc.onclick=()=>{window._sleepDate=todayStr();openSleep();};wrap.appendChild(sc);
  // RHR recovery card (only if data exists)
  const rst=rhrStatus();const rlast=rhrLast();
  if(rlast){
